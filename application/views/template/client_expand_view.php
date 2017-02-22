@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4 style="margin-top: 0px;">Company Profile</h4><hr />
+                    <h4 style="margin-top: 0px;"><b>Company Profile</b></h4><hr />
                     <div class="col-lg-5">
                     Company / Client name : <br />
                     <b style="font-size: 16px;"><?php echo $customer_info[0]->company_name; ?></b>
