@@ -105,13 +105,13 @@
 
                     <ol class="breadcrumb"  style="margin-bottom: 0;">
                         <li><a href="Dashboard">Dashboard</a></li>
-                        <li><a href="Payments">Payments</a></li>
+                        <li><a href="Payments">Collection Entry</a></li>
                     </ol>
                     <div class="container-fluid">
                         <div id="payments_list"> 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Payments</b>
+                                    <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Collection Entry</b>
                                 </div>
                                 <div class="panel-body">
                                     <table id="tbl_payments" class="table-striped custom-design" cellspacing="0" width="100%">
@@ -132,107 +132,111 @@
                             </div>
                         </div>
 
-                        <div id="payment_trans">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Payment Transaction</b>
-                                </div>
-                                <div class="panel-body">
-                                    <div style="border: 1px solid #c0c0c0; padding: 20px 0px 30px 0px; margin-bottom: 10px;">
-                                        <div class="row" style="margin-bottom: 10px;">
-                                            <div class="container-fluid">
-                                                <form>
-                                                    <div class="col-xs-12 col-sm-5">
-                                                        <strong>Receipt #:</strong>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                 <i class="fa fa-code"></i>
-                                                            </span> 
-                                                            <input type="text" class="form-control" name="">
-                                                        </div>
+                            <div id="modal_payment" class="modal fade" role="dialog">
+                                <div class="modal-dialog" style="width: 80%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Collection Entry</b>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div style="border: 1px solid #c0c0c0; padding: 20px 0px 30px 0px; margin-bottom: 10px;">
+                                                <div class="row" style="margin-bottom: 10px;">
+                                                    <div class="container-fluid">
+                                                        <form>
+                                                            <div class="col-xs-12 col-sm-5">
+                                                                <strong>Receipt #:</strong>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">
+                                                                         <i class="fa fa-code"></i>
+                                                                    </span> 
+                                                                    <input type="text" class="form-control" name="receipt_no" placeholder="Enter Receipt # here">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-4 col-sm-offset-3">
+                                                                <strong>Payment Date:</strong><br>
+                                                                <div class="input-group">
+                                                                     <span class="input-group-addon">
+                                                                         <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                    <input type="text" name="date_paid" class="date-picker form-control" value="<?php echo date("m/d/Y"); ?>" placeholder="Date Invoice" data-error-msg="Please set the date this items are issued!" required>
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <div class="col-xs-12 col-sm-4 col-sm-offset-3">
-                                                        <strong>Payment Date:</strong><br>
-                                                        <div class="input-group">
-                                                            <input type="text" name="date_invoice" class="date-picker form-control" value="<?php echo date("m/d/Y"); ?>" placeholder="Date Invoice" data-error-msg="Please set the date this items are issued!" required>
-                                                             <span class="input-group-addon">
-                                                                 <i class="fa fa-calendar"></i>
-                                                            </span>
-                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <form>
+                                                            <div class="col-xs-12 col-sm-5">
+                                                                <strong>Payment Method:</strong><br>
+                                                                    <select id="cbo_payment_method" name="payment_method_id" class="form-control" style="width: 100%;">
+                                                                        <?php foreach($methods as $method) { ?>
+                                                                            <option value="<?php echo $method->payment_method_id; ?>">
+                                                                                <?php echo $method->payment_method; ?>
+                                                                            </option>
+                                                                        <?php } ?>
+                                                                    </select>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-offset-7">
+                                                                
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                </form>
+                                                </div>
+                                            </div>
+                                            <div style="border: 1px solid #c0c0c0; padding: 10px 20px 30px 20px;">
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <strong>Client:</strong><br>
+                                                        <select id="cbo_customers" name="customer_id" class="form-control" style="width: 100%;">
+                                                            <?php foreach ($customers as $customer) { ?>
+                                                                <option value="<?php echo $customer->customer_id ?>"><?php echo $customer->company_name; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div><br>
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <table id="tbl_receivables" class="table-striped table-bordered custom-design" cellspacing="0" width="100%" style="font-font:tahoma;border: 1px solid #c0c0c0;">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="hidden">Billing ID</th>
+                                                                    <th>Billing #</th>
+                                                                    <th width="12%">Billing Date</th>
+                                                                    <th width="12%">Due Date</th>
+                                                                    <th width="30%">Remarks</th>
+                                                                    <th width="12%" style="text-align: right;">Amount Due</th>
+                                                                    <th width="14%" style="text-align: right;">Payment</th>
+                                                                    <th width="5%"><center>Action</center></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <!-- <tr>
+                                                                    <td colspan="6" style="height: 50px;">&nbsp;</td>
+                                                                </tr> -->
+                                                                <tr>
+                                                                    <td colspan="4" align="right"><b>Total : </b></td>
+                                                                    <td id="td_total_amount_due" align="right"><b>0.00</b></td>
+                                                                    <td colspan="1" id="td_total_payment_amount" align="right"><b>0.00</b></td>
+                                                                    <td></td>
+                                                                </tr>
+
+                                                                </tfoot>
+                                                            </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="container-fluid">
-                                                <form>
-                                                    <div class="col-xs-12 col-sm-5">
-                                                        <strong>Payment Method:</strong><br>
-                                                            <select id="cbo_payment_method" class="form-control" style="width: 100%;">
-                                                                <?php foreach($methods as $method) { ?>
-                                                                    <option value="<?php echo $method->payment_method_id; ?>">
-                                                                        <?php echo $method->payment_method; ?>
-                                                                    </option>
-                                                                <?php } ?>
-                                                            </select>
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-offset-7">
-                                                        
-                                                    </div>
-                                                </form>
-                                            </div>
+                                        <div class="modal-footer">
+                                            <button id="btn_save" class="btn btn-primary"><i class="fa fa-floppy-o"></i>&nbsp;Save Changes</button>
+                                            <button id="btn_cancel" class="btn btn-default">Cancel</button>
                                         </div>
                                     </div>
-                                    <div style="border: 1px solid #c0c0c0; padding: 10px 20px 30px 20px;">
-                                        <div class="row">
-                                            <div class="container-fluid">
-                                                <strong>Client:</strong><br>
-                                                <select id="cbo_customers" class="form-control" style="width: 100%;">
-                                                    <?php foreach ($customers as $customer) { ?>
-                                                        <option value="<?php echo $customer->customer_id ?>"><?php echo $customer->company_name; ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div><br>
-                                        <div class="row">
-                                            <div class="container-fluid">
-                                                <table id="tbl_receivables" class="table table-striped table-bordered" cellspacing="0" width="100%" style="font-font:tahoma;border: 1px solid #c0c0c0;">
-                                                        <thead>
-                                                        <tr>
-                                                            <th width="12%">Billing Date</th>
-                                                            <th width="12%">Due Date</th>
-                                                            <th width="30%">Remarks</th>
-                                                            <th width="12%" style="text-align: right;">Amount Due</th>
-                                                            <th width="14%">Payment</th>
-                                                            <th width="5%">Action</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td colspan="6" style="height: 50px;">&nbsp;</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3" align="right"><b>Total : </b></td>
-                                                            <td id="td_total_payables" align="right"><b>0.00</b></td>
-                                                            <td id="td_total_payments" align="right"><b>0.00</b></td>
-                                                            <td></td>
-                                                        </tr>
-
-                                                        </tfoot>
-                                                    </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel-footer">
-                                    <button id="btn_save" class="btn btn-primary"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
-                                    <button id="btn_cancel" class="btn btn-default">Cancel</button>
                                 </div>
                             </div>
-                        </div>
                     </div> <!-- .container-fluid -->
 
                 </div> <!-- #page-content -->
@@ -374,11 +378,40 @@
 
         var bindEventHandlers=function(){
             $('#btn_new').on('click',function(){
-                showList(false);
+                //showList(false);
+                $('#modal_payment').modal('show');
             });
 
             $('#btn_cancel').on('click',function(){
                 showList(true);
+            });
+
+            _cboCustomers.on('change', function() {
+
+                $.ajax({
+                    url : 'Payments/transactions/get-customer-billings/'+_cboCustomers.val(),
+                    type : "GET",
+                    dataType: "json",
+                    beforeSend : function(){
+                        $('#tbl_receivables > tbody').html('<tr><td align="center" colspan="8"><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></td></tr>');
+                    },
+                    success : function(response) {
+                        var data=response.billing_items;
+                        $('#tbl_receivables > tbody').html('');
+
+                        $.each(data,function(i,value) {
+                            $('#tbl_receivables > tbody').append(newRowItem({
+                                billing_id : value.billing_id,
+                                billing_no : value.billing_no,
+                                date_billed : value.date_billed,
+                                date_due : value.date_due,
+                                notes : value.notes,
+                                charge_line_total : value.charge_line_total,
+                                total_billing_amount : value.total_billing_amount
+                            }));
+                        });
+                    }
+                })
             });
         }();
 
@@ -387,9 +420,22 @@
                 $('#payment_trans').hide();
                 $('#payments_list').show();
             } else {
-                $('#payment_trans').show();
+                $('#payment_trans').show(); 
                 $('#payments_list').hide();
             }
+        };
+
+        var newRowItem=function(d){
+            return '<tr>'+
+            '<td class="hidden" name="billing_id[]">'+ d.billing_id +'</td>' +
+            '<td width="10%" name="billing_no[]">'+ d.billing_no+'</td>'+
+            '<td width="10%" name="date_billed[]">'+ d.date_billed+'</td>'+
+            '<td width="5%" name="date_due[]">'+ d.date_due+'</td>'+
+            '<td width="30%"><input name="notes" type="text" class="form-control" value="'+d.notes+'"></td>'+
+            '<td width="11%" style="text-align: right;" name="charge_line_total[]">'+accounting.formatNumber(d.charge_line_total,2)+'</td>'+
+            '<td width="11%"><input name="total_billing_amount[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.total_billing_amount,2)+'" style="text-align:right;"></td>'+
+            '<td align="center"><button type="button" name="pay_all" class="btn btn-success"><i class="fa fa-check"></i></button></td>'+
+            '</tr>';
         };
     });
 

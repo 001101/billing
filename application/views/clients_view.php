@@ -273,12 +273,15 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
-                                        <div class="img-container">
-                                            <img class="image" name="img_user" src="assets/img/default-user-image.png" alt="Image">
+                                        <div class="img-container" style="height: 240px;">
+                                            <img class="image" name="img_user" src="assets/img/default-user-image.png" alt="Image" style="max-height: 100%; min-height: 100%;">
                                             <input type="file" name="file_upload[]" class="hidden">
-                                            <div id="btn_browse" class="overlay">
+                                            <div id="btn_browse" class="overlay" style="height: 240px;">
                                                 <div class="text text-center">Browse Image</div>
                                             </div>
+                                        </div>
+                                        <div id="div_img_loader" style="display: none;">
+                                            <img name="img_loader" src="assets/img/loader/ajax-loader-sm.gif" style="display: block;margin:40% auto auto auto; " />
                                         </div>
                                         <div>
                                             <button type="button" id="btn_remove_photo" class="btn btn-danger btn-block">Remove Photo</button>
@@ -289,10 +292,10 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button id="btn_save" type="button" class="btn btn-primary" style="text-transform: none;"><span class=""></span> Save</button>
+                            <button id="btn_save" type="button" class="btn btn-primary" style="text-transform: none;"><span class=""></span> Save Changes</button>
                             <button id="btn_cancel" type="button" class="btn btn-danger" data-dismiss="modal" style="text-transform: none;">Cancel</button>
                         </div>
-                    </div><!---content---->
+                    </div><!---content-->
                 </div>
             </div><!---modal-->
 
@@ -522,6 +525,11 @@
             });
             $('input[name="file_upload[]"]').change(function(event){
                 var _files=event.target.files;
+
+                $('#div_img_loader').show();
+                $('.img-container').hide();
+                $('#btn_remove_photo').hide();
+
                 var data=new FormData();
                 $.each(_files,function(key,value){
                     data.append(key,value);
@@ -536,6 +544,9 @@
                     processData : false,
                     contentType : false,
                     success : function(response){
+                        $('#div_img_loader').hide();
+                        $('.img-container').show();
+                        $('#btn_remove_photo').show();
                         $('img[name="img_user"]').attr('src',response.path);
                     }
                 });

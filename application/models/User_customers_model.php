@@ -12,7 +12,7 @@
 		function get_affiliated_clients($user_id) {
 			
 			$sql="SELECT 
-				ci.company_name,
+				ci.*,
 				ci.`customer_id`,
 				ucg.user_id,
 				IF(ISNULL(ucg.customer_id),0,1) as is_assign

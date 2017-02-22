@@ -583,7 +583,7 @@
                         if ( idx === -1 ) 
                             detailRows.push( tr.attr('id') );
                     }).always(function(){
-                        showSpinningProgress($(this));
+                        showSpinningProgress(tr);
                     });
                 }
             } );
