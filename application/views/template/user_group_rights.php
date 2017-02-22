@@ -20,7 +20,7 @@
                             <span style="margin-left: 1%"><b><i class="fa fa-list"></i> User Group Rights</b></span>
                             <hr />
                             <div class="table-responsive">
-                                <table id="tbl_user_group_rights" class="table" style="background-color: white;" cellspacing="0" width="100%">
+                                <table id="tbl_user_group_rights" class="custom-design table-striped" style="background-color: white;" cellspacing="0" width="100%">
                                     <thead>
                                     <tr>
                                         <th width="80%">Description</th>

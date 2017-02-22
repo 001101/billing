@@ -27,6 +27,10 @@
                 zoom: 85%;
             }
 
+            .numeriCol {
+                text-align: right;
+            }
+
             .panel.panel-default .panel-heading {
                 border-color: transparent;
             }
@@ -118,7 +122,7 @@
                                                                 <tr>
                                                                     <th>Charge Name</th>
                                                                     <th>Charge Description</th>
-                                                                    <th>Charge Amount</th>
+                                                                    <th align="right">Charge Amount</th>
                                                                     <th>
                                                                         <center>Action</center>
                                                                     </th>
@@ -228,6 +232,10 @@
     <script type="text/javascript" src="assets/plugins/datatables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
 
+    <!-- numeric formatter -->
+    <script src="assets/plugins/formatter/autoNumeric.js" type="text/javascript"></script>
+    <script src="assets/plugins/formatter/accounting.js" type="text/javascript"></script>
+
     <script>
 
     $(document).ready(function(){
@@ -243,10 +251,15 @@
                 "bLengthChange":false,
                 "ajax" : "Charges/transaction/list",
                 "columns": [
-
                     { targets:[0],data: "charge_name" },
                     { targets:[1],data: "charge_description" },
-                    { targets:[2],data: "charge_amount" },
+                    { 
+                        class:'numeriCol',
+                        targets:[2],data: "charge_amount",
+                        render: function (data, type, full) {
+                             return accounting.formatNumber(data, 2, ",");
+                        }
+                    },
                     {
                         targets:[3],
                         render: function (data, type, full, meta){
