@@ -666,6 +666,7 @@
             $(e).toggleClass('disabled');
             $(e).find('span').toggleClass('glyphicon glyphicon-refresh spinning');
         };
+        
         var reInitializeServiceDataTable=function(tbl){
             var dtService;
             dtService=tbl.DataTable({

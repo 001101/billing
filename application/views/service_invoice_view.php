@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,75 +14,80 @@
     <meta name="author" content="">
 
 
-    <?php echo $_def_css_files; ?>
+    <link type="text/css" href="assets/css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/animate.css" rel="stylesheet">
+    <link type="text/css" href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/plugins/spinner/dist/ladda-themeless.min.css">
+    <link type="text/css" href="assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">        <!-- Font Awesome -->
+    <link type="text/css" href="assets/fonts/themify-icons/themify-icons.css" rel="stylesheet">              <!-- Themify Icons -->
+    <link type="text/css" href="assets/css/styles.css" rel="stylesheet">                                     <!-- Core CSS with all styles -->
 
-    <link type="text/css" href="assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
-    <link type="text/css" href="assets/plugins/datatables/dataTables.themify.css" rel="stylesheet">
+    <link type="text/css" href="assets/plugins/codeprettifier/prettify.css" rel="stylesheet">                <!-- Code Prettifier -->
+
+    <link href="assets/plugins/notify/pnotify.core.css" rel="stylesheet"> <!-- notification -->
+
+    <link rel="stylesheet" href="assets/plugins/pace/themes/blue/pace-theme-loading-bar.css" /><!-- progress bar -->
+
     <link href="assets/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+
+
+    <style>
+        table.custom-design{
+            width: 100%;
+        }
+
+        .datepicker{z-index:99999999 !important;}
+
+
+        table.custom-design > tbody > tr > td{
+            border:1px solid #acb8b1;
+            padding: 7px;
+        }
+
+        table.custom-design > thead > tr > th{
+            border:1px solid #acb8b1;
+            padding: 7px;
+
+        }
+
+        table.custom-design > tfoot > tr > td{
+            border:1px solid #acb8b1;
+            padding: 7px;
+
+        }
+
+        .custom-design-header{
+            background-color: #4f9f63;
+        }
+
+    </style>
 
     <link href="assets/plugins/select2/select2.min.css" rel="stylesheet">
 
-    <!--/twitter typehead-->
-    <link href="assets/plugins/twittertypehead/twitter.typehead.css" rel="stylesheet">
+    <link type="text/css" href="assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="assets/plugins/datatables/dataTables.themify.css" rel="stylesheet">
+
+    <link type="text/css" href="assets/plugins/zTree/zTreeStyle.css" rel="stylesheet">
 
     <style>
         html{
-            zoom: 0.82;
-            zoom: 82%;
-        }
-
-        #span_invoice_no{
-            min-width: 50px;
-        }
-
-        #span_invoice_no:focus{
-            border: 3px solid orange;
-            background-color: yellow;
-        }
-
-        .panel {
-            border: none!important;
-            -webkit-box-shadow: 0px 0px 12px -1px rgba(156,151,156,1);
-            -moz-box-shadow: 0px 0px 12px -1px rgba(156,151,156,1);
-            box-shadow: 0px 0px 12px -1px rgba(156,151,156,1);
-        }
-
-        .alert {
-            border-width: 0;
-            border-style: solid;
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-        .alert-danger, .alert-danger h1, .alert-danger h2, .alert-danger h3, .alert-danger h4, .alert-danger h5, .alert-danger h6, .alert-danger small {
-            color: #dd191d;
-        }
-
-        .alert-danger {
-            color: #dd191d;
-            background-color: #f9bdbb;
-            border-color: #e84e40;
-        }
-
-
-
-
-        #tbl_items td,#tbl_items tr,#tbl_items th{
-            table-layout: fixed;
-            border: 1px solid gray;
-            border-collapse: collapse;
+            zoom: 0.85;
+            zoom: 85%;
         }
 
         .toolbar{
             float: left;
         }
 
-        td.details-control {
-            background: url('assets/img/print.png') no-repeat center center;
-            cursor: pointer;
+        .billing_menu{
+            float: left;
         }
 
+        td.details-control {
+            background: url('assets/img/Folder_Closed.png') no-repeat center center;
+            cursor: pointer;
+        }
         tr.details td.details-control {
             background: url('assets/img/Folder_Opened.png') no-repeat center center;
         }
@@ -98,12 +104,8 @@
 
         .select2-container{
             min-width: 100%;
-            z-index: 9999999999;
         }
 
-        .dropdown-menu > .active > a,.dropdown-menu > .active > a:hover{
-            background-color: dodgerblue;
-        }
 
         @keyframes spin {
             from { transform: scale(1) rotate(0deg); }
@@ -115,73 +117,32 @@
             to { -webkit-transform: rotate(360deg); }
         }
 
-        .custom_frame{
-
-            border: 1px solid lightgray;
-            margin: 1% 1% 1% 1%;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
+        .zTreeDemoBackground {
+            overflow: auto;
         }
 
-        .numeric{
-            text-align: right;
-        }
+        div.zTreeDemoBackground {width:100%;height:500px;text-align:left;margin: 2%;overflow: hidden;border: 0px solid white;}
 
-        /* .container-fluid {
-             padding: 0 !important;
-         }
+        ul.ztree {margin-top: 10px;background: white;width:100%;height:100%;}
+        ul.ztree li span{font-size: 11pt;}
+        ul.log {border: 1px solid #617775;background: #f0f6e4;width:300px;height:100%;overflow: hidden;}
+        ul.log.small {height:45px;}
+        ul.log li {color: #666666;list-style: none;padding-left: 10px;}
+        ul.log li.dark {background-color: #E3E3E3;}
 
-         .panel-body {
-             padding: 0 !important;
-         }*/
-
-        #btn_new {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            text-transform: uppercase!important;
-        }
-
-        @media screen and (max-width: 480px) {
-
-            table{
-                min-width: 800px;
-            }
-
-            .dataTables_filter{
-                min-width: 800px;
-            }
-
-            .dataTables_info{
-                min-width: 800px;
-            }
-
-            .dataTables_paginate{
-                float: left;
-                width: 100%;
-            }
-        }
-
-
-        .form-group {
-            margin-bottom: 15px;
-        }
 
 
     </style>
 </head>
 
-<body class="animated-content"  style="font-family: tahoma;">
+<body class="animated-content">
 
 <?php echo $_top_navigation; ?>
 
 <div id="wrapper">
     <div id="layout-static">
+        <?php echo $_side_bar_navigation;?>
 
-
-        <?php echo $_side_bar_navigation;
-
-        ?>
 
 
         <div class="static-content-wrapper white-bg">
@@ -190,271 +151,202 @@
             <div class="static-content"  >
                 <div class="page-content"><!-- #page-content -->
 
-                    <ol class="breadcrumb"  style="margin-bottom: 0;">
-                        <li><a href="Dashboard">Dashboard</a></li>
-                        <li><a href="Service_invoices">Service Invoice</a></li>
+                    <ol class="breadcrumb" style="margin:0;">
+                        <li><a href="dashboard">Dashboard</a></li>
+                        <li><a href="Service_invoice">Process Billing</a></li>
                     </ol>
+                    <div class="container-fluid">
+                        <div data-widget-group="group1">
 
+                            <div class="row">
 
-                    <div class="container-fluid"">
-                    <div data-widget-group="group1">
-                        <div class="row">
-                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div id="div_chart_list">
+                                        <div class="panel panel-default" style="border-top: 3px solid #2196f3;">
 
-
-
-                                <div id="div_service_invoice">
-
-                                    <div class="panel panel-default" style="border: 3px solid #00a546;min-height: 650px;border-radius:0px;">
-                                        <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Service Invoice</b></div></a>
-
-
-                                        <div class="panel-body table-responsive">
-
-                                            <table id="tbl_service_invoice" class="custom-design table-striped" cellspacing="0" width="100%" style="">
-                                                <thead class="">
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Invoice #</th>
-                                                    <th>Invoice Date</th>
-                                                    <th>Due Date</th>
-                                                    <th>Customer</th>
-                                                    <th>Remarks</th>
-                                                    <th><center>Action</center></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-
-
-
-
-                                        <!-- <div class="panel-footer"></div> -->
-                                    </div>
-
-                                </div>
-
-
-                                <div id="div_service_info_fields" style="display: none;">
-
-
-                                    <div class="panel panel-default" style="border: 4px solid #2980b9;border-radius: 8px;">
-
-
-                                        <!-- <div class="pull-right">
-                                            <h4 class="sales_invoice_title" style="margin-top: 0%;"></h4>
-                                            <div class="btn btn-green" style="margin-left: 10px;">
-                                                <strong><a id="btn_receive_so" href="#" style="text-decoration: none; color: white;">Create from Sales Order</a></strong>
-                                            </div>
-                                        </div> -->
-                                        <div class="panel-heading">
-                                             <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Service Invoice</b>
-                                        </div>
-                                        <div class="panel-body" style="padding-bottom: 0%;padding-top: 0%;">
-                                            <div class="row" style="padding: 1%;margin-top: 0%;font-family: "Source Sans Pro", "Segoe UI", "Droid Sans", Tahoma, Arial, sans-serif">
-                                            <form id="frm_sales_invoice" role="form" class="form-horizontal">
-
-                                                <h4 style="margin-bottom: 6px;"><b>Invoice # : <span id="span_invoice_no">INV-XXXX</span></b></h4>
-                                                <div style="border: 1px solid #a0a4a5;padding: 1%;border-radius: 5px;">
-
-                                                    <div class="row">
-                                                        <div class="col-sm-8">
-                                                            Customer : <br />
-                                                            <select name="customer" id="cbo_customers" data-error-msg="Customer is required." required>
-                                                                <option value="0">[ Create New Customer ]</option>
-                                                                <?php foreach($customers as $customer){ ?>
-                                                                    <option value="<?php echo $customer->customer_id; ?>"><?php echo $customer->company_name; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-2 col-sm-offset-2">
-                                                            Invoice Date : <br />
-                                                            <div class="input-group">
-                                                                <input type="text" name="date_invoice" class="date-picker form-control" value="<?php echo date("m/d/Y"); ?>" placeholder="Date Invoice" data-error-msg="Please set the date this items are issued!" required>
-                                                                 <span class="input-group-addon">
-                                                                     <i class="fa fa-calendar"></i>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-8">
-                                                            Address :<br>
-                                                            <textarea class="form-control" id="txt_address" type="text" name="address" placeholder="Customer Address"></textarea>
-                                                        </div>
-
-                                                        <div class="col-sm-2 col-sm-offset-2">
-                                                            Due Date : <br />
-                                                            <div class="input-group">
-                                                                <input type="text" name="date_due" class="date-picker form-control" value="<?php echo date("m/d/Y"); ?>" placeholder="Date Due" data-error-msg="Please set the date this items are issued!" required>
-                                                                 <span class="input-group-addon">
-                                                                     <i class="fa fa-calendar"></i>
-                                                                </span>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </form>
-                                        </div>
-
-
-                                        <div style="border: 1px solid #a0a4a5;padding: 1%;border-radius: 0px;">
-
-                                            <label class="control-label" style="font-family: Tahoma;"><strong>Search Items / Services :</strong></label>
+                                            <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Billing Statements</b></div></a>
 
                                             <div class="row">
-                                             <div class="col-lg-10" style="padding-right: 0%;">
 
-                                                 <div id="custom-templates">
-                                                     <input class="typeahead" type="text" placeholder="Search here" style="width: 100%;">
-                                                 </div><br />
-                                             </div>
-                                             <div class="col-lg-2" style="padding-left: 5px;">
-                                                 <button id="btn_browse" class="btn-primary btn" style="width: 100%;text-transform: none;"><i class="fa fa-search"></i> Browse Services</button>
-
-                                             </div>
-                                         </div>
-
-
-
-                                            <form id="frm_items">
-                                                <div class="table-responsive"  style="min-height: 200px;padding: 1px;">
-                                                    <table id="tbl_items" class="custom-design table-striped" cellspacing="0" width="100%" style="font-font:tahoma;">
-
-                                                        <thead class="">
-                                                        <tr>
-
-                                                            <th width="10%">Qty</th>
-                                                            <th width="30%">Description</th>
-                                                            <th width="30%">Notes</th>
-                                                            <th width="15%" style="text-align: right;">Service Fee</th>
-                                                            <th width="5%"><center>Action</center></th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <td colspan="5" style="height: 50px;">&nbsp;</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Total Service Fee :</strong></td>
-                                                            <td align="right" colspan="2" id="td_total_service_fee" color="red">0.00</td>
-
-                                                        </tr>
-
-                                                        </tfoot>
-
-
-
-                                                    </table>
+                                                <div class="col-xs-12 col-lg-2">
+                                                    <div class="zTreeDemoBackground" style="margin-left: 10px;margin-top: 10px;margin-bottom: 20px;border: 0px solid black;">
+                                                        <ul id="treeDemo" class="ztree"></ul>
+                                                    </div>
                                                 </div>
-                                            </form>
-
-                                        </div>
 
 
+                                                <div class="col-xs-12 col-lg-10">
+                                                    <div class="panel-body table-responsive" style="padding-left: 1px!important;">
 
-                                        <div class="row">
-                                            <div class="container-fluid">
 
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><br />
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <label control-label><strong>Remarks :</strong></label>
-                                                            <div class="col-lg-12" style="padding: 0%;">
-                                                                <textarea name="remarks" class="form-control" placeholder="Remarks"></textarea>
+                                                        <div class="tab-container tab-default tab-default">
+                                                            <ul class="nav nav-tabs">
+
+
+                                                                <li class="active"><a href="#billing_statement" data-toggle="tab"><i class="fa fa-bars"></i> Billing Statement</a></li>
+
+                                                                <li class=""><a href="#customer_list" data-toggle="tab"><i class="fa fa-bars"></i> Company / Client List</a></li>
+
+                                                            </ul>
+                                                            <div class="tab-content">
+
+
+                                                                <div class="tab-pane active" id="billing_statement" style="min-height: 250px;">
+                                                                    <div style="border:1px solid gray;padding: 1%;">
+                                                                        <span style="font-size: 14pt;">Billing as of <b id="lbl_date">February 2017</b></span><hr />
+
+                                                                        <table id="tbl_billing" class="custom-design table-striped" cellspacing="0" width="100%">
+                                                                            <thead class="">
+                                                                            <tr>
+                                                                                <th>&nbsp;&nbsp;</th>
+                                                                                <th>SOA/Billing #</th>
+                                                                                <th>Company / Client</th>
+                                                                                <th>Billing Date</th>
+                                                                                <th>Due Date</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                            </tbody>
+                                                                        </table>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="tab-pane " id="customer_list" style="min-height: 250px;">
+                                                                    <div style="border:1px solid gray;padding: 1%;">
+                                                                        <span style="font-size: 14pt;">Billing as of <b id="lbl_date">February 2017</b></span><span style="font-size: 9pt;"> (Please tick mark all accomplished services on <b>Completed Column</b>.)</span><hr />
+
+                                                                        <table id="tbl_customers" class="custom-design table-striped" cellspacing="0" width="100%">
+                                                                            <thead class="">
+                                                                            <tr>
+                                                                                <th>&nbsp;&nbsp;</th>
+                                                                                <th>Code</th>
+                                                                                <th>Company / Client</th>
+                                                                                <th>Trade Name</th>
+                                                                                <th>Contact No</th>
+                                                                                <th style="text-align: center;">Billed?</th>
+                                                                                <th>Process</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                            </tbody>
+                                                                        </table>
+
+
+                                                                    </div>
+
+                                                                </div>
+
+
+
                                                             </div>
                                                         </div>
 
+
+
                                                     </div>
-
-
-
                                                 </div>
                                             </div>
-                                        </div>
-                                        <br />
-                                    </div>
-
-
-                                    <div class="panel-footer" >
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <button id="btn_save" class="btn-primary btn" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;"><span class=""></span>Save Changes</button>
-                                                <button id="btn_cancel" class="btn-default btn" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;">Cancel</button>
-                                            </div>
+                                            <!-- <div class="panel-footer"></div> -->
                                         </div>
                                     </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- .container-fluid -->
 
+                </div> <!-- #page-content -->
+            </div>
+
+
+            <div id="modal_confirmation" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content"><!---content--->
+                        <div class="modal-header">
+                            <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
+                            <h4 class="modal-title"><span id="modal_mode"> </span>Confirm Deletion</h4>
+
+                        </div>
+
+                        <div class="modal-body">
+                            <p id="modal-body-message">Are you sure ?</p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id="btn_yes" type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                            <button id="btn_close" type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        </div>
+                    </div><!---content---->
+                </div>
+            </div><!---modal-->
+
+
+
+
+            <div id="modal_process_billing" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
+                <div class="modal-dialog" style="width: 65%;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#2ecc71;">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                            <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>Billing Statement</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div style="border: 1px solid black;padding: 1%;">
+                            <form id="frm_customer">
+                                <div class="row">
+                                    <div class="col-lg-9">
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <b>SOA Number : </b><br /><span id="span_billing_no">2017-000001</span>
+                                    </div>
 
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-lg-9">
 
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <b>Billing Date :</b><br />
+                                        <input type="text" class="date-picker form-control" value="<?php echo date('m/d/Y'); ?>" />
+                                    </div>
 
-
+                                </div>
+                            </form>
                             </div>
-
-
-
-
                         </div>
-                    </div>
-                </div>
-            </div> <!-- .container-fluid -->
 
-        </div> <!-- #page-content -->
+                        <div class="modal-footer">
+                            <button id="btn_save" type="button" class="btn btn-primary" style="text-transform: none;"><span class=""></span> Finalize Billing</button>
+                            <button id="btn_cancel" type="button" class="btn btn-danger" data-dismiss="modal" style="text-transform: none;">Cancel</button>
+                        </div>
+                    </div><!---content---->
+                </div>
+            </div><!---modal-->
+
+
+
+
+            <footer role="contentinfo">
+                <div class="clearfix">
+                    <ul class="list-unstyled list-inline pull-left">
+                        <li><h6 style="margin: 0;">&copy; 2016 - Paul Christian Rueda</h6></li>
+                    </ul>
+                    <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="ti ti-arrow-up"></i></button>
+                </div>
+            </footer>
+
+
+
+
+        </div>
     </div>
-
-
-    <div id="modal_confirmation" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content"><!---content--->
-                <div class="modal-header ">
-                    <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
-                    <h4 class="modal-title" style="color: white;"><span id="modal_mode"> </span>Confirm Deletion</h4>
-
-                </div>
-
-                <div class="modal-body">
-                    <p id="modal-body-message">Are you sure you want to delete?</p>
-                </div>
-
-                <div class="modal-footer">
-                    <button id="btn_yes" type="button" class="btn btn-danger" data-dismiss="modal" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;">Yes</button>
-                    <button id="btn_close" type="button" class="btn btn-default" data-dismiss="modal" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;">No</button>
-                </div>
-            </div><!---content---->
-        </div>
-    </div><!---modal-->
-
-
-
-    <footer role="contentinfo">
-        <div class="clearfix">
-            <ul class="list-unstyled list-inline pull-left">
-                <li><h6 style="margin: 0;">&copy; 2017 - JDEV IT Business Solutions</h6></li>
-            </ul>
-            <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="ti ti-arrow-up"></i></button>
-        </div>
-    </footer>
-
-
-
-
-</div>
-</div>
 
 
 </div>
@@ -472,42 +364,44 @@
 
 
 
-
-<!-- Date range use moment.js same as full calendar plugin -->  
+<!-- Date range use moment.js same as full calendar plugin -->
 <script src="assets/plugins/fullcalendar/moment.min.js"></script>
 <!-- Data picker -->
 <script src="assets/plugins/datapicker/bootstrap-datepicker.js"></script>
 
-<!-- Select2 -->
-<script src="assets/plugins/select2/select2.full.min.js"></script>
-
-
-
-<!-- twitter typehead -->
-<script src="assets/plugins/twittertypehead/handlebars.js"></script>
-<script src="assets/plugins/twittertypehead/bloodhound.min.js"></script>
-<script src="assets/plugins/twittertypehead/typeahead.bundle.js"></script>
-<script src="assets/plugins/twittertypehead/typeahead.jquery.min.js"></script>
-
 <!-- touchspin -->
 <script type="text/javascript" src="assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
 
-<!-- numeric formatter -->
-<script src="assets/plugins/formatter/autoNumeric.js" type="text/javascript"></script>
-<script src="assets/plugins/formatter/accounting.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="assets/plugins/zTree/jquery.ztree.core.js"></script>
+
 
 <script>
     $(document).ready(function(){
-        var dt; var _cboCustomers;
+        var dt; var _txnMode; var _selectedID; var _selectRowObj;
+        var zNodes; var setting; var _monthID; var _year; var dtBilling;
 
-        var initializeControls=function(){
+        var reInitializeTreeView=function(){
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        };
 
-            dt=$('#tbl_service_invoice').DataTable({
-                "dom": '<"toolbar">frtip',
-                "bLengthChange":false,
-                "order": [[ 1, "asc" ]],
-                "pageLength":15,
-                "ajax" : "Service_invoices/transaction/invoice-list",
+        function reloadBilling(){
+
+            dtBilling=$('#tbl_billing').DataTable({
+                "bLengthChange":true,
+                "bPaginate":true,
+                "pageLength" : 10,
+                "ajax": {
+                    "url": "Service_invoices/transaction/invoice-list",
+                    "type": "GET",
+                    "bDestroy": true,
+                    "data": function ( d ) {
+                        return $.extend( {}, d, {
+                            "month_id" : _monthID,
+                            "year": _year
+                        });
+                    }
+                },
                 "columns": [
                     {
                         "targets": [0],
@@ -517,71 +411,237 @@
                         "defaultContent": ""
                     },
                     { targets:[1],data: "invoice_no" },
-                    { targets:[2],data: "date_invoice" },
-                    { targets:[3],data: "date_due" },
-                    { targets:[4],data: "company_name" },
-                    { targets:[5],data: "remarks" },
-                    {
-                        targets:[6],
-                        render: function (data, type, full, meta){
-                            var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:0px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
-                            var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
+                    { targets:[2],data: "company_name" },
+                    { targets:[3],data: "date_invoice" },
+                    { targets:[4],data: "date_due" },
 
-                            return '<center> '+btn_edit+"&nbsp;"+btn_trash+' </center>';
+
+                    {
+                        targets:[5],
+                        render: function(data, type, full, meta){
+                            return "dd";
                         }
                     }
                 ]
 
+                ,
+                "rowCallBack": function(a,b,c){
+                    console.log(b);
+                }
+
             });
 
 
 
 
-            var createToolBarButton=function(){
-                var _btnNew='<button class="btn btn-primary" id="btn_new" style="text-transform: none;font-family: Tahoma, Georgia, Serif; " data-toggle="modal" data-target="#salesInvoice" data-placement="left" title="New Service Invoice" >'+
-                    '<i class="fa fa-plus-circle"></i> New Service Invoice</button>';
-                $("div.toolbar").html(_btnNew);
-            }();
-
-        }();
-
-
-
-
-
-        var bindEventHandlers=function(){
-
-            $('#btn_new').click(function(){
-                showList(false);
-            });
-
-            $('#btn_cancel').click(function(){
-                showList(true);
-            });
-
-            _cboCustomers=$("#cbo_customers").select2({
-                placeholder: "Please select branch.",
-                allowClear: true
-            });
-
-
-        }();
-
-
-
-        var showList=function(b){
-            if(b){
-                $('#div_service_invoice').show();
-                $('#div_service_info_fields').hide();
-            }else{
-                $('#div_service_invoice').hide();
-                $('#div_service_info_fields').show();
-            }
         };
 
 
 
+        var initializeControls=function(){
+
+            reloadBilling();
+
+            _monthID=<?php echo json_encode(date('m')); ?>;
+            _year=<?php echo json_encode(date('Y')); ?>;
+
+            dt= $('#tbl_customers').DataTable({
+                "dom": '<"toolbar">frtip',
+                "bLengthChange":false,
+                "bPaginate": false,
+                "language": {
+                    "searchPlaceholder": "Search Customer"
+                },
+                "ajax" : "Accomplishments/transaction/list",
+                "columns": [
+                    {
+                        "targets": [0],
+                        "class":          "details-control",
+                        "orderable":      false,
+                        "data":           null,
+                        "defaultContent": ""
+                    },
+                    { targets:[1],data: "customer_code" },
+                    { targets:[2],data: "company_name" },
+                    { targets:[3],data: "trade_name" },
+                    { targets:[4],data: "office_address" },
+                    {
+                        targets:[5],
+                        render: function(data, type, full, meta){
+                            return "<center><i class='fa fa-check-circle' style='color:green;'></i></center>";
+                        }
+                    },
+
+                    {
+                        targets:[6],
+                        render: function(data, type, full, meta){
+                            return "<center><button name='process_billling' class='btn btn-primary' style='text-transform: none;'><i class='fa fa-bars'></i> Process</button></center>";
+                        }
+                    }
+
+                ]
+            });
+
+            var createToolBarButton=function() {
+                var _btnNew='<button class="btn btn-primary"  id="btn_refresh" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Refresh" >'+
+                    '<i class="fa fa-refresh"></i> Reload </button>';
+                $("div.toolbar").html(_btnNew);
+            }();
+
+
+            //**************************************************************************************************************
+            setting= {
+                view: {
+
+                    addDiyDom: addDiyDom
+                },
+                data: {
+                    key: {
+                        title: "title"
+                    },
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: {
+                    onClick:function(){
+
+                    }
+                }
+
+            };
+
+
+            zNodes=[
+
+                <?php foreach($years as $year){ ?>
+                {"id":"<?php echo $year; ?>","pId":"","name":"<?php echo $year; ?><?php echo ($year==date("Y")?"(Current Year)":""); ?>","title":"<?php echo $year; ?>","open":"<?php echo ($year==date("Y")?"true":false); ?>","icon":"assets\/plugins\/zTree\/img\/diy\/4.png"},
+                <?php foreach($months as $month){ ?>
+                {"id":"<?php echo $year; ?>-<?php echo $month; ?>","pId":"<?php echo $year; ?>","name":"<?php echo $month; ?>","title":"<?php echo $month; ?>","open":"<?php echo ($year==date("Y")?"true":false); ?>","icon":"assets\/plugins\/zTree\/img\/diy\/11.png"},
+                <?php } ?>
+                <?php } ?>
+
+
+
+
+            ];
+
+            reInitializeTreeView();
+
+
+
+
+
+
+        }();
+
+
+
+
+
+
+        var bindEventHandlers=(function(){
+            var detailRows = [];
+
+            $('#tbl_customers tbody').on( 'click', 'tr td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = dt.row( tr );
+                var idx = $.inArray( tr.attr('id'), detailRows );
+                if ( row.child.isShown() ) {
+                    tr.removeClass( 'details' );
+                    row.child.hide();
+                    // Remove from the 'open' array
+                    detailRows.splice( idx, 1 );
+                }
+                else {
+                    tr.addClass( 'details' );
+                    var d=row.data();
+                    $.ajax({
+                        "dataType":"html",
+                        "type":"POST",
+                        "url":"Accomplishments/transaction/expand-view?id="+ d.customer_id,
+                        "beforeSend" : function(){
+                            row.child( '<center><br /><img src="assets/img/loader/ajax-loader-lg.gif" /><br /><br /></center>' ).show();
+                        }
+                    }).done(function(response){
+                        row.child( response ).show();
+                        reInitializeServiceDataTable($('#tbl_services_'+ d.customer_id));
+
+                        if ( idx === -1 ) {
+                            detailRows.push( tr.attr('id') );
+                        }
+                    });
+                }
+            });
+
+
+            $('#tbl_customers tbody').on( 'click', 'button[name="process_billling"]', function () {
+                $('#modal_process_billing').modal('show');
+            });
+
+
+
+            $('.zTreeDemoBackground').on('click','ul.ztree li span',function(){
+                var sMonth=$(this).closest('li').text();
+                var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
+
+                //get month id and year
+                _monthID=$(this).closest('li').index();
+                _year=sYear;
+
+                //realod billing list
+                dtBilling.destroy();
+                reloadBilling();
+
+                $('#lbl_date').html(sMonth+" "+sYear);
+            });
+
+
+
+
+        })();
+
+
+        var showNotification=function(obj){
+            PNotify.removeAll(); //remove all notifications
+            new PNotify({
+                title:  obj.title,
+                text:  obj.msg,
+                type:  obj.stat
+            });
+        };
+
+        function addDiyDom(treeId, treeNode) {
+            var aObj = $("#" + treeNode.tId);
+
+            if(!isNaN(treeNode.id)){
+
+                //aObj.closest('a').text("Test");
+
+
+            }
+        };
+
+        var reInitializeServiceDataTable=function(tbl){
+            var dtService;
+            dtService=tbl.DataTable({
+                "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder": "Search Services"
+                },
+                "pageLength":8
+            });
+
+            tbl.on('click','a#link_accomplished',function(){
+                alert("dd");
+            });
+        };
+
+
+
+
     });
+
 
 
 

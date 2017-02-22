@@ -39,7 +39,7 @@
                             <ul class="acc-menu">
                                 <li class="<?php echo (in_array('4-2',$this->session->user_rights)?'':'hidden'); ?>"><a href="Accomplishments">Process Accomplishments</a></li>
                                 <li class="<?php echo (in_array('4-3',$this->session->user_rights)?'':'hidden'); ?>"><a href="Payments">Payments</a></li>
-                                <li class="<?php echo (in_array('4-1',$this->session->user_rights)?'':'hidden'); ?>"><a href="Service_invoices">Service Invoice</a></li>
+                                <li class="<?php echo (in_array('4-1',$this->session->user_rights)?'':'hidden'); ?>"><a href="Service_invoices">Process Billing</a></li>
                             </ul>
                         </li>
 

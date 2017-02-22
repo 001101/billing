@@ -25,7 +25,17 @@
 	        $data['_top_navigation']=$this->load->view('template/elements/top_navigation','',TRUE);
 	        $data['title']='Service Invoice';
 
-	        $data['customers']=$this->Customers_model->get_list('is_deleted=false');
+            $current_year=date("Y");
+            $max_year=$current_year+1;
+
+            $years=array();
+            for($min_year=$current_year-1;$min_year<=$max_year;$min_year++){
+                $years[]=$min_year;
+            }
+
+            $data['years']=$years;
+            $data['months']=array("January","February","March","April","May","June","July","August","September","October","November","December");
+            $data['customers']=$this->Customers_model->get_list('is_deleted=0');
 
 	        $this->load->view('service_invoice_view',$data);
         }
@@ -34,6 +44,8 @@
 		{
 			switch($txn) {
                 case 'invoice-list':
+                    $billing_month=$this->input->get('');
+
                     $m_service_info=$this->Services_invoice_model;
                     $response['data']=$m_service_info->get_list('is_deleted=FALSE');
                     echo json_encode($response);
