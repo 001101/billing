@@ -37,19 +37,9 @@
 		{
 			switch ($txn) {
 				case 'get-customer-billings':
-					$m_billing_info=$this->Services_invoice_model;
+					$m_clients=$this->Customers_model;
 
-					$response['billing_items']=$m_billing_info->get_list(
-						array(
-							'billing_info.customer_id'=>$filter_value,
-							'billing_info.`payment_status`=0 OR billing_info.payment_status=1'
-						),
-						'billing_info.*,
-						billing_items.*',
-						array(
-							array('billing_items','billing_items.billing_id=billing_info.billing_id','left')
-						)
-					);
+					$response['data']=$m_clients->get_customer_receivable_list($filter_value);
 
 					echo json_encode($response);
 					break;
@@ -59,9 +49,11 @@
 
 					$response['data']=$m_payment_info->get_list(
 						'payment_info.is_deleted=FALSE',
-						'payment_info.*, customers_info.*',
+						'payment_info.*, customers_info.*, user_accounts.*, payment_methods.*',
 						array(
-							array('customers_info','customers_info.customer_id=payment_info.customer_id','left')
+							array('customers_info','customers_info.customer_id=payment_info.customer_id','left'),
+							array('payment_methods','payment_methods.payment_method_id=payment_info.payment_method_id','left'),
+							array('user_accounts','user_accounts.user_id=payment_info.posted_by','left')
 						)
 					);
 
@@ -77,6 +69,8 @@
 					$m_payment_info->date_paid=date('Y-m-d',strtotime($this->input->post('date_paid',TRUE)));
 					$m_payment_info->payment_method_id=$this->input->post('payment_method_id',TRUE);
 					$m_payment_info->customer_id=$this->input->post('customer_id',TRUE);
+					$m_payment_info->total_amount_paid=$this->input->post('total_amount_paid',TRUE);
+					$m_payment_info->remarks=$this->input->post('remarks',TRUE);
 					$m_payment_info->posted_by=$this->session->user_id;
 					$m_payment_info->set('date_posted','NOW()');
 					$m_payment_info->save();
@@ -85,18 +79,19 @@
 
 					$m_payment_items=$this->Payments_item_model;
 
-					$service_invoice_id=$this->input->post('service_invoice_id',TRUE);
-					$remarks=$this->input->post('remarks',TRUE);
+					$billing_id=$this->input->post('billing_id',TRUE);
+					$contract_id=$this->input->post('contract_id',TRUE);
+					$item_remarks=$this->input->post('item_remarks',TRUE);
 					$amount_due=$this->input->post('amount_due',TRUE);
 					$payment_amount=$this->input->post('payment_amount',TRUE);
 
-					for($i=0;$i<count($service_invoice_id);$i++) {
+					for($i=0;$i<count($billing_id);$i++) {
 						$m_payment_items->payment_id=$payment_id;
-						$m_payment_items->service_invoice_id=$service_invoice_id;
 						$m_payment_items->billing_id=$billing_id[$i];
-						$m_payment_items->remarks=$remarks[$i];
-						$m_payment_items->amount_due=get_numeric_value($amount_due[$i]);
-						$m_payment_items->payment_amount=get_numeric_value($payment_amount[$i]);
+						$m_payment_items->contract_id=$contract_id[$i];
+						$m_payment_items->item_remarks=$item_remarks[$i];
+						$m_payment_items->amount_due=$this->get_numeric_value($amount_due[$i]);
+						$m_payment_items->payment_amount=$this->get_numeric_value($payment_amount[$i]);
 						$m_payment_items->save();
 					}
 
@@ -104,8 +99,16 @@
 
 					$response['title'] = 'Success!';
                     $response['stat'] = 'success';
-                    $response['msg'] = 'Collection Entry successfully created.';
-                    $response['row_added']=$this->response_rows($payment_id);
+                    $response['msg'] = 'Collection Entry successfully posted.';
+                    $response['row_added']=$m_payment_info->get_list(
+						array('payment_info.is_deleted=FALSE','payment_info.payment_id'=>$payment_id),
+						'payment_info.*, customers_info.*, user_accounts.*, payment_methods.*',
+						array(
+							array('customers_info','customers_info.customer_id=payment_info.customer_id','left'),
+							array('payment_methods','payment_methods.payment_method_id=payment_info.payment_method_id','left'),
+							array('user_accounts','user_accounts.user_id=payment_info.posted_by','left')
+						)
+					);
 
                     echo json_encode($response);
 

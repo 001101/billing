@@ -36,6 +36,11 @@
         box-shadow: 0px 0px 16px -2px rgba(30,160,230,1)!important;
     }
 
+    .select2-container{
+        min-width: 100%;
+        z-index: 9999999999;!important;
+    }
+
     .input-group-addon {
         border: 1px solid #aaa; 
         border-right: none;

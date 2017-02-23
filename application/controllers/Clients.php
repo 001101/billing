@@ -261,7 +261,14 @@ class Clients extends CORE_Controller {
 
                 break;
 
+            case 'receivables':
+                    $customer_id=$this->input->get('id',TRUE);
+                    $m_customers=$this->Customers_model;
 
+                    $data['receivables']=$m_customers->get_customer_receivable_list($customer_id);
+                    $structured_content=$this->load->view('template/customer_receivable_list',$data,TRUE);
+                    echo $structured_content;
+                break;
 
         }
     }

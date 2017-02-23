@@ -31,6 +31,10 @@
                 zoom: 85%;
             }
 
+            .numeriCol {
+                text-align: right;
+            }
+
             .panel.panel-default .panel-heading {
                 border-color: transparent;
             }
@@ -117,9 +121,13 @@
                                     <table id="tbl_payments" class="table-striped custom-design" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Receipt #</th>
-                                                <th>Client</th>
-                                                <th>Payment Date</th>
+                                                <th width="10%">Receipt #</th>
+                                                <th width="20%">Client</th>
+                                                <th width="10%">Method</th>
+                                                <th width="20%">Remarks</th>
+                                                <th width="15%">Posted by</th>
+                                                <th width="10%">Date Paid</th>
+                                                <th width="10%" style="text-align: right;">Amount</th>
                                                 <th>
                                                     <center>Action</center>
                                                 </th>
@@ -133,102 +141,110 @@
                         </div>
 
                             <div id="modal_payment" class="modal fade" role="dialog">
-                                <div class="modal-dialog" style="width: 80%;">
+                                <div class="modal-dialog" style="width: 90%;">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Collection Entry</b>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>Collection Entry</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <div style="border: 1px solid #c0c0c0; padding: 20px 0px 30px 0px; margin-bottom: 10px;">
-                                                <div class="row" style="margin-bottom: 10px;">
-                                                    <div class="container-fluid">
-                                                        <form>
-                                                            <div class="col-xs-12 col-sm-5">
-                                                                <strong>Receipt #:</strong>
-                                                                <div class="input-group">
-                                                                    <span class="input-group-addon">
-                                                                         <i class="fa fa-code"></i>
-                                                                    </span> 
-                                                                    <input type="text" class="form-control" name="receipt_no" placeholder="Enter Receipt # here">
+                                            <form id="frm_payment_info">
+                                                <div style="border: 1px solid #c0c0c0; padding: 20px 0px 30px 0px; margin-bottom: 10px;">
+                                                    <div class="row" style="margin-bottom: 10px;">
+                                                        <div class="container-fluid">
+                                                                <div class="col-xs-12 col-sm-5">
+                                                                    <strong>Receipt #:</strong>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon">
+                                                                             <i class="fa fa-code"></i>
+                                                                        </span> 
+                                                                        <input type="text" class="form-control" name="receipt_no" placeholder="Enter Receipt # here" data-error-msg="Receipt # is required!" required>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-4 col-sm-offset-3">
-                                                                <strong>Payment Date:</strong><br>
-                                                                <div class="input-group">
-                                                                     <span class="input-group-addon">
-                                                                         <i class="fa fa-calendar"></i>
-                                                                    </span>
-                                                                    <input type="text" name="date_paid" class="date-picker form-control" value="<?php echo date("m/d/Y"); ?>" placeholder="Date Invoice" data-error-msg="Please set the date this items are issued!" required>
+                                                                <div class="col-xs-12 col-sm-4 col-sm-offset-3">
+                                                                    <strong>Payment Date:</strong><br>
+                                                                    <div class="input-group">
+                                                                         <span class="input-group-addon">
+                                                                             <i class="fa fa-calendar"></i>
+                                                                        </span>
+                                                                        <input type="text" name="date_paid" class="date-picker form-control" value="<?php echo date("m/d/Y"); ?>" placeholder="Date Invoice" data-error-msg="Please set the date this items are issued!" required>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="container-fluid">
+                                                                <div class="col-xs-12 col-sm-5">
+                                                                    <strong>Payment Method:</strong><br>
+                                                                        <select id="cbo_payment_method" name="payment_method_id" class="form-control" style="width: 100%;" data-error-msg="Payment method is required!" required>
+                                                                            <?php foreach($methods as $method) { ?>
+                                                                                <option value="<?php echo $method->payment_method_id; ?>">
+                                                                                    <?php echo $method->payment_method; ?>
+                                                                                </option>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-offset-7">
+                                                                    
+                                                                </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="container-fluid">
-                                                        <form>
-                                                            <div class="col-xs-12 col-sm-5">
-                                                                <strong>Payment Method:</strong><br>
-                                                                    <select id="cbo_payment_method" name="payment_method_id" class="form-control" style="width: 100%;">
-                                                                        <?php foreach($methods as $method) { ?>
-                                                                            <option value="<?php echo $method->payment_method_id; ?>">
-                                                                                <?php echo $method->payment_method; ?>
-                                                                            </option>
-                                                                        <?php } ?>
-                                                                    </select>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-offset-7">
-                                                                
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="border: 1px solid #c0c0c0; padding: 10px 20px 30px 20px;">
-                                                <div class="row">
-                                                    <div class="container-fluid">
-                                                        <strong>Client:</strong><br>
-                                                        <select id="cbo_customers" name="customer_id" class="form-control" style="width: 100%;">
-                                                            <?php foreach ($customers as $customer) { ?>
-                                                                <option value="<?php echo $customer->customer_id ?>"><?php echo $customer->company_name; ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                </div><br>
-                                                <div class="row">
-                                                    <div class="container-fluid">
-                                                        <table id="tbl_receivables" class="table-striped table-bordered custom-design" cellspacing="0" width="100%" style="font-font:tahoma;border: 1px solid #c0c0c0;">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th class="hidden">Billing ID</th>
-                                                                    <th>Billing #</th>
-                                                                    <th width="12%">Billing Date</th>
-                                                                    <th width="12%">Due Date</th>
-                                                                    <th width="30%">Remarks</th>
-                                                                    <th width="12%" style="text-align: right;">Amount Due</th>
-                                                                    <th width="14%" style="text-align: right;">Payment</th>
-                                                                    <th width="5%"><center>Action</center></th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
+                                            </form>
+                                                <div style="border: 1px solid #c0c0c0; padding: 10px 20px 30px 20px;margin-bottom: 10px;">
 
-                                                                </tbody>
-                                                                <tfoot>
-                                                                <!-- <tr>
-                                                                    <td colspan="6" style="height: 50px;">&nbsp;</td>
-                                                                </tr> -->
-                                                                <tr>
-                                                                    <td colspan="4" align="right"><b>Total : </b></td>
-                                                                    <td id="td_total_amount_due" align="right"><b>0.00</b></td>
-                                                                    <td colspan="1" id="td_total_payment_amount" align="right"><b>0.00</b></td>
-                                                                    <td></td>
-                                                                </tr>
+                                                <form id="frm_payment_items">
+                                                    <div class="row">
+                                                        <div class="container-fluid">
+                                                            <strong>Client:</strong><br>
+                                                            <select id="cbo_customers" name="customer_id" class="form-control" style="width: 100%;" data-error-msg="Please select customer to continue" required>
+                                                                <?php foreach ($customers as $customer) { ?>
+                                                                    <option value="<?php echo $customer->customer_id ?>"><?php echo $customer->company_name; ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div><br>
+                                                    <div class="row">
+                                                        <div class="container-fluid">
+                                                            <table id="tbl_receivables" class="table-striped table-bordered custom-design" cellspacing="0" width="100%" style="font-font:tahoma;border: 1px solid #c0c0c0;">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th class="hidden">Billing ID</th>
+                                                                        <th class="hidden">Contract ID</th>
+                                                                        <th width="10%">Contract/Account #</th>
+                                                                        <th width="10%">Billing #</th>
+                                                                        <th width="5%">Billing Date</th>
+                                                                        <th width="5%">Due Date</th>
+                                                                        <th width="15%">Remarks</th>
+                                                                        <th width="10%" style="text-align: right;">Amount Due</th>
+                                                                        <th width="10%" style="text-align: right;">Payment</th>
+                                                                        <th width="5%"><center>Action</center></th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
 
-                                                                </tfoot>
-                                                            </table>
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                    <!-- <tr>
+                                                                        <td colspan="6" style="height: 50px;">&nbsp;</td>
+                                                                    </tr> -->
+                                                                    <tr>
+                                                                        <td colspan="5" align="right"><b>Total : </b></td>
+                                                                        <td id="td_total_amount_due" align="right"><b>0.00</b></td>
+                                                                        <td colspan="1" id="td_total_payment_amount" align="right"><b>0.00</b></td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    </tfoot>
+                                                                </table>
+                                                        </div>
                                                     </div>
+                                                    </form>
                                                 </div>
-                                            </div>
+                                                <div style="border: 1px solid #c0c0c0; padding: 10px 20px 30px 20px;">
+                                                    <strong>Remarks :</strong><br>
+                                                    <textarea class="form-control" name="remarks"></textarea>
+                                                </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button id="btn_save" class="btn btn-primary"><i class="fa fa-floppy-o"></i>&nbsp;Save Changes</button>
@@ -323,7 +339,7 @@
 
 <script>
     $(document).ready(function(){
-        var _cboCustomers, _cboPayments;
+        var _cboCustomers, _cboPayments, _txnMode;
         var initializeControls=function(){
             dt=$('#tbl_payments').DataTable({
                 "dom": '<"toolbar">frtip',
@@ -332,15 +348,25 @@
                 "columns": [
 
                     { targets:[0],data: "receipt_no" },
-                    { targets:[1],data: "payment_date" },
                     { targets:[1],data: "company_name" },
+                    { targets:[2],data: "payment_method" },
+                    { targets:[3],data: "remarks" },
+                    { targets:[4],data: "user_name" },
+                    { targets:[5],data: "date_paid" },
+                    { 
+                        class: "numeriCol",
+                        targets:[6],data: "total_amount_paid",
+                        render: function (data, type, full) {
+                             return accounting.formatNumber(data, 2, ",");
+                        }
+                    },
                     {
-                        targets:[2],
+                        targets:[7],
                         render: function (data, type, full, meta){
                             var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
                             var btn_trash='<button class="btn btn-danger btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
 
-                            return '<center>'+btn_edit+'&nbsp;'+btn_trash+'</center>';
+                            return '<center>'+btn_trash+'</center>';
                         }
                     }
                 ]
@@ -379,15 +405,17 @@
         var bindEventHandlers=function(){
             $('#btn_new').on('click',function(){
                 //showList(false);
+                _txnMode="new";
                 $('#modal_payment').modal('show');
+                $('#btn_save').removeAttr('disabled','disabled');
             });
 
             $('#btn_cancel').on('click',function(){
-                showList(true);
+                //showList(true);
+                $('#modal_payment').modal('hide');
             });
 
             _cboCustomers.on('change', function() {
-
                 $.ajax({
                     url : 'Payments/transactions/get-customer-billings/'+_cboCustomers.val(),
                     type : "GET",
@@ -396,24 +424,140 @@
                         $('#tbl_receivables > tbody').html('<tr><td align="center" colspan="8"><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></td></tr>');
                     },
                     success : function(response) {
-                        var data=response.billing_items;
+                        var data=response.data;
                         $('#tbl_receivables > tbody').html('');
 
-                        $.each(data,function(i,value) {
+                        $.each(data, function(i,value) {
                             $('#tbl_receivables > tbody').append(newRowItem({
                                 billing_id : value.billing_id,
+                                contract_id : value.contract_id,
+                                contract_no : value.contract_no,
                                 billing_no : value.billing_no,
                                 date_billed : value.date_billed,
                                 date_due : value.date_due,
                                 notes : value.notes,
-                                charge_line_total : value.charge_line_total,
-                                total_billing_amount : value.total_billing_amount
+                                amount_due : value.amount_due,
+                                payment_amount : value.payment_amount
                             }));
                         });
+                        reInitializeNumeric();
+                        reComputeDetails();
                     }
                 })
             });
+
+            $('#btn_save').on('click', function(){
+                if(validateRequiredFields($('#frm_payment_info'))){
+                    if(_txnMode=="new"){
+                        postPayment().done(function(response){
+                            showNotification(response);
+                            if(response.stat=="success"){
+                                dt.row.add(response.row_added[0]).draw();
+                                clearFields($('#frm_payment_info'));
+                                _cboPayments.select2('val',null);
+                                $('textarea[name="remarks"]').val('');
+                                $('#modal_payment').modal('hide');
+                            }
+                        }).always(function(){
+                            showSpinningProgress($('#btn_save'));
+                        });
+                    }
+                }
+            });
+
+            $('#tbl_receivables > tbody').on('keyup','input.numeric',function(e){
+                var row=$(this).closest('tr');
+
+                var payment=getFloat($(this).val());
+                var payable=getFloat(row.find('input[name="amount_due[]"]').val());
+
+                if(payment>payable){
+                    showNotification({
+                        "title": "Invalid!",
+                        "stat" : "error",
+                        "msg" : "Sorry, payment amount is greater than payable amount."
+                    });
+
+                    $(this).val('');
+                }
+
+                reComputeDetails();
+
+            });
+
+            $('#tbl_receivables > tbody').on('click','button#btn_pay_all',function(e){
+                var row=$(this).closest('tr');
+                var payableAmount=getFloat(row.find('input[name="amount_due[]"]').val());
+                row.find('input[name="payment_amount[]"]').val(accounting.formatNumber(payableAmount,2));
+                reComputeDetails();
+            });
         }();
+
+        var clearFields=function(f){
+            $('input:not(.date-picker),textarea',f).val('');
+
+            $(f).find('input:first').focus();
+            $('#tbl_receivables > tbody').html('');
+
+            _cboCustomers.select2('val',null);
+        };
+
+        var validateRequiredFields=function(f){
+            var stat=true;
+
+            $('div.form-group').removeClass('has-error');
+            $('input[required],textarea[required],select[required]',f).each(function(){
+
+                if($(this).is('select')){
+                    if($(this).select2('val')==0||$(this).select2('val')==null){
+                        showNotification({title:"Error!",stat:"error",msg:$(this).data('error-msg')});
+                        $(this).closest('div.form-group').addClass('has-error');
+                        $(this).focus();
+                        stat=false;
+                        return false;
+                    }
+                }else{
+                    if($(this).val()==""){
+                        showNotification({title:"Error!",stat:"error",msg:$(this).data('error-msg')});
+                        $(this).closest('div.form-group').addClass('has-error');
+                        $(this).focus();
+                        stat=false;
+                        return false;
+                    }
+                }
+
+            });
+
+            return stat;
+        };
+
+        var showSpinningProgress=function(e){
+            $(e).attr('disabled','disabled');
+            $(e).find('span').toggleClass('glyphicon glyphicon-refresh spinning');
+        };
+
+        var postPayment=function(){
+            var _data=$('#frm_payment_info,#frm_payment_items').serializeArray();
+            _data.push({name:"remarks",value:$('textarea[name="remarks"]').val()});
+            _data.push({name:"total_amount_paid",value:getFloat($('#td_total_payment_amount').text())});
+
+            return $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":"Payments/transactions/create",
+                "data":_data,
+                "beforeSend": showSpinningProgress($('#btn_save'))
+            });
+        };
+
+        var showNotification=function(obj){
+            PNotify.removeAll(); //remove all notifications
+            new PNotify({
+                title:  obj.title,
+                text:  obj.msg,
+                type:  obj.stat
+            });
+        };
 
         var showList=function(txn){
             if(txn === true) {
@@ -427,15 +571,44 @@
 
         var newRowItem=function(d){
             return '<tr>'+
-            '<td class="hidden" name="billing_id[]">'+ d.billing_id +'</td>' +
-            '<td width="10%" name="billing_no[]">'+ d.billing_no+'</td>'+
-            '<td width="10%" name="date_billed[]">'+ d.date_billed+'</td>'+
-            '<td width="5%" name="date_due[]">'+ d.date_due+'</td>'+
-            '<td width="30%"><input name="notes" type="text" class="form-control" value="'+d.notes+'"></td>'+
-            '<td width="11%" style="text-align: right;" name="charge_line_total[]">'+accounting.formatNumber(d.charge_line_total,2)+'</td>'+
-            '<td width="11%"><input name="total_billing_amount[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.total_billing_amount,2)+'" style="text-align:right;"></td>'+
-            '<td align="center"><button type="button" name="pay_all" class="btn btn-success"><i class="fa fa-check"></i></button></td>'+
+            '<td class="hidden"><input name="billing_id[]" type="hidden" value="'+ d.billing_id +'">'+ d.billing_id +'</td>' +
+            '<td class="hidden"><input name="contract_id[]" type="hidden" value="'+ d.contract_id +'">'+ d.contract_id +'</td>' +
+            '<td><input name="contract_no[]" type="hidden" value="' + d.contract_no + '">'+ d.contract_no +'</td>' +
+            '<td><input name="billing_no[]" type="hidden" value="'+ d.billing_no +'">'+ d.billing_no +'</td>'+
+            '<td><input name="date_billed[]" type="hidden" value="'+ d.date_billed +'">'+d.date_billed+'</td>'+
+            '<td><input name="date_due[]" type="hidden" value="'+ d.date_due+'">'+ d.date_due +'</td>'+
+            '<td><input name="item_remarks[]" type="text" class="form-control" value="'+(d.notes == null ? '' : d.notes)+'"></td>'+
+            '<td><input name="amount_due[]" class="numeric form-control" style="text-align: right;" value="'+accounting.formatNumber(d.amount_due,2)+'" disabled></td>'+
+            '<td><input name="payment_amount[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(0,2)+'" style="text-align:right;"></td>'+
+            '<td align="center"><button type="button" id="btn_pay_all" class="btn btn-success"><i class="fa fa-check"></i></button></td>'+
             '</tr>';
+        };
+
+        var reComputeDetails=function(){
+            var rows=$('#tbl_receivables > tbody > tr');
+            var total_amount_due=0; var total_payment=0;
+
+            $.each(rows,function(i,value){
+                var row=$(this);
+                total_amount_due+=getFloat(row.find('input[name="amount_due[]"]').val());
+                total_payment+=getFloat(row.find('input[name="payment_amount[]"]').val());
+            });
+
+            $('#td_total_amount_due').html('<b>'+accounting.formatNumber(total_amount_due,2)+'</b>');
+            $('#td_total_payment_amount').html('<b>'+accounting.formatNumber(total_payment,2)+'</b>');
+        };
+
+        var resetSummaryDetails=function(){
+            $('#td_total_amount_due').html('<b>0.00</b>');
+            $('#td_total_payment_amount').html('<b>0.00</b>');
+        };
+
+        var getFloat=function(f){
+            return parseFloat(accounting.unformat(f));
+        };
+
+        var reInitializeNumeric=function(){
+            $('.numeric').autoNumeric('init',{mDec:2});
         };
     });
 
