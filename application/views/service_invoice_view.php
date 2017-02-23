@@ -23,6 +23,12 @@
             width: 100%;
         }
 
+        #tbl_billing td:nth-child(6),#tbl_billing th:nth-child(6){
+            text-align: right;
+        }
+
+
+
         .datepicker{z-index:99999999 !important;}
 
 
@@ -75,13 +81,23 @@
             float: left;
         }
 
-        td.details-control {
+        #tbl_customers td.details-control {
             background: url('assets/img/Folder_Closed.png') no-repeat center center;
             cursor: pointer;
         }
-        tr.details td.details-control {
+        #tbl_customers tr.details td.details-control {
             background: url('assets/img/Folder_Opened.png') no-repeat center center;
         }
+
+        #tbl_billing td.details-control {
+            background: url('assets/img/print.png') no-repeat center center;
+            cursor: pointer;
+        }
+        #tbl_billing tr.details td.details-control {
+            background: url('assets/img/print.png') no-repeat center center;
+        }
+
+
 
         .child_table{
             padding: 5px;
@@ -189,12 +205,13 @@
                                                                         <table id="tbl_billing" class="custom-design table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
                                                                             <tr>
-                                                                                <th>&nbsp;&nbsp;</th>
-                                                                                <th>SOA/Billing #</th>
-                                                                                <th>Company / Client</th>
-                                                                                <th>Billing Date</th>
-                                                                                <th>Due Date</th>
-                                                                                <th>Action</th>
+                                                                                <th width="5%">&nbsp;&nbsp;</th>
+                                                                                <th width="20%">SOA/Billing #</th>
+                                                                                <th width="35%">Company / Client</th>
+                                                                                <th width="10%">Billing Date</th>
+                                                                                <th width="10%">Due Date</th>
+                                                                                <th width="10%">Total Due</th>
+                                                                                <th width="10%">Action</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -218,7 +235,7 @@
                                                                                 <th>Company / Client</th>
                                                                                 <th>Trade Name</th>
                                                                                 <th>Contact No</th>
-                                                                                <th style="text-align: center;">Billed?</th>
+                                                                                <th style="text-align: center;">Status(Billing)</th>
                                                                                 <th>Process</th>
                                                                             </tr>
                                                                             </thead>
@@ -304,7 +321,14 @@
 
                                     <div class="col-lg-3">
                                         <b>SOA Number : </b><br />
-                                        <input name="billing_no" type="text" class="form-control" value="<?php echo date('Ymd'); ?>" />
+
+                                        <div id="div_billing_no_loader">
+                                            <img src="assets/img/loader/facebook.gif" />
+                                        </div>
+
+                                        <div id="div_billing_no">
+                                            <input name="billing_no" id="txt_billing_no" type="text" class="form-control" value="<?php echo date('Ymd'); ?>" />
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-6"></div>
@@ -544,9 +568,9 @@
         function reloadBilling(){
 
             dtBilling=$('#tbl_billing').DataTable({
-                "bLengthChange":true,
-                "bPaginate":true,
-                "pageLength" : 10,
+                "dom": '<"toolbar">frtip',
+                "bLengthChange":false,
+                "bPaginate":false,
                 "language": {
                     "searchPlaceholder": "Search Billing",
                     "loadingRecords": "<br /><center><img src='assets/img/loader/facebook.gif'></center><br />"
@@ -574,12 +598,20 @@
                     { targets:[2],data: "company_name" },
                     { targets:[3],data: "date_billed" },
                     { targets:[4],data: "date_due" },
-
+                    { targets:[5],
+                        data: "total_amount_due",
+                        render: function(data, type, full, meta){
+                            return accounting.formatNumber(data,2);
+                        }
+                    },
 
                     {
-                        targets:[5],
+                        targets:[6],
                         render: function(data, type, full, meta){
-                            return "dd";
+                            var _btnNew='<center><button class="btn btn-default"  id="btn_print" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Print" >'+
+                                '<i class="fa fa-print"></i> Print </button></center>';
+
+                            return _btnNew;
                         }
                     }
                 ]
@@ -591,6 +623,12 @@
 
             });
 
+            var createToolBarButton=function() {
+                var _btnNew='<button class="btn btn-default"  id="btn_print_all" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Print all" >'+
+                    '<i class="fa fa-print"></i> Print all </button>';
+                $("div.toolbar").html(_btnNew);
+            }();
+
 
 
 
@@ -599,7 +637,6 @@
 
         var reloadContractBillingStatus=function(){
             dt= $('#tbl_customers').DataTable({
-                "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
                 "bPaginate": false,
                 "language": {
@@ -648,11 +685,7 @@
                 ]
             });
 
-            var createToolBarButton=function() {
-                var _btnNew='<button class="btn btn-primary"  id="btn_refresh" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Refresh" >'+
-                    '<i class="fa fa-refresh"></i> Reload </button>';
-                $("div.toolbar").html(_btnNew);
-            }();
+
         };
 
 
@@ -795,8 +828,10 @@
                         $('#modal_process_billing').modal('hide');
                         dtBilling.destroy();
                         reloadBilling();
-                        dt.destroy();
-                        reloadContractBillingStatus();
+                        //dt.destroy();
+                        //reloadContractBillingStatus();
+
+                        dt.row(_selectRowObj).data(response.contract_row[0]).draw(false);
                     }
                 }).always(function(){
                     showSpinningProgress(btn);
@@ -915,22 +950,39 @@
                 $.ajax({
                     "dataType":"json",
                     "type":"POST",
-                    "url":"Service_invoices/transaction/billing-current-charges?contract_id="+ data.contract_id,
+                    "url":"Service_invoices/transaction/billing-current-charges?contract_id="+ data.contract_id+"&month_id="+_monthID+"&year_id="+_year,
                     "beforeSend" : function(){
+
+                        $('#div_billing_no_loader').show();
+                        $('#div_billing_no').hide();
 
                         $('#tbl_current_charges > tbody').html('<tr><td colspan="4"><center><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></center></td></tr>');
                         $('#tbl_beginning_balances > tbody').html('<tr><td colspan="5"><center><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></center></td></tr>');
 
                     }
                 }).done(function(response){
-                    $('#tbl_current_charges > tbody').html(response.current_charges);
-                    $('#tbl_beginning_balances > tbody').html(response.beginning_balances);
 
 
-                    reInitializeNumeric();
-                    reComputeTotalCurrentCharges();
-                    reComputeTotalBeginningCharges();
-                    reComputeBillingSummary();
+
+                    $('#div_billing_no_loader').hide();
+                    $('#div_billing_no').show();
+
+                    if(response.stat=="success"){
+                        $('#txt_billing_no').val(response.billing_no);
+
+                        $('#tbl_current_charges > tbody').html(response.current_charges);
+                        $('#tbl_beginning_balances > tbody').html(response.beginning_balances);
+
+
+                        reInitializeNumeric();
+                        reComputeTotalCurrentCharges();
+                        reComputeTotalBeginningCharges();
+                        reComputeBillingSummary();
+                    }else{
+                        showNotification(response);
+                        $('#modal_process_billing').modal('hide');
+                    }
+
 
                 });
 
@@ -1016,7 +1068,7 @@
             return '<tr>'+
                 '<td>'+ d.charge_name+'<input type="hidden" name="beginning_balance_charge_id[]" value="'+ d.charge_id+'" readonly></td>'+
                 '<td>na</td>'+
-                '<td><input name="beginning_balance_description" class="form-control" value="'+ d.charge_name+'" /></td>'+
+                '<td><input name="beginning_balance_description[]" class="form-control" value="'+ d.charge_name+'" /></td>'+
                 '<td align="right"><input name="beginning_balance_remaining[]" class="form-control numeric" value="0.00" style="text-align: right;" /></td>'+
                 '<td align="center"><button name="remove_charge" class="btn btn-default"><i class="fa fa-trash"></i></button></td>'+
                 '</tr>';

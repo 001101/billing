@@ -44,7 +44,7 @@
 
 
 
-        function get_contract_billing_status($month_id,$year_id){
+        function get_contract_billing_status($month_id,$year_id,$contract_id=null){
             $sql="SELECT c.*,IF(ISNULL(bi.customer_id),0,1)as bill_status
 
                     FROM
@@ -54,6 +54,7 @@
                     SELECT c.*,ci.company_name,ci.trade_name,ci.contact_no,ci.office_address FROM contracts as c
                     LEFT JOIN customers_info as ci ON ci.customer_id=c.customer_id
                     WHERE c.is_deleted=0 AND c.is_active=1
+                    ".($contract_id==null?"":" AND c.contract_id=$contract_id")."
 
                     )as c
 
@@ -62,12 +63,36 @@
                     (
 
                     SELECT bi.customer_id,bi.contract_id FROM billing_info as bi WHERE bi.is_deleted=0 AND bi.is_active=1
-                    AND bi.month_id=$month_id AND bi.year_id=$year_id LIMIT 1
+                    AND bi.month_id=CAST($month_id as UNSIGNED) AND bi.year_id=CAST($year_id as UNSIGNED)
+                    ".($contract_id==null?"":" AND bi.contract_id=$contract_id")."
+
+                    GROUP BY bi.contract_id
 
                     ) as bi ON bi.contract_id=c.contract_id";
 
             return $this->db->query($sql)->result();
         }
+
+
+
+        function get_billing_no(){
+            $sql="SELECT create_billing_no() as id";
+            $result=$this->db->query($sql)->result();
+            return $result[0]->id;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	}

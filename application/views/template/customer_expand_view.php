@@ -67,7 +67,7 @@
                     <li class="active"><a href="#documents_<?php echo $contract_id; ?>" data-toggle="tab"><i class="fa fa-bars"></i> Documents</a></li>
                     <li class=""><a href="#services_<?php echo $contract_id; ?>" data-toggle="tab"><i class="fa fa-bars"></i> Services</a></li>
                     <li class=""><a href="#search_files_<?php echo $contract_id; ?>" data-toggle="tab"><i class="fa fa-bars"></i> Manage Uploaded Files</a></li>
-                    <li class=""><a href="#fee_template_<?php echo $contract_id; ?>" data-toggle="tab"><i class="fa fa-bars"></i> Fees (Billing Template)</a></li>
+                    <li class=""><a href="#fee_template_<?php echo $contract_id; ?>" data-toggle="tab"><i class="fa fa-bars"></i> Fees </a></li>
 
 
                 </ul>

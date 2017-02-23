@@ -47,7 +47,7 @@
 					<!-- <div class="panel-heading">
 						<h2>Login</h2>
 					</div> -->
-					<div class="panel-body" style="border-top: 3px solid #2196f3; border-radius: 0;">
+					<div class="panel-body" style="border: 3px solid black;">
 						<!-- <h2>Login Form</h2> -->
 						
 						<div class="col-xs-12 text-center" style="margin-bottom: 20px;">
@@ -89,7 +89,7 @@
 						</form>
 						<br>
 					</div>
-					<div class="panel-footer">
+					<div class="panel-footer" style="border: 3px solid black;background-color: #029e44;margin-top: -1px;">
 						<div class="clearfix">
 							<div class="row">
 								<div class="container-fluid">
@@ -97,7 +97,7 @@
 										<button id="btn_register" class="btn btn-info btn-block">Register</button>
 									</div>									
 									<div class="col-xs-12 col-sm-6">
-										<button id="btn_login" class="btn btn-success btn-block ladda-button" data-style="expand-left" data-spinner-color="white" data-size="l">
+										<button id="btn_login" class="btn btn-success btn-block ladda-button" style="" data-style="expand-left" data-spinner-color="white" data-size="l">
 										<span class=""></span> Login
 										</button>
 									</div>
