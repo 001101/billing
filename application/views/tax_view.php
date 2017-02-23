@@ -596,25 +596,14 @@
             '</thead>' +
             '<tbody>' +
             '<tr>' +
-            '<td width="20%">Supplier Name : </td><td width="50%"><b>'+ d.supplier_name+'</b></td>' +
-            '<td rowspan="5" valign="top"><div class="avatar">'+
-            '<img src="'+ d.photo_path+'" class="img-circle" style="margin-top:0px;height: 100px;width: 100px;">'+
-            '</div></td>' +
+            '<td width="20%">Tax Name : </td><td width="50%"><b>'+ d.tax_type+'</b></td>' +
+            '<td rowspan="5" valign="top"></td>' +
             '</tr>' +
             '<tr>' +
-            '<td>Address : </td><td><b>'+ d.address+'</b></td>' +
+            '<td>Tax Description : </td><td><b>'+ d.description+'</b></td>' +
             '</tr>' +
             '<tr>' +
-            '<td>Email : </td><td>'+ d.email_address+'</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td>Mobile Nos. : </td><td>'+ d.mobile_no+'</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td>Landline. : </td><td>'+ d.landline+'</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td>Active : </td><td><i class="fa fa-check"></i></td>' +
+            '<td>Tax Rate : </td><td>'+ d.tax_rate+'</td>' +
             '</tr>' +
             '</tbody></table><br />';
         };

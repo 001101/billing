@@ -121,13 +121,12 @@
 
                                     <div id="div_company_fields">
                                         <div class="panel panel-default" style="border-top: 3px solid #2196f3;">
-                                            <!-- <div class="panel-heading">
+                                            <div class="panel-heading">
                                                 <h2>Company Information</h2>
                                                 <div class="panel-ctrls" data-actions-container="" data-action-collapse='{"target": ".panel-body"}'></div>
                                             </div>
- -->
+
                                             <div class="panel-body">
-                                              <h2>Company Information</h2>
 
                                                <form id="frm_company" role="form" class="form-horizontal row-border">
 
@@ -510,11 +509,6 @@
                         showSpinningProgress(btn);
                     });
                 }
-
-
-
-
-
             });
 
 

@@ -11,7 +11,9 @@
 				array(
                     'Services_invoice_model',
 				    'Services_invoice_items_model',
-				    'Customers_model'
+				    'Customers_model',
+                    'Charges_model',
+                    'Contract_fee_template_model'
                 )
 			);
 		}
@@ -25,7 +27,18 @@
 	        $data['_top_navigation']=$this->load->view('template/elements/top_navigation','',TRUE);
 	        $data['title']='Service Invoice';
 
-	        $data['customers']=$this->Customers_model->get_list('is_deleted=false');
+            $current_year=date("Y");
+            $max_year=$current_year+1;
+
+            $years=array();
+            for($min_year=$current_year-1;$min_year<=$max_year;$min_year++){
+                $years[]=$min_year;
+            }
+
+            $data['years']=$years;
+            $data['months']=array("January","February","March","April","May","June","July","August","September","October","November","December");
+            $data['customers']=$this->Customers_model->get_list('is_deleted=0');
+            $data['charges']=$this->Charges_model->get_list('is_deleted=0');
 
 	        $this->load->view('service_invoice_view',$data);
         }
@@ -33,27 +46,110 @@
 		function transaction($txn=null) 
 		{
 			switch($txn) {
+                case 'finalize':
+                    $m_billing=$this->Services_invoice_model;
+
+                    $m_billing->begin();
+                    $m_billing->billing_no=$this->input->post('billing_no',TRUE);
+                    $m_billing->contract_id=$this->input->post('contract_id',TRUE);
+                    $m_billing->date_billed=date('Y-m-d',strtotime($this->input->post('date_billed',TRUE)));
+                    $m_billing->customer_id=$this->input->post('customer_id',TRUE);
+                    $m_billing->month_id=$this->input->post('month_id',TRUE);
+                    $m_billing->year_id=$this->input->post('year_id',TRUE);
+                    $m_billing->date_due=date('Y-m-d',strtotime($this->input->post('date_due',TRUE)));
+                    //$m_billing->remarks=$this->input->post('remarks',TRUE);
+                    $m_billing->total_billing_current_amount=$this->get_numeric_value($this->input->post('total_billing_current_amount',TRUE));
+                    $m_billing->total_billing_previous_amount=$this->get_numeric_value($this->input->post('total_billing_previous_amount',TRUE));
+                    $m_billing->total_billing_amount=$this->get_numeric_value($this->input->post('total_billing_amount',TRUE));
+                    $m_billing->total_amount_due=$this->get_numeric_value($this->input->post('total_amount_due',TRUE));
+                    $m_billing->advance_payment=$this->get_numeric_value($this->input->post('advance_payment',TRUE));
+
+                    $m_billing->posted_by=$this->session->user_id;
+                    $m_billing->set('date_posted','NOW()');
+                    $m_billing->save();
+
+
+                    $m_billing->commit();
+
+                    if($m_billing->status()===TRUE){
+                        $response['title']="Success!";
+                        $response['stat']="success";
+                        $response['msg']="Billing successfully created.";
+                        echo json_encode($response);
+                    }
+
+
+
+                    break;
                 case 'invoice-list':
-                    $m_service_info=$this->Services_invoice_model;
-                    $response['data']=$m_service_info->get_list('is_deleted=FALSE');
+                    $billing_month=$this->input->get('month_id',TRUE);
+                    $billing_year=$this->input->get('year',TRUE);
+
+
+                    $response['data']=$this->get_response_rows('billing_info.is_deleted=0 AND billing_info.is_active=1');
                     echo json_encode($response);
-                break;
+                    break;
+                case 'contract-billing-status-list':
+                    $month_id=$this->input->get('month_id',TRUE);
+                    $year_id=$this->input->get('year_id',TRUE);
+
+                    $response['data']=$this->Services_invoice_model->get_contract_billing_status($month_id,$year_id);
+                    echo json_encode($response);
+                    break;
+
+                case 'billing-current-charges':
+                    $m_fee=$this->Contract_fee_template_model;
+                    $m_billing=$this->Services_invoice_model;
+
+                    $contract_id=$this->input->get('contract_id',TRUE);
+
+
+                    //get recurring fixed charges on the contract template
+                    $data['fees']=$m_fee->get_list(
+                        array(
+                            'contract_id'=>$contract_id
+                        ),
+                        array(
+                            'contract_fee_template.*',
+                            'c.charge_name',
+                            'c.charge_description'
+                        ),
+                        array(
+                            array('charges as c','c.charge_id=contract_fee_template.charge_id','left')
+                        )
+                    );
+
+                    //get previous balances
+                    $data['previous_fees']=$m_billing->get_billing_with_balances($contract_id);
+
+
+
+                    $response['current_charges']=$this->load->view('template/current_charges_table_body',$data,TRUE);
+                    $response['beginning_balances']=$this->load->view('template/beginning_balance_table_body',$data,TRUE);
+
+                    echo json_encode($response);
+
+                    break;
+
+
+
             }
 		}
 
 
         function get_response_rows($params=null){
             $m_service_info=$this->Services_invoice_model;
+
             return $m_service_info->get_list(
                 $params,
 
                 array(
-                    'service_info.*',
-                    'customers_info.company_name'
+                    'billing_info.*',
+                    'ci.company_name'
                 ),
 
                 array(
-                    array('customers_info as ci','ci.customer_id=service_info.customer_id')
+                    array('customers_info as ci','ci.customer_id=billing_info.customer_id','left')
                 )
 
             );

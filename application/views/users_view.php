@@ -531,7 +531,7 @@
 
             var createToolBarButton=function(){
                 var _btnNew='<button class="btn btn-primary"  id="btn_new" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Register User Account" >'+
-                    '<i class="fa fa-users"></i> Register User Account</button>';
+                    '<i class="fa fa-plus-circle"></i> Register User Account</button>';
                 $("div.toolbar").html(_btnNew);
             }();
 
@@ -582,7 +582,8 @@
                         //Add to 'open' array
                         if ( idx === -1 ) 
                             detailRows.push( tr.attr('id') );
-                        
+                    }).always(function(){
+                        showSpinningProgress(tr);
                     });
                 }
             } );
