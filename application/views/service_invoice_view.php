@@ -14,21 +14,7 @@
     <meta name="author" content="">
 
 
-    <link type="text/css" href="assets/css/bootstrap.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/animate.css" rel="stylesheet">
-    <link type="text/css" href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <link type="text/css" href="assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">        <!-- Font Awesome -->
-    <link type="text/css" href="assets/fonts/themify-icons/themify-icons.css" rel="stylesheet">              <!-- Themify Icons -->
-    <link type="text/css" href="assets/css/styles.css" rel="stylesheet">                                     <!-- Core CSS with all styles -->
-
-    <link type="text/css" href="assets/plugins/codeprettifier/prettify.css" rel="stylesheet">                <!-- Code Prettifier -->
-
-    <link href="assets/plugins/notify/pnotify.core.css" rel="stylesheet"> <!-- notification -->
-
-    <link rel="stylesheet" href="assets/plugins/pace/themes/blue/pace-theme-loading-bar.css" /><!-- progress bar -->
-
-    <link href="assets/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <?php echo $_def_css_files; ?>
 
 
 
@@ -61,6 +47,11 @@
             background-color: #4f9f63;
         }
 
+        .select2-container{
+            min-width: 100%;
+            z-index: 9999999999;!important;
+        }
+
     </style>
 
     <link href="assets/plugins/select2/select2.min.css" rel="stylesheet">
@@ -72,8 +63,8 @@
 
     <style>
         html{
-            zoom: 0.85;
-            zoom: 85%;
+            zoom: 0.77;
+            zoom: 77%;
         }
 
         .toolbar{
@@ -217,13 +208,13 @@
 
                                                                 <div class="tab-pane " id="customer_list" style="min-height: 250px;">
                                                                     <div style="border:1px solid gray;padding: 1%;">
-                                                                        <span style="font-size: 14pt;">Billing as of <b id="lbl_date">February 2017</b></span><span style="font-size: 9pt;"> (Please tick mark all accomplished services on <b>Completed Column</b>.)</span><hr />
+                                                                        <span style="font-size: 14pt;">Account / Contract Billing Status as of <b id="lbl_date">February 2017</b></span><span style="font-size: 9pt;"> (Please tick mark all accomplished services on <b>Completed Column</b>.)</span><hr />
 
                                                                         <table id="tbl_customers" class="custom-design table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
                                                                             <tr>
                                                                                 <th>&nbsp;&nbsp;</th>
-                                                                                <th>Code</th>
+                                                                                <th>Account #</th>
                                                                                 <th>Company / Client</th>
                                                                                 <th>Trade Name</th>
                                                                                 <th>Contact No</th>
@@ -235,6 +226,8 @@
 
                                                                             </tbody>
                                                                         </table>
+
+                                                                        <br /><br />
 
 
                                                                     </div>
@@ -296,34 +289,190 @@
                             <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>Billing Statement</h4>
                         </div>
                         <div class="modal-body">
-                            <div style="border: 1px solid black;padding: 1%;">
-                            <form id="frm_customer">
-                                <div class="row">
-                                    <div class="col-lg-9">
+                            <div style="border: 1px solid gray;padding: 2%;border-radius: 5px;">
+                            <form id="frm_billing">
 
-                                    </div>
+                                <input type="text" name="contract_id" readonly>
+                                <input type="text" name="customer_id" readonly>
+
+                                <input type="text" name="month_id" readonly>
+                                <input type="text" name="year_id" readonly>
+
+
+                                <div class="row">
+
                                     <div class="col-lg-3">
-                                        <b>SOA Number : </b><br /><span id="span_billing_no">2017-000001</span>
+                                        <b>SOA Number : </b><br />
+                                        <input name="billing_no" type="text" class="form-control" value="<?php echo date('Ymd'); ?>" />
                                     </div>
 
-                                </div>
+                                    <div class="col-lg-6"></div>
 
-                                <div class="row">
-                                    <div class="col-lg-9">
-
-                                    </div>
                                     <div class="col-lg-3">
                                         <b>Billing Date :</b><br />
-                                        <input type="text" class="date-picker form-control" value="<?php echo date('m/d/Y'); ?>" />
+                                        <input name="date_billed" type="text" class="date-picker form-control" value="<?php echo date('m/d/Y'); ?>" />
                                     </div>
 
                                 </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <b>Company / Client :</b><br />
+                                        <input name="company_name" type="text" class="form-control" value="Paul Christian Rueda" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <b>Account / Contract # :</b><br />
+                                        <input name="contract_no" type="text" class="form-control" value="C1200012" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <b>Due Date :</b><br />
+                                        <input name="date_due" type="text" class="date-picker form-control" value="<?php echo date('m/d/Y'); ?>" />
+                                    </div>
+
+                                </div>
+
                             </form>
                             </div>
+
+                            <br />
+                            <caption><b style="font-size: 12pt;font-weight: 500;">Current Charges :</b></caption>
+                            <div style="border: 1px solid gray;padding: 2%;border-radius: 5px;">
+
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-lg-12">
+                                        <b>Select Charges to add (Optional) :</b><br />
+                                        <select id="cbo_current_charges" class="form-control">
+                                            <?php foreach($charges as $charge){ ?>
+                                                <option value="<?php echo $charge->charge_id; ?>" data-charge-description="<?php echo $charge->charge_description; ?>"  data-charge-amount="<?php echo $charge->charge_amount; ?>"><?php echo $charge->charge_name; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <table id="tbl_current_charges" class="custom-design table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th width="20%">Charge Name</th>
+                                            <th width="45%">Description</th>
+                                            <th width="20%" style="text-align: right;">Amount</th>
+                                            <th width="5%" style="text-align: center;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Monthly Retainers fee</td>
+                                            <td>Monthly Retainers fee</td>
+                                            <td align="right"><input class="form-control" value="5,500.00" style="text-align: right;" /></td>
+                                            <td align="center"><button name="remove_charge" class="btn btn-default"><i class="fa fa-trash"></i></button></td>
+
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2" align="right"><b>Total Current Charges : </b></td>
+                                            <td colspan="1" align="right" id="td_total_current_charges"><b>5,500.00</b></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+
+
+                            </div>
+
+                            <br />
+
+                            <caption><b style="font-size: 12pt;font-weight: 500;">Beginning Balance :</b></caption>
+                            <div style="border: 1px solid gray;padding: 2%;border-radius: 5px;">
+
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-lg-12">
+                                        <b>Select Charges to add (Optional) :</b><br />
+                                        <select id="cbo_previous_charges" class="form-control">
+                                            <?php foreach($charges as $charge){ ?>
+                                                <option value="<?php echo $charge->charge_id; ?>" data-charge-description="<?php echo $charge->charge_description; ?>"  data-charge-amount="<?php echo $charge->charge_amount; ?>"><?php echo $charge->charge_name; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <table class="custom-design table-striped">
+
+                                    <thead>
+                                    <tr>
+                                        <th width="20%">Charge Name</th>
+                                        <th width="21%">SOA / Billing # <span style="font-color: gray;">(Unpaid)</span></th>
+                                        <th width="34%">Description</th>
+                                        <th width="20%" style="text-align: right;">Amount</th>
+                                        <th width="5%" style="text-align: center">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>Previous Balance</td>
+                                        <td><a href="#" style="text-decoration: underline;">SOA # 2017001222</a></td>
+                                        <td>SOA # 2017001222</td>
+                                        <td align="right"><input class="form-control" value="5,500.00" style="text-align: right;" /></td>
+                                        <td align="center"><button name="remove_charge" class="btn btn-default"><i class="fa fa-trash"></i></button></td>
+
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="3" align="right"><b>Total Current Charges : </b></td>
+                                        <td align="right"><b>5,500.00</b></td>
+                                        <td></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+
+
+                            </div>
+
+
+
+
+<br />
+
+                            <div style="border: 1px solid gray;padding: 1%;border-radius: 5px;">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                   <table width="100%">
+                                       <tr>
+                                           <td align="right" width="80%" valign="center" style="padding: 10px;"><b style="font-size: 12pt;font-weight: 500;">TOTAL :</b></td>
+                                           <td align="right" width="20%" valign="center"><input type="text" class="form-control" value="" readonly /></td>
+                                       </tr>
+                                       <tr>
+                                           <td align="right" width="80%" valign="center" style="padding: 10px;"><i>Less Advance Payment : </i> (<a href="#">Browse Advances</a>)</td>
+                                           <td align="right" width="20%" valign="center"><input type="text" class="form-control" value="" /></td>
+                                       </tr>
+
+                                       <tr>
+                                           <td align="right" width="80%" valign="center" style="padding: 10px;"><b style="font-size: 12pt;font-weight: 600;">Total Amount Due :</b></td>
+                                           <td align="right" width="20%" valign="center"><input type="text" class="form-control" value="" readonly /></td>
+                                       </tr>
+                                   </table>
+                                </div>
+                                <div class="col-lg-4">
+
+
+                                </div>
+                            </div>
+                            </div>
+
+
+
+
                         </div>
 
                         <div class="modal-footer">
-                            <button id="btn_save" type="button" class="btn btn-primary" style="text-transform: none;"><span class=""></span> Finalize Billing</button>
+                            <button id="btn_save" type="button" class="btn btn-primary" style="text-transform: capitalize;"><i class="fa fa-save"></i> <span class=""></span> Finalize Billing Statement</button>
                             <button id="btn_cancel" type="button" class="btn btn-danger" data-dismiss="modal" style="text-transform: none;">Cancel</button>
                         </div>
                     </div><!---content---->
@@ -355,9 +504,6 @@
 <?php echo $_switcher_settings; ?>
 <?php echo $_def_js_files; ?>
 
-<script src="assets/plugins/spinner/dist/spin.min.js"></script>
-<script src="assets/plugins/spinner/dist/ladda.min.js"></script>
-
 
 <script type="text/javascript" src="assets/plugins/datatables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
@@ -372,14 +518,23 @@
 <!-- touchspin -->
 <script type="text/javascript" src="assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
 
+<!-- Select2 -->
+<script src="assets/plugins/select2/select2.full.min.js"></script>
+
 
 <script type="text/javascript" src="assets/plugins/zTree/jquery.ztree.core.js"></script>
+
+<!-- numeric formatter -->
+<script src="assets/plugins/formatter/autoNumeric.js" type="text/javascript"></script>
+<script src="assets/plugins/formatter/accounting.js" type="text/javascript"></script>
+
 
 
 <script>
     $(document).ready(function(){
         var dt; var _txnMode; var _selectedID; var _selectRowObj;
         var zNodes; var setting; var _monthID; var _year; var dtBilling;
+        var _cboCurrentCharges;var _cboPreviousCharges;
 
         var reInitializeTreeView=function(){
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
@@ -391,6 +546,10 @@
                 "bLengthChange":true,
                 "bPaginate":true,
                 "pageLength" : 10,
+                "language": {
+                    "searchPlaceholder": "Search Billing",
+                    "loadingRecords": "<br /><center><img src='assets/img/loader/facebook.gif'></center><br />"
+                },
                 "ajax": {
                     "url": "Service_invoices/transaction/invoice-list",
                     "type": "GET",
@@ -410,9 +569,9 @@
                         "data":           null,
                         "defaultContent": ""
                     },
-                    { targets:[1],data: "invoice_no" },
+                    { targets:[1],data: "billing_no" },
                     { targets:[2],data: "company_name" },
-                    { targets:[3],data: "date_invoice" },
+                    { targets:[3],data: "date_billed" },
                     { targets:[4],data: "date_due" },
 
 
@@ -437,22 +596,26 @@
         };
 
 
-
-        var initializeControls=function(){
-
-            reloadBilling();
-
-            _monthID=<?php echo json_encode(date('m')); ?>;
-            _year=<?php echo json_encode(date('Y')); ?>;
-
+        var reloadContractBillingStatus=function(){
             dt= $('#tbl_customers').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
                 "bPaginate": false,
                 "language": {
-                    "searchPlaceholder": "Search Customer"
+                    "searchPlaceholder": "Search Customer",
+                    "loadingRecords": "<br /><center><img src='assets/img/loader/facebook.gif'></center><br />"
                 },
-                "ajax" : "Accomplishments/transaction/list",
+                "ajax" : {
+                    "url":  "Service_invoices/transaction/contract-billing-status-list",
+                    "type": "GET",
+                    "bDestroy": true,
+                    "data": function ( d ) {
+                        return $.extend( {}, d, {
+                            "month_id" : _monthID,
+                            "year_id": _year
+                        });
+                    }
+                },
                 "columns": [
                     {
                         "targets": [0],
@@ -461,14 +624,16 @@
                         "data":           null,
                         "defaultContent": ""
                     },
-                    { targets:[1],data: "customer_code" },
+                    { targets:[1],data: "contract_no" },
                     { targets:[2],data: "company_name" },
                     { targets:[3],data: "trade_name" },
-                    { targets:[4],data: "office_address" },
+                    { targets:[4],data: "contact_no" },
                     {
                         targets:[5],
+                        data: "bill_status",
                         render: function(data, type, full, meta){
-                            return "<center><i class='fa fa-check-circle' style='color:green;'></i></center>";
+
+                            return "<center><i class='fa fa-"+(data=="1"?"check":"times")+"-circle' style='color:"+(data=="1"?"green":"red")+";'></i></center>";
                         }
                     },
 
@@ -487,6 +652,42 @@
                     '<i class="fa fa-refresh"></i> Reload </button>';
                 $("div.toolbar").html(_btnNew);
             }();
+        };
+
+
+
+        var initializeControls=function(){
+
+            $('.date-picker').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+
+            _cboCurrentCharges=$('#cbo_current_charges,#cbo_previous_charges').select2({
+                placeholder: "Please select charge.",
+                allowClear: true
+            });
+
+            _cboPreviousCharges=$('#cbo_previous_charges').select2({
+                placeholder: "Please select charge.",
+                allowClear: true
+            });
+
+
+            $('#cbo_current_charges,#cbo_previous_charges').select2('val',null);
+
+
+
+
+
+            _monthID=<?php echo json_encode(date('m')); ?>;
+            _year=<?php echo json_encode(date('Y')); ?>;
+
+            reloadBilling();
+            reloadContractBillingStatus();
 
 
             //**************************************************************************************************************
@@ -575,7 +776,85 @@
             });
 
 
+            _cboCurrentCharges.on('select2:select',function(e){
+                var i=$(this).select2('val');
+                var charges=$('#cbo_current_charges').find('option[value="'+i+'"]');
+
+
+                var charge_id=i;
+                var charge_name=charges.html();
+                var charge_description=charges.data('charge-description');
+                var charge_amount=charges.data('charge-amount');
+
+
+                $('#tbl_current_charges tbody').append(newRowCurrentCharges(
+                    {
+                        "charge_id":charge_id,
+                        "charge_name":charge_name,
+                        "charge_description":charge_description,
+                        "charge_amount":charge_amount
+                    }
+                ));
+
+                reInitializeNumeric();
+                $(this).select2('val',null);
+
+
+
+            });
+
+            $('#tbl_current_charges tbody').on( 'keyup', 'input.numeric', function () {
+
+                reComputeTotalCurrentCharges();
+            });
+
+            $('#tbl_current_charges tbody').on( 'click', 'button[name="remove_charge"]', function () {
+                    var row=$(this).closest('tr');
+                    row.fadeOut(600, function() {
+                        row.remove();
+                        reComputeTotalCurrentCharges();
+                    });
+
+            });
+
+
             $('#tbl_customers tbody').on( 'click', 'button[name="process_billling"]', function () {
+
+                _selectRowObj=$(this).closest('tr');
+                var data=dt.row(_selectRowObj).data();
+                _selectedID=data.contract_id;
+
+                $('input[name="month_id"]').val(_monthID);
+                $('input[name="year_id"]').val(_year);
+
+
+                $('input,textarea,select',$('#frm_billing')).each(function(){
+                    var _elem=$(this);
+                    $.each(data,function(name,value){
+                        if(_elem.attr('name')==name){
+                            _elem.val(value);
+                        }
+                    });
+                });
+
+                //get all current charges of current contract
+                $.ajax({
+                    "dataType":"html",
+                    "type":"POST",
+                    "url":"Service_invoices/transaction/billing-current-charges?contract_id="+ data.contract_id,
+                    "beforeSend" : function(){
+                        $('#tbl_current_charges > tbody').html('<tr><td colspan="4"><center><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></center></td></tr>');
+
+                    }
+                }).done(function(response){
+                    $('#tbl_current_charges > tbody').html(response);
+                    reInitializeNumeric();
+                    reComputeTotalCurrentCharges();
+                });
+
+
+
+
                 $('#modal_process_billing').modal('show');
             });
 
@@ -586,12 +865,16 @@
                 var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
 
                 //get month id and year
-                _monthID=$(this).closest('li').index();
+                _monthID=$(this).closest('li').index()+1;
                 _year=sYear;
 
                 //realod billing list
                 dtBilling.destroy();
                 reloadBilling();
+
+                //realod contract list
+                dt.destroy();
+                reloadContractBillingStatus();
 
                 $('#lbl_date').html(sMonth+" "+sYear);
             });
@@ -638,6 +921,37 @@
         };
 
 
+        var newRowCurrentCharges=function(d){
+            return '<tr>'+
+                        '<td>'+ d.charge_name +'<input name="current_charge_id[]" type="hidden" value="'+ d.charge_id+'" readonly></td>'+
+                        '<td><input name="current_charge_description[]" class="form-control" value="'+ d.charge_description +'" /></td>'+
+                        '<td align="right"><input name="current_charge_amount[]" class="numeric form-control" value="0.00" style="text-align: right;" /></td>'+
+                        '<td align="center"><button name="remove_charge" class="btn btn-default"><i class="fa fa-trash"></i></button></td>'+
+                    '</tr>';
+        };
+
+
+        var reInitializeNumeric=function(){
+            $('.numeric').autoNumeric('init',{mDec:2});
+        };
+
+        var getFloat=function(f){
+            return parseFloat(accounting.unformat(f));
+        };
+
+        var reComputeTotalCurrentCharges=function(){
+            var rows=$('#tbl_current_charges > tbody  tr');
+
+            var totalCurrentCharge=0;
+            $.each(rows,function(){
+
+                totalCurrentCharge+=getFloat($(this).find('input.numeric').val());
+
+            });
+
+            $('#td_total_current_charges').html('<b>'+accounting.formatNumber(totalCurrentCharge,2)+'</b>');
+
+        };
 
 
     });
