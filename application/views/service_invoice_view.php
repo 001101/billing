@@ -289,14 +289,15 @@
                             <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>Billing Statement</h4>
                         </div>
                         <div class="modal-body">
-                            <div style="border: 1px solid gray;padding: 2%;border-radius: 5px;">
                             <form id="frm_billing">
+                            <div style="border: 1px solid gray;padding: 2%;border-radius: 5px;">
 
-                                <input type="text" name="contract_id" readonly>
-                                <input type="text" name="customer_id" readonly>
 
-                                <input type="text" name="month_id" readonly>
-                                <input type="text" name="year_id" readonly>
+                                <input type="hidden" name="contract_id" readonly>
+                                <input type="hidden" name="customer_id" readonly>
+
+                                <input type="hidden" name="month_id" readonly>
+                                <input type="hidden" name="year_id" readonly>
 
 
                                 <div class="row">
@@ -333,7 +334,7 @@
 
                                 </div>
 
-                            </form>
+
                             </div>
 
                             <br />
@@ -400,14 +401,14 @@
                                     </div>
                                 </div>
 
-                                <table class="custom-design table-striped">
+                                <table id="tbl_beginning_balances" class="custom-design table-striped">
 
                                     <thead>
                                     <tr>
                                         <th width="20%">Charge Name</th>
-                                        <th width="21%">SOA / Billing # <span style="font-color: gray;">(Unpaid)</span></th>
-                                        <th width="34%">Description</th>
-                                        <th width="20%" style="text-align: right;">Amount</th>
+                                        <th width="15%">SOA # <span style="font-color: gray;">(Unpaid)</span></th>
+                                        <th width="42%">Description</th>
+                                        <th width="18%" style="text-align: right;">Amount</th>
                                         <th width="5%" style="text-align: center">Action</th>
                                     </tr>
                                     </thead>
@@ -425,8 +426,8 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="3" align="right"><b>Total Current Charges : </b></td>
-                                        <td align="right"><b>5,500.00</b></td>
+                                        <td colspan="3" align="right"><b>Total Beginning Balance : </b></td>
+                                        <td align="right" id="td_total_beginning_balances"><b>5,500.00</b></td>
                                         <td></td>
                                     </tr>
                                     </tfoot>
@@ -446,16 +447,16 @@
                                    <table width="100%">
                                        <tr>
                                            <td align="right" width="80%" valign="center" style="padding: 10px;"><b style="font-size: 12pt;font-weight: 500;">TOTAL :</b></td>
-                                           <td align="right" width="20%" valign="center"><input type="text" class="form-control" value="" readonly /></td>
+                                           <td align="right" width="20%" valign="center"><input type="text" name="total_billing_amount" id="txt_total" class="form-control" value="" style="text-align: right;font-weight: 600;" readonly /></td>
                                        </tr>
                                        <tr>
                                            <td align="right" width="80%" valign="center" style="padding: 10px;"><i>Less Advance Payment : </i> (<a href="#">Browse Advances</a>)</td>
-                                           <td align="right" width="20%" valign="center"><input type="text" class="form-control" value="" /></td>
+                                           <td align="right" width="20%" valign="center"><input type="text" name="advance_payment" id="txt_advance" class="form-control numeric"  style="text-align: right;font-weight: 600;" value="" /></td>
                                        </tr>
 
                                        <tr>
                                            <td align="right" width="80%" valign="center" style="padding: 10px;"><b style="font-size: 12pt;font-weight: 600;">Total Amount Due :</b></td>
-                                           <td align="right" width="20%" valign="center"><input type="text" class="form-control" value="" readonly /></td>
+                                           <td align="right" width="20%" valign="center"><input type="text" name="total_amount_due" id="txt_total_amount_due" class="form-control"  style="text-align: right;font-weight: 600;" value="" readonly /></td>
                                        </tr>
                                    </table>
                                 </div>
@@ -468,11 +469,11 @@
 
 
 
-
+                            </form>
                         </div>
 
                         <div class="modal-footer">
-                            <button id="btn_save" type="button" class="btn btn-primary" style="text-transform: capitalize;"><i class="fa fa-save"></i> <span class=""></span> Finalize Billing Statement</button>
+                            <button id="btn_finalize" type="button" class="btn btn-primary" style="text-transform: capitalize;"><i class="fa fa-save"></i> <span class=""></span> Finalize Billing Statement</button>
                             <button id="btn_cancel" type="button" class="btn btn-danger" data-dismiss="modal" style="text-transform: none;">Cancel</button>
                         </div>
                     </div><!---content---->
@@ -666,7 +667,7 @@
                 autoclose: true
             });
 
-            _cboCurrentCharges=$('#cbo_current_charges,#cbo_previous_charges').select2({
+            _cboCurrentCharges=$('#cbo_current_charges').select2({
                 placeholder: "Please select charge.",
                 allowClear: true
             });
@@ -677,11 +678,8 @@
             });
 
 
-            $('#cbo_current_charges,#cbo_previous_charges').select2('val',null);
-
-
-
-
+            $('#cbo_current_charges').select2('val',null);
+            $('#cbo_previous_charges').select2('val',null);
 
             _monthID=<?php echo json_encode(date('m')); ?>;
             _year=<?php echo json_encode(date('Y')); ?>;
@@ -775,6 +773,66 @@
                 }
             });
 
+            $('#btn_finalize').click(function(){
+
+                var btn=$(this);
+                var _data=$('#frm_billing').serializeArray();
+                _data.push({name:"total_billing_current_amount",value:$('#td_total_current_charges').text()});
+                _data.push({name:"total_billing_previous_amount",value:$('#td_total_beginning_balances').text()});
+
+
+                $.ajax({
+                    "dataType":"json",
+                    "type":"POST",
+                    "url":"Service_invoices/transaction/finalize",
+                    "data":_data,
+                    "beforeSend": function(){
+                        showSpinningProgress(btn);
+                    }
+                }).done(function(response){
+                    showNotification(response);
+                    if(response.stat=="success"){
+                        $('#modal_process_billing').modal('hide');
+                        dtBilling.destroy();
+                        reloadBilling();
+                        dt.destroy();
+                        reloadContractBillingStatus();
+                    }
+                }).always(function(){
+                    showSpinningProgress(btn);
+                });
+
+
+            });
+
+            $('#txt_advance').on('keyup',function(){
+                reComputeBillingSummary();
+            });
+
+            _cboPreviousCharges.on('select2:select',function(e){
+                var i=$(this).select2('val');
+                var charges=$('#cbo_previous_charges').find('option[value="'+i+'"]');
+
+
+                var charge_id=i;
+                var charge_name=charges.html();
+                var charge_description=charges.data('charge-description');
+                var charge_amount=charges.data('charge-amount');
+
+
+                $('#tbl_beginning_balances tbody').append(newRowBeginningCharges(
+                    {
+                        "charge_id":charge_id,
+                        "charge_name":charge_name,
+                        "charge_description":charge_description,
+                        "charge_amount":charge_amount
+                    }
+                ));
+
+                reInitializeNumeric();
+                $(this).select2('val',null);
+            });
+
 
             _cboCurrentCharges.on('select2:select',function(e){
                 var i=$(this).select2('val');
@@ -804,16 +862,32 @@
             });
 
             $('#tbl_current_charges tbody').on( 'keyup', 'input.numeric', function () {
-
                 reComputeTotalCurrentCharges();
+                reComputeBillingSummary();
+            });
+
+            $('#tbl_beginning_balances tbody').on( 'keyup', 'input.numeric', function () {
+                reComputeTotalBeginningCharges();
+                reComputeBillingSummary();
             });
 
             $('#tbl_current_charges tbody').on( 'click', 'button[name="remove_charge"]', function () {
                     var row=$(this).closest('tr');
-                    row.fadeOut(600, function() {
+                    row.fadeOut(500, function() {
                         row.remove();
                         reComputeTotalCurrentCharges();
+                        reComputeBillingSummary();
                     });
+
+            });
+
+            $('#tbl_beginning_balances tbody').on( 'click', 'button[name="remove_charge"]', function () {
+                var row=$(this).closest('tr');
+                row.fadeOut(500, function() {
+                    row.remove();
+                    reComputeTotalBeginningCharges();
+                    reComputeBillingSummary();
+                });
 
             });
 
@@ -839,17 +913,25 @@
 
                 //get all current charges of current contract
                 $.ajax({
-                    "dataType":"html",
+                    "dataType":"json",
                     "type":"POST",
                     "url":"Service_invoices/transaction/billing-current-charges?contract_id="+ data.contract_id,
                     "beforeSend" : function(){
+
                         $('#tbl_current_charges > tbody').html('<tr><td colspan="4"><center><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></center></td></tr>');
+                        $('#tbl_beginning_balances > tbody').html('<tr><td colspan="5"><center><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></center></td></tr>');
 
                     }
                 }).done(function(response){
-                    $('#tbl_current_charges > tbody').html(response);
+                    $('#tbl_current_charges > tbody').html(response.current_charges);
+                    $('#tbl_beginning_balances > tbody').html(response.beginning_balances);
+
+
                     reInitializeNumeric();
                     reComputeTotalCurrentCharges();
+                    reComputeTotalBeginningCharges();
+                    reComputeBillingSummary();
+
                 });
 
 
@@ -930,6 +1012,16 @@
                     '</tr>';
         };
 
+        function newRowBeginningCharges(d){
+            return '<tr>'+
+                '<td>'+ d.charge_name+'<input type="hidden" name="beginning_balance_charge_id[]" value="'+ d.charge_id+'" readonly></td>'+
+                '<td>na</td>'+
+                '<td><input name="beginning_balance_description" class="form-control" value="'+ d.charge_name+'" /></td>'+
+                '<td align="right"><input name="beginning_balance_remaining[]" class="form-control numeric" value="0.00" style="text-align: right;" /></td>'+
+                '<td align="center"><button name="remove_charge" class="btn btn-default"><i class="fa fa-trash"></i></button></td>'+
+                '</tr>';
+
+        };
 
         var reInitializeNumeric=function(){
             $('.numeric').autoNumeric('init',{mDec:2});
@@ -951,6 +1043,40 @@
 
             $('#td_total_current_charges').html('<b>'+accounting.formatNumber(totalCurrentCharge,2)+'</b>');
 
+        };
+
+        var reComputeTotalBeginningCharges=function(){
+            var rows=$('#tbl_beginning_balances > tbody  tr');
+
+            var totalCharge=0;
+            $.each(rows,function(){
+
+                totalCharge+=getFloat($(this).find('input.numeric').val());
+
+            });
+
+            $('#td_total_beginning_balances').html('<b>'+accounting.formatNumber(totalCharge,2)+'</b>');
+
+        };
+
+
+        var reComputeBillingSummary=function(){
+            var totalCurrent=getFloat($('#td_total_current_charges').text());
+            var totalBeginning=getFloat($('#td_total_beginning_balances').text());
+            var total=totalCurrent+totalBeginning;
+
+            var total_advance=getFloat($('#txt_advance').val());
+            var total_due=total-total_advance;
+
+
+            $('#txt_total').val(accounting.formatNumber(totalCurrent+totalBeginning,2));
+            $('#txt_total_amount_due').val(accounting.formatNumber(total_due,2));
+
+        };
+
+        var showSpinningProgress=function(e){
+            $(e).toggleClass('disabled');
+            $(e).find('span').toggleClass('glyphicon glyphicon-refresh spinning');
         };
 
 
