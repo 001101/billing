@@ -16,6 +16,7 @@ class Clients extends CORE_Controller {
         $this->load->model('Customer_file_model');
         $this->load->model('User_customers_model');
         $this->load->model('Customer_document_type_model');
+        $this->load->model('Contract_model');
     }
 
     public function index()
@@ -169,6 +170,7 @@ class Clients extends CORE_Controller {
             case 'expand-view':
                 $customer_id=$filter_value;
                 $m_customers=$this->Customers_model;
+                $m_contract=$this->Contract_model;
                 //$m_documents=$this->Documents_model;
                 $m_customer_files=$this->Customer_file_model;
                 $m_customer_services=$this->Customers_services_model;
@@ -176,16 +178,29 @@ class Clients extends CORE_Controller {
                 $data['customer_id']=$customer_id;
                 $data['customer_info']=$m_customers->get_list(
                     $customer_id,
-
                     array(
                         'customers_info.*',
                         'tt.tax_type'
                     ),
-
                     array(
                         array( 'tax_types as tt','tt.tax_type_id=customers_info.tax_type_id','left')
                     )
+                );
 
+                $data['customer_contracts']=$m_contract->get_list(
+                    array(
+                        'is_deleted=FALSE AND is_active=TRUE',
+                        'contracts.customer_id'=>$customer_id
+                    ),
+                    'contracts.contract_no,
+                    contracts.date_started,
+                    IFNULL(charges.charge_amount,0) as charge_amount,
+                    contracts.is_active',
+                    array(
+                        array('customers_info','customers_info.customer_id=contracts.customer_id','left'),
+                        array('contract_fee_template','contract_fee_template.contract_id=contracts.contract_id','left'),
+                        array('charges','charges.charge_id=contract_fee_template.charge_id','left')
+                    )
                 );
 
                 $this->load->view('Template/client_expand_view',$data);

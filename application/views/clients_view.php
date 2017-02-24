@@ -175,7 +175,7 @@
                                 <div class="col-md-12">
 
                                     <div id="div_supplier_list">
-                                        <div class="panel panel-default"  style="border-top: 3px solid #2196f3;">
+                                        <div class="panel panel-default">
 
                                             <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Clients</b></div></a>
 
@@ -254,7 +254,7 @@
                             <form id="frm_customer">
                                 <div class="row">
                                     <div class="col-lg-5">
-                                        Customer Code : <br><input type="text" name="customer_code" data-error-msg="Customer Code is required!" class="form-control" required  />
+                                        Customer Code *: <br><input type="text" name="customer_code" data-error-msg="Customer Code is required!" class="form-control" required  />
                                         Trade name * : <br><input class="form-control" name="trade_name" data-error-msg="Trade name is required!" id="txtTradeName" type="text" required /></td>
                                         Company Name * :<br><input class="form-control" name="company_name" data-error-msg="Company name is required!" id="txtCompanyName" type="text" required />
                                         Head Office Address :<br><textarea class="form-control" name="office_address" data-error-msg="Head Office Address is required!" id="txtHeadOfficeAddress"></textarea>
@@ -395,6 +395,7 @@
                         }
                     }).done(function(response){
                         row.child(response).show();
+                        reInitializeDataTable($('#tbl_contract_'+ d.customer_id));
                         // reInitializeServiceDataTable($('#tbl_services_'+ d.customer_id));
                         // reInitializeDocumentDataTable($('#tbl_documents_'+ d.customer_id));
                         // reInitializeFilesDataTable($('#tbl_search_files_'+d.customer_id));
@@ -647,6 +648,18 @@
             $(e).toggleClass('disabled');
             $(e).find('span').toggleClass('glyphicon glyphicon-refresh spinning');
         };
+
+        var reInitializeDataTable=function(tbl){
+            var dtContracts;
+            dtContracts=tbl.DataTable({
+                "bLengthChange":false,
+                "pageLength":6,
+                "language": {
+                    "searchPlaceholder": "Search Contracts..."
+                }
+            });
+        };
+
         var reInitializeServiceDataTable=function(tbl){
             var dtService;
             dtService=tbl.DataTable({

@@ -125,7 +125,7 @@
 
                     <ol class="breadcrumb" style="margin:0%;">
                         <li><a href="dashboard">Dashboard</a></li>
-                        <li><a href="Clients">Customers</a></li>
+                        <li><a href="Contracts">Contracts</a></li>
                     </ol>
 
                     <div class="container-fluid">
@@ -209,8 +209,8 @@
                 <div class="modal-dialog" style="width: 30%;">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#2ecc71;">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-                            <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>Contract Profile</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                            <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>Account / Contract Profile</h4>
                         </div>
                         <div class="modal-body">
                             <form id="frm_customer">
@@ -221,7 +221,7 @@
                                         <select id="cbo_clients" name="customer_id" class="form-control" data-error-msg="Company / Client is required!" required>
                                             <option value="0">[ New Company / Client ]</option>
                                             <?php foreach($customers as $customer){ ?>
-                                            <option value="<?php echo $customer->customer_id; ?>"><?php echo $customer->company_name; ?></option>
+                                            <option value="<?php echo $customer->customer_id; ?>" data-tin="<?php echo $customer->tin_no; ?>" data-billing-add="<?php echo $customer->billing_address; ?>" data-contact-person="<?php echo $customer->contact_person; ?>"><?php echo $customer->company_name; ?></option>
                                             <?php } ?>
                                         </select>
 
@@ -243,6 +243,34 @@
                     </div><!---content---->
                 </div>
             </div><!---modal-->
+
+            <!-- data-backdrop="static" and data-keyboard="false" prevents the modal from closing when clicking outside of it -->
+            <div id="modal_add_client" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" id="close_client" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                            <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>New Company / Client</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="frm_client">
+                                Customer Code *: <br><input type="text" name="customer_code" data-error-msg="Customer Code is required!" class="form-control" required  />
+                                Trade name * : <br><input class="form-control" name="trade_name" data-error-msg="Trade name is required!" id="txtTradeName" type="text" required /></td>
+                                Company Name * : <br><input class="form-control" name="company_name" data-error-msg="Company name is required!" id="txtCompanyName" type="text" required />
+                                TIN # : <br><input type="text" class="form-control" name="tin_no" />
+                                Billing Address : <br><textarea class="form-control" name="billing_address"></textarea>
+                                Contact Person : <br><input class="form-control" name="contact_person" />
+                            </form>
+                            <br>
+                            <strong style="color: red; float: right;"><i>Note: Fields with (*) are required.</i></strong><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn_save_client" class="btn btn-primary">Save Changes</button>
+                            <button id="btn_cancel_client" class="btn btn-default">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <footer role="contentinfo">
                 <div class="clearfix">
@@ -283,9 +311,7 @@
     $(document).ready(function(){
         var dt; var _txnMode; var _selectedID; var _selectRowObj; var _cboItemTypes;
         var _files; var _contractID; var _docTypeID; var _docSelectedRowObj; var _selectedDocTBL;
-        var _selectedFileTBL; var _selectedServiceTBL;
-
-
+        var _selectedFileTBL; var _selectedServiceTBL; var _cboClients;
 
         var initializeControls=function(){
             var initializeControls=function() {
@@ -352,10 +378,12 @@
                 }();
 
 
-                $('#cbo_clients').select2({
+                _cboClients = $('#cbo_clients').select2({
                     placeholder: "Please select contracts.",
                     allowClear: true
                 });
+
+                _cboClients.select2('val',null);
 
                 $('.date-picker').datepicker({
                     todayBtn: "linked",
@@ -406,11 +434,22 @@
 
 
             $('#attach_files').on('change',function(event){
-
                 _files=event.target.files;
             });
 
+            _cboClients.on('select2:select', function(){
+                var i=$(this).select2('val');
+                var obj_customers=$('#cbo_clients').find('option[value="' + i + '"]');
+                $('#txtBilling').val(obj_customers.data('billing-add'));
+                $('input[name="tin_no"]').val(obj_customers.data('tin'));
+                $('input[name="contact_person"]').val(obj_customers.data('contact-person'));
 
+                if(_cboClients.val() == 0) {
+                    $('#modal_add_client').modal('show');
+                    $('#modal_contract_entry').modal('hide');
+                    $('#btn_save_client').removeClass('disabled');
+                }
+            });
 
             $('#btn_attach_files').click(function(){
                 var data=new FormData();
@@ -470,10 +509,7 @@
                         showSpinningProgress(btn);
                     }
                 });
-
-
             });
-
 
             $('#btn_new').click(function(){
                 var currentDate=<?php echo json_encode(date('m/d/Y')); ?>;
@@ -482,9 +518,6 @@
                 $('.date-picker').val(currentDate);
                 $('#modal_contract_entry').modal('show');
             });
-
-
-
 
             $('#tbl_clients tbody').on('click','button[name="edit_info"]',function(){
                 _txnMode="edit";
@@ -521,6 +554,35 @@
                         dt.row(_selectRowObj).data(response.row_updated[0]).draw(false);
                     }
                 });
+            });
+
+            $('#btn_save_client').on('click', function(){
+               if(validateRequiredFields('#frm_client')){
+                    createClient().done(function(response){
+                        showNotification(response);
+                        if(response.stat=="success"){   
+                            var client=response.row_added[0];
+
+                            $('#cbo_clients').append('<option value="'+client.customer_id+'" selected>'+client.company_name+'</option>');
+                            _cboClients.select2('val',client.customer_id);
+
+                            $('#txtBilling').val(client.billing_address);
+                            $('input[name="tin_no"]').val(client.tin_no);
+                            $('input[name="contact_person"]').val(client.contact_person);
+                            $('#modal_contract_entry').modal('show');
+                            $('#modal_add_client').modal('hide');
+                            clearFields('#frm_client');
+                        }   
+                    }).always(function(){
+                        showSpinningProgress($(this));
+                    });
+               }
+            });
+
+            $('#close_client, #btn_cancel_client').on('click', function(){
+                $('#modal_contract_entry').modal('show');
+                $('#modal_add_client').modal('hide');
+                _cboClients.select2('val',null);
             });
 
             $('#btn_yes').click(function(){
@@ -610,6 +672,7 @@
             $('input,textarea',parent).val('');
             $('img[name="img_user"]').attr('src','assets/img/default-user-image.png');
         };
+
         var createContract=function() {
             var _data=$('#frm_customer,#frm_services,#frm_documents').serializeArray();
             _data.push({name : "photo_path" ,value : $('img[name="img_user"]').attr('src')});
@@ -621,6 +684,20 @@
                 "beforeSend": showSpinningProgress($('#btn_save'))
             });
         };
+
+        var createClient=function(){
+            var _dataClient=$('#frm_client').serializeArray();
+            _dataClient.push({name : "photo_path" ,value : 'assets/img/default-user-image.png'});
+
+            return $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":"Clients/transaction/create",
+                "data":_dataClient,
+                "beforeSend": showSpinningProgress($('#btn_save_client'))
+            });
+        };
+
         var updateContract=function() {
             var _data=$('#frm_customer,#frm_services,#frm_documents').serializeArray();
             _data.push({name : "photo_path" ,value : $('img[name="img_user"]').attr('src')});
