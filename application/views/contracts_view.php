@@ -213,7 +213,7 @@
                             <h4 class="modal-title" style="color:white;"><span id="modal_mode"> </span>Account / Contract Profile</h4>
                         </div>
                         <div class="modal-body">
-                            <form id="frm_customer">
+                            <form id="frm_contract">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         Account/Contract # : <br><input type="text" name="contract_no" data-error-msg="Account / Contract # is required!" class="form-control" required  />
@@ -615,7 +615,7 @@
                 showList(true);
             });
             $('#btn_save').click(function(){
-                if(validateRequiredFields()){
+                if(validateRequiredFields('#frm_contract')){
                     if(_txnMode=="new"){
                         createContract().done(function(response){
                             showNotification(response);
@@ -674,7 +674,7 @@
         };
 
         var createContract=function() {
-            var _data=$('#frm_customer,#frm_services,#frm_documents').serializeArray();
+            var _data=$('#frm_contract,#frm_services,#frm_documents').serializeArray();
             _data.push({name : "photo_path" ,value : $('img[name="img_user"]').attr('src')});
             return $.ajax({
                 "dataType":"json",
@@ -699,7 +699,7 @@
         };
 
         var updateContract=function() {
-            var _data=$('#frm_customer,#frm_services,#frm_documents').serializeArray();
+            var _data=$('#frm_contract,#frm_services,#frm_documents').serializeArray();
             _data.push({name : "photo_path" ,value : $('img[name="img_user"]').attr('src')});
             _data.push({name : "contract_id" ,value : _selectedID});
             return $.ajax({
