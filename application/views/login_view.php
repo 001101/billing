@@ -26,12 +26,232 @@
 
 	    html {
 	    	zoom: 100%!important;
+	    	overflow-x: hidden;
+	    	overflow-y: hidden;
 	    }
 
 	    .input-group-addon {
 	    	border: 1px solid #aaa; 
 	    	border-right: none;
 	    }
+
+	    @keyframes spin {
+            from { transform: scale(1) rotate(0deg); }
+            to { transform: scale(1) rotate(360deg); }
+        }
+        @-webkit-keyframes spin2 {
+            from { -webkit-transform: rotate(0deg); }
+            to { -webkit-transform: rotate(360deg); }
+        }
+    </style>
+
+    <style>
+    	.wrapper {
+		  background: rgba(76, 175, 80, .4);
+		  /*
+		  background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+		  background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+		  background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+		  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);*/
+		  padding-top: 60px;
+		  position: absolute;
+		  /*top: 50%;*/
+		  left: 34%;
+		  width: 30%;
+		  height: 10000px;
+		  overflow: hidden;
+		}
+		.wrapper.form-success .container h1 {
+		  transform: translateY(85px);
+		}
+		.container-cp {
+		  max-width: 600px;
+		  margin: 0 auto;
+		  padding: 80px 0;
+		  height: 400px;
+		  text-align: center;
+		}
+		.container-cp h1 {
+		  font-size: 40px;
+		  transition-duration: 1s;
+		  transition-timing-function: ease-in-put;
+		  font-weight: 200;
+		}
+		form {
+		  padding: 20px 0;
+		  position: relative;
+		  z-index: 2;
+		}
+		form input {
+		  appearance: none;
+		  outline: 0;
+		  border: 1px solid rgba(255, 255, 255, 1);
+		  background-color: rgba(255, 255, 255, 1);
+		  width: 290px;
+		  border-radius: 6px;
+		  padding: 10px 10px;
+		  margin: 0 auto 10px auto;
+		  display: block;
+		  text-align: center;
+		  font-size: 14px;
+		  /*color: white;*/
+		  transition-duration: 0.25s;
+		  font-weight: 300;
+		}
+		form input:hover {
+		  background-color: rgba(255, 255, 255, 0.8);
+		}
+		form input:focus {
+		  background-color: white;
+		  width: 300px;
+		  color: black;
+		}
+		/*form button {
+		  appearance: none;
+		  outline: 0;
+		  background-color: white;
+		  border: 0;
+		  padding: 10px 15px;
+		  color: #53e3a6;
+		  border-radius: 3px;
+		  width: 250px;
+		  cursor: pointer;
+		  font-size: 18px;
+		  transition-duration: 0.25s;
+		}
+		form button:hover {
+		  background-color: #f5f7f9;
+		}*/
+		.login-button {
+			margin-top: 10px;
+			width: 300px;
+			height: 40px;
+		}
+
+		.bg-bubbles {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  z-index: -9999999;
+		}
+
+		.bg-bubbles li {
+		  position: absolute;
+		  list-style: none;
+		  display: block;
+		  width: 40px;
+		  height: 40px;
+		  background-color: rgba(255, 255, 255, 0.15);
+		  bottom: -160px;
+		  -webkit-animation: square 25s infinite;
+		  animation: square 25s infinite;
+		  -webkit-transition-timing-function: linear;
+		  transition-timing-function: linear;
+		}
+
+		.bg-bubbles li:nth-child(1) {
+		  left: 10%;
+		}
+
+		.bg-bubbles li:nth-child(2) {
+		  left: 20%;
+		  width: 80px;
+		  height: 80px;
+		  -webkit-animation-delay: 2s;
+		  animation-delay: 2s;
+		  -webkit-animation-duration: 17s;
+		  animation-duration: 17s;
+		}
+
+		.bg-bubbles li:nth-child(3) {
+		  left: 25%;
+		  -webkit-animation-delay: 4s;
+		  animation-delay: 4s;
+		}
+
+		.bg-bubbles li:nth-child(4) {
+		  left: 40%;
+		  width: 60px;
+		  height: 60px;
+		  -webkit-animation-duration: 22s;
+		  animation-duration: 22s;
+		  background-color: rgba(255, 255, 255, 0.25);
+		}
+
+		.bg-bubbles li:nth-child(5) {
+		  left: 70%;
+		}
+
+		.bg-bubbles li:nth-child(6) {
+		  left: 80%;
+		  width: 120px;
+		  height: 120px;
+		  -webkit-animation-delay: 3s;
+		  animation-delay: 3s;
+		  background-color: rgba(255, 255, 255, 0.2);
+		}
+
+		.bg-bubbles li:nth-child(7) {
+		  left: 32%;
+		  width: 160px;
+		  height: 160px;
+		  -webkit-animation-delay: 7s;
+		  animation-delay: 7s;
+		}
+
+		.bg-bubbles li:nth-child(8) {
+		  left: 55%;
+		  width: 20px;
+		  height: 20px;
+		  -webkit-animation-delay: 15s;
+		  animation-delay: 15s;
+		  -webkit-animation-duration: 40s;
+		  animation-duration: 40s;
+		}
+
+		.bg-bubbles li:nth-child(9) {
+		  left: 25%;
+		  width: 10px;
+		  height: 10px;
+		  -webkit-animation-delay: 2s;
+		  animation-delay: 2s;
+		  -webkit-animation-duration: 40s;
+		  animation-duration: 20s;
+		  background-color: rgba(255, 255, 255, 0.3);
+		}
+
+		.bg-bubbles li:nth-child(10) {
+		  left: 90%;
+		  width: 160px;
+		  height: 160px;
+		  -webkit-animation-delay: 11s;
+		  animation-delay: 11s;
+		}
+
+		@-webkit-keyframes square {
+		  0% {
+		    -webkit-transform: translateY(0);
+		    transform: translateY(0);
+		  }
+		  100% {
+		    -webkit-transform: translateY(-700px) rotate(600deg);
+		    transform: translateY(-700px) rotate(600deg);
+		  }
+		}
+
+		@keyframes square {
+		  0% {
+		    -webkit-transform: translateY(0);
+		    transform: translateY(0);
+		  }
+		  100% {
+		    -webkit-transform: translateY(-700px) rotate(600deg);
+		    transform: translateY(-700px) rotate(600deg);
+		  }
+		}
+
     </style>
 
     </head>
@@ -40,72 +260,20 @@
         
         
 <div class="container" id="login-form">
-	<a href="Login" class="login-logo"></a>
 		<div class="row">
-			<div class="col-md-4 col-md-offset-4">
-				<div class="panel panel-primary" style="border:none;">
-					<!-- <div class="panel-heading">
-						<h2>Login</h2>
-					</div> -->
-					<div class="panel-body" style="border: 3px solid black;">
-						<!-- <h2>Login Form</h2> -->
-						
-						<div class="col-xs-12 text-center" style="margin-bottom: 20px;">
-							<img class="" src="<?php echo $company_info->logo_path; ?>" style="max-width: 150px;">
-						</div>
-						<form action="#" class="form-horizontal" id="validate-form">
-							<div class="form-group mb-md">
-		                        <div class="col-xs-12">
-		                        	<div class="input-group">							
-										<span class="input-group-addon">
-											<i class="ti ti-user"></i>
-										</span>
-										<input name="user_name" type="text" class="form-control" placeholder="Username" data-parsley-minlength="20" placeholder="At least 6 characters" required>
-									</div>
-		                        </div>
-							</div>
-
-							<div class="form-group mb-md">
-		                        <div class="col-xs-12">
-		                        	<div class="input-group">
-										<span class="input-group-addon">
-											<i class="ti ti-key"></i>
-										</span>
-										<input name="user_pword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-									</div>
-		                        </div>
-							</div>
-							<div class="form-group mb-n">
-								<div class="col-xs-12">
-									<a href="#" class="pull-left">Forgot password?</a>
-									<div class="checkbox-inline icheck pull-right p-n">
-										<label for="">
-											<input type="checkbox"></input>
-											Remember me
-										</label>
-									</div>
-								</div>
-							</div>
-						</form>
-						<br>
-					</div>
-					<div class="panel-footer" style="border: 3px solid black;background-color: #029e44;margin-top: -1px;">
-						<div class="clearfix">
-							<div class="row">
-								<div class="container-fluid">
-									<div class="col-xs-12 col-sm-6" style="margin-bottom: 10px;">
-										<button id="btn_register" class="btn btn-info btn-block">Register</button>
-									</div>									
-									<div class="col-xs-12 col-sm-6">
-										<button id="btn_login" class="btn btn-success btn-block ladda-button" style="" data-style="expand-left" data-spinner-color="white" data-size="l">
-										<span class=""></span> Login
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
+			<div class="col-md-12">
+				<div class="wrapper">
+					<div class="container-cp ">
+						<!-- <h1 style="color: white; font-weight: 200; font-family: 'Segoe UI',sans-serif;">Welcome</h1> -->
+						<img style="min-height: 100px; min-width: 100px; max-width: 240px; max-height: 100px;" src="<?php echo $company_info->logo_path; ?>">
+							<form class="form">
+								<input name="user_name" type="text" placeholder="Username" data-parsley-minlength="20" placeholder="At least 6 characters" required>
+								<input name="user_pword" type="password" id="exampleInputPassword1" placeholder="Password">
+								<button type="button" id="btn_login" class="btn login-button" style="background: #4caf50; color: white; border:2px solid #ffffff;"><span class=""></span>&nbsp;Login</button>
+							</form>
 					</div>
 				</div>
+
 <!--
 				<div class="text-center">
 					<a href="#" class="btn btn-label btn-social btn-facebook mb-md"><i class="ti ti-facebook"></i>Connect with Facebook</a>
@@ -115,7 +283,21 @@
 -->
 			</div>
 		</div>
+
 </div>
+		
+<ul class="bg-bubbles">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
 
 <?php echo $_def_js_files; ?>
 
@@ -132,8 +314,8 @@
 
                 $('#btn_login').click(function(){
 
-                    var l = Ladda.create(this);
-                    l.start();
+                    // var l = Ladda.create(this);
+                    // l.start();
 
 
                     validateUser().done(function(response){
@@ -147,7 +329,8 @@
                         }
 
                     }).always(function(){
-                        l.stop();
+                        // l.stop();
+                        showSpinningProgress($('#btn_login'));
                     });
 
 
@@ -172,10 +355,15 @@
                     "url":"Login/transaction/validate",
                     "data" : _data,
                     "beforeSend": function(){
-
+                    	showSpinningProgress($('#btn_login'));
                     }
                 });
             });
+
+            var showSpinningProgress=function(e){
+	            $(e).toggleClass('disabled');
+	            $(e).find('span').toggleClass('glyphicon glyphicon-refresh spinning');
+	        };
 
 
             var showNotification=function(obj){
