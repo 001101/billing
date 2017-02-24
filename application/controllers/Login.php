@@ -12,6 +12,7 @@ class Login extends CORE_Controller {
         $this->load->model('User_group_right_model');
         $this->load->model('Payment_method_model');
         $this->load->model('Company_model');
+        $this->load->model('Charges_model');
     }
 
 
@@ -45,6 +46,9 @@ class Login extends CORE_Controller {
 
         $m_methods=$this->Payment_method_model;
         $m_methods->create_default_payment_method();
+
+        $m_charges=$this->Charges_model;
+        $m_charges->create_default_charges();
         
     }
 

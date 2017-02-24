@@ -206,7 +206,7 @@
                                                     </div><br>
                                                     <div class="row">
                                                         <div class="container-fluid">
-                                                            <table id="tbl_receivables" class="table-striped table-bordered custom-design" cellspacing="0" width="100%" style="font-font:tahoma;border: 1px solid #c0c0c0;">
+                                                            <table id="tbl_receivables" class="table-striped  custom-design" cellspacing="0" width="100%" style="font-font:tahoma;border: 1px solid #c0c0c0;">
                                                                     <thead>
                                                                     <tr>
                                                                         <th class="hidden">Billing ID</th>
@@ -247,7 +247,7 @@
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button id="btn_save" class="btn btn-primary"><i class="fa fa-floppy-o"></i>&nbsp;Save Changes</button>
+                                            <button id="btn_save" class="btn btn-primary">Record Payment</button>
                                             <button id="btn_cancel" class="btn btn-default">Cancel</button>
                                         </div>
                                     </div>
