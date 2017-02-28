@@ -18,6 +18,49 @@
     <link type="text/css" href="assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
     <link type="text/css" href="assets/plugins/datatables/dataTables.themify.css" rel="stylesheet">
 
+    <style>
+        .panel-bg-blue {
+            background: -moz-linear-gradient(206deg, #319ef4 0%, #319ef4 22%, #0c85e6 66%, #0b73c5 100%); /* ff3.6+ */
+            background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #0b73c5), color-stop(34%, #0c85e6), color-stop(78%, #319ef4), color-stop(100%, #319ef4)); /* safari4+,chrome */
+            background: -webkit-linear-gradient(206deg, #319ef4 0%, #319ef4 22%, #0c85e6 66%, #0b73c5 100%); /* safari5.1+,chrome10+ */
+            background: -o-linear-gradient(206deg, #319ef4 0%, #319ef4 22%, #0c85e6 66%, #0b73c5 100%); /* opera 11.10+ */
+            background: -ms-linear-gradient(206deg, #319ef4 0%, #319ef4 22%, #0c85e6 66%, #0b73c5 100%); /* ie10+ */
+            background: linear-gradient(244deg, #319ef4 0%, #319ef4 22%, #0c85e6 66%, #0b73c5 100%); /* w3c */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b73c5', endColorstr='#319ef4',GradientType=1 ); /* ie6-9 */
+        }
+
+        .panel-bg-red {
+            background: -moz-linear-gradient(206deg, #f55246 0%, #f55246 22%, #f55246 65%, #f44336 100%); /* ff3.6+ */
+            background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #f44336), color-stop(35%, #f55246), color-stop(78%, #f55246), color-stop(100%, #f55246)); /* safari4+,chrome */
+            background: -webkit-linear-gradient(206deg, #f55246 0%, #f55246 22%, #f55246 65%, #f44336 100%); /* safari5.1+,chrome10+ */
+            background: -o-linear-gradient(206deg, #f55246 0%, #f55246 22%, #f55246 65%, #f44336 100%); /* opera 11.10+ */
+            background: -ms-linear-gradient(206deg, #f55246 0%, #f55246 22%, #f55246 65%, #f44336 100%); /* ie10+ */
+            background: linear-gradient(244deg, #f55246 0%, #f55246 22%, #f55246 65%, #f44336 100%); /* w3c */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f44336', endColorstr='#f55246',GradientType=1 ); /* ie6-9 */
+        }
+
+        .panel-bg-green {
+            background: -moz-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* ff3.6+ */
+            background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #429745), color-stop(34%, #4caf50), color-stop(78%, #6ec071), color-stop(100%, #6ec071)); /* safari4+,chrome */
+            background: -webkit-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* safari5.1+,chrome10+ */
+            background: -o-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* opera 11.10+ */
+            background: -ms-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* ie10+ */
+            background: linear-gradient(244deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* w3c */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#429745', endColorstr='#6ec071',GradientType=1 ); /* ie6-9 */
+        }
+
+        .panel-bg-light-blue {
+            background: rgba(0,188,212,1);
+            background: -moz-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
+            background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(0,188,212,1)), color-stop(47%, rgba(101,189,214,1)), color-stop(100%, rgba(147,206,222,1)));
+            background: -webkit-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
+            background: -o-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
+            background: -ms-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
+            background: linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00bcd4', endColorstr='#93cede', GradientType=1 );
+        }
+    </style>
+
 
     <style>
 
@@ -76,7 +119,7 @@
             }
 
         .tile-text {
-            color: #2196f3; 
+            color: #2196f3;
             font-weight: 600;
         }
 
@@ -91,14 +134,33 @@
     .panel {
         border-radius: 0;
         border: none;
-        margin: 0;
+        /*margin: 0;
         -webkit-box-shadow: 0px 0px 7px 1px rgba(161,161,161,1);
         -moz-box-shadow: 0px 0px 7px 1px rgba(161,161,161,1);
-        box-shadow: 0px 0px 7px 1px rgba(161,161,161,1);
+        box-shadow: 0px 0px 7px 1px rgba(161,161,161,1);*/
+    }
+
+    hr {
+        margin-top: 0;
+        margin-bottom: 0;
+        border: none;
+        height: 3px;
+        color: #fff; /* old IE */
+        background-color: #fff; /* Modern Browsers */
+    }
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .col-md-3 {
+        padding-left: 0;
     }
 
     .panel-footer,
     .panel-body {
+        padding: 20px!important; 
         border-top: 0;
         border-radius: 0!important;
     }
@@ -154,98 +216,127 @@
             <div class="static-content-wrapper">
                 <div class="static-content"  >
                     <div class="page-content"><!-- #page-content -->
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 0;">
                             <div class="container-fluid">
-                                <div style="margin-left: 10px; margin-right: 10px;">
-                                    <h1 style="margin-left: 12px;"><i class="fa fa-dashboard"></i>&nbsp;Dashboard</h1>
-                                    <div class="row">
-                                        <div class="container-fluid">
-                                            <div class="col-xs-12 col-sm-3" style="padding: 5px;">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body" style="background: #2196f3; padding: 0 10px 0 10px;">
-                                                       <h1><i class="pull-left fa fa-users" style="color: white; margin-top: 25px;"></i></h1>
-                                                       <h1 style=" color: white; text-align: right;"><?php echo (string)$customers_count->customer_count; ?></h1>
-                                                       <h3 style=" color: white; font-weight: 200; text-align: right;">My Clients</h3>
-                                                    </div>
-                                                    <div class="panel-footer" style="background: #0c85e6; color: white;">
-                                                        <a href="#" style="color: white;">View More</a>
-                                                        <i class="fa fa-arrow-circle-o-right pull-right" style="font-size: 24px;"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3" style="padding: 5px;">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body" style="background: #62bb66; color: white; padding: 0 10px 0 10px;">
-                                                       <h1><i class="pull-left fa fa-cog" style="color: white; margin-top: 25px;"></i></h1>
-                                                       <h1 style=" color: white; text-align: right;">0</h1>
-                                                       <h3 style=" color: white; font-weight: 200; text-align: right;">My Services</h3>
-                                                    </div>
-                                                    <div class="panel-footer" style="background: #4caf50; color: white;">
-                                                        <a href="#" style="color: white;">View More</a>
-                                                        <i class="fa fa-arrow-circle-o-right pull-right" style="font-size: 24px;"></i>
+                                <div style="padding: 0 15px 0 15px;">
+                                    <h1><span class="fa fa-dashboard"></span>&nbsp;Dashboard</h1>
+                                    <div class="col-xs-12 col-md-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body panel-bg-blue">
+                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-user"></i></h1>
+                                               <hr>
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
+                                                            <br>
+                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
+                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo ($this->session->user_group_id == 1 ? (string)$users_count->user_count : (string)$customers_count->customer_count) ?></h1>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3" style="padding: 5px;">
-                                               <div class="panel panel-default">
-                                                    <div class="panel-body" style="background: #bc37d3; color: white; padding: 0 10px 0 10px;">
-                                                       <h1><i class="pull-left fa fa-trello" style="color: white; margin-top: 25px;"></i></h1>
-                                                       <h1 style=" color: white; text-align: right;">0</h1>
-                                                       <h3 style=" color: white; font-weight: 200; text-align: right;">Trends</h3>
-                                                    </div>
-                                                    <div class="panel-footer" style="background: #9c27b0; color: white;">
-                                                        <a href="#" style="color: white;">View More</a>
-                                                        <i class="fa fa-arrow-circle-o-right pull-right" style="font-size: 24px;"></i>   
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3" style="padding: 5px;">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body" style="background: #ffc929; color: white; padding: 0 10px 0 10px;">
-                                                       <h1><i class="pull-left fa fa-money" style="color: white; margin-top: 25px;"></i></h1>
-                                                       <h1 style=" color: white; text-align: right;">0</h1>
-                                                       <h3 style=" color: white; font-weight: 200; text-align: right;">
-                                                           Payments
-                                                       </h3>
-                                                    </div>
-                                                    <div class="panel-footer" style="background: #d39e00; color: white;">
-                                                        <a href="#" style="color: white;">View More</a>
-                                                        <i class="fa fa-arrow-circle-o-right pull-right" style="font-size: 24px;"></i>   
-                                                    </div>
-                                                </div>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;"><?php echo ($this->session->user_group_id == 1 ? 'Users' : 'Clients') ?></h4>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="container-fluid">
-                                            <div class="col-xs-12 col-sm-4" style="padding: 7px;">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="border-radius: 0;">
-                                                        <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-users"></i>&nbsp;Clients</span>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <canvas id="DoughnutChart" height="150px"></canvas>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-4" style="padding: 7px;">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="border-radius: 0;">
-                                                        <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-cog"></i>&nbsp;Payments</span>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <canvas id="lineChart" height="150px"></canvas>
+                                    <div class="col-xs-12 col-md-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body panel-bg-red">
+                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-settings"></i></h1>
+                                               <hr>
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
+                                                            <br>
+                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
+                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Services</h4>
                                             </div>
-                                            <div class="col-xs-12 col-sm-4" style="padding: 7px;">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="border-radius: 0;">
-                                                        <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-file-text-o"></i>&nbsp;Summary</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body panel-bg-green">
+                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-stats-up"></i></h1>
+                                               <hr>
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
+                                                            <br>
+                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
+                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                        </div>
                                                     </div>
-                                                    <div class="panel-body">
-                                                        <canvas id="barChart" height="150px"></canvas>
+                                                </div>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Performance</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body panel-bg-light-blue">
+                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-money"></i></h1>
+                                               <hr>
+                                                <div class="row">
+                                                    <div class="container-fluid">
+                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
+                                                            <br>
+                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
+                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                        </div>
                                                     </div>
+                                                </div>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Payments</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                                <div class="container-fluid">
+                                    <div style="padding: 0 15px 0 5px;">
+                                        <div class="col-xs-12 col-sm-4" style="padding: 7px;">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="border-radius: 0;">
+                                                    <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-users"></i>&nbsp;Clients</span>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <canvas id="DoughnutChart" height="150px"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4" style="padding: 7px;">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="border-radius: 0;">
+                                                    <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-cog"></i>&nbsp;Payments</span>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <canvas id="lineChart" height="150px"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4" style="padding: 7px;">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="border-radius: 0;">
+                                                    <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-file-text-o"></i>&nbsp;Summary</span>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <canvas id="barChart" height="150px"></canvas>
                                                 </div>
                                             </div>
                                         </div>
@@ -302,7 +393,7 @@
                 }]
         };
 
-        var options = { 
+        var options = {
             cutoutPercentage:50,
             legend: {
                 position: 'bottom'

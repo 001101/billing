@@ -29,7 +29,7 @@ class Customers extends CORE_Controller {
 
         $data['documents'] = $this->Documents_model->get_list('is_active=TRUE AND is_deleted=FALSE');
         $data['taxes'] = $this->Tax_types_model->get_list('is_deleted=FALSE');
-        
+
         $data['services'] = $this->Services_model->get_list('is_active=TRUE AND is_deleted=FALSE');
 
         $this->load->view('customers_view',$data);
