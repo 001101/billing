@@ -36,26 +36,33 @@ class Clients extends CORE_Controller {
     }
 
     function test($A,$K){
-
         $pos_from_left=$K-1;
         $second_half=array_slice($A,$pos_from_left);
         $first_half=array_slice($A,0,$pos_from_left);
 
-
         print_r(array_merge($second_half,$first_half));
-
     }
-
 
     function transaction($txn=null,$filter_value=null){
         switch($txn){
             //****************************************************************************************************************
             case 'list':
-                $m_customers=$this->Customers_model;
-                $response['data']=$m_customers->get_list(
-                    array('is_deleted'=>FALSE)
-
-                );
+                if ($this->session->user_group_id == 1) {
+                  $m_customers=$this->Customers_model;
+                  $response['data']=$m_customers->get_list('is_deleted=FALSE');
+                } else {
+                  $m_user_customers=$this->User_customers_model;
+                  $response['data']=$m_user_customers->get_list(
+                      array(
+                        'user_id'=>$filter_value,
+                        'customers_info.is_deleted=FALSE'
+                      ),
+                      'customers_info.*',
+                      array(
+                        array('customers_info','customers_info.customer_id=user_customers.customer_id','left')
+                      )
+                  );
+                }
                 echo json_encode($response);
                 break;
             //****************************************************************************************************************
@@ -97,6 +104,7 @@ class Clients extends CORE_Controller {
                 $m_customers->save();
 
                 $customer_id=$m_customers->last_insert_id();//get last insert id
+
                 $m_customers->commit();
 
                 //$m_photos->customer_id=$customer_id;
@@ -295,4 +303,3 @@ class Clients extends CORE_Controller {
         );
     }
 }
-            

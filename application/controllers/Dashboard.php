@@ -10,7 +10,8 @@ class Dashboard extends CORE_Controller {
         $this->load->model(
             array(
                 'Customers_model',
-                'User_customers_model'
+                'User_customers_model',
+                'Users_model'
             )
         );
     }
@@ -23,10 +24,17 @@ class Dashboard extends CORE_Controller {
         $data['_side_bar_navigation']=$this->load->view('template/elements/side_bar_navigation','',TRUE);
         $data['_top_navigation']=$this->load->view('template/elements/top_navigation','',TRUE);
 
+        $user_count=$this->Users_model->get_list(
+            'is_deleted=FALSE AND is_active=TRUE',
+            'COUNT(*) AS user_count'
+        );
+
         $customer_count=$this->User_customers_model->get_list(
             array('user_id'=>$this->session->user_id),
             'COUNT(*) AS customer_count'
         );
+
+        $data['users_count']=$user_count[0];
 
         $data['customers_count']=$customer_count[0];
 

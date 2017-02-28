@@ -40,7 +40,7 @@
 	    }
 
 	    .input-group-addon {
-	    	border: 1px solid #aaa; 
+	    	border: 1px solid #aaa;
 	    	border-right: none;
 	    }
 
@@ -55,24 +55,124 @@
     </style>
 
     <style>
-    	.wrapper {
-		  background: rgba(76, 175, 80, .4);
-		  /*
-		  background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-		  background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-		  background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-		  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);*/
-		  padding-top: 60px;
-		  position: absolute;
-		  /*top: 50%;*/
-		  left: 34%;
-		  width: 30%;
-		  height: 10000px;
-		  overflow: hidden;
+	    /* Smartphones (portrait and landscape) ----------- */
+		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+	    	.wrapper { 
+	    		left: -10px;
+		  		width: 100px;
+	    	}
+
+	    	form input { 
+    		  appearance: none;
+			  outline: 0;
+			  border: 1px solid rgba(255, 255, 255, 1);
+			  background-color: rgba(255, 255, 255, 1);
+			  width: 320px;
+			  border-radius: 6px;
+			  padding: 10px 10px;
+			  margin: 0 auto 10px auto;
+			  display: block;
+			  text-align: center;
+			  font-size: 14px;
+			  /*color: white;*/
+			  transition-duration: 0.25s;
+			  font-weight: 300;
+	    	}
+
+	    	.login-button {
+				margin-top: 10px;
+				width: 320px;
+				height: 40px;
+			}
+
+	    	.img-company {
+	    		margin-left: 70px;
+	    	}
+	    }
+
+	    /* iPads (portrait and landscape) ----------- */
+		@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+			.wrapper { 
+	    		left: 1000px;
+	    	}
+
+	    	form input { 
+    		  appearance: none;
+			  outline: 0;
+			  border: 1px solid rgba(255, 255, 255, 1);
+			  background-color: rgba(255, 255, 255, 1);
+			  width: 320px;
+			  border-radius: 6px;
+			  padding: 10px 10px;
+			  margin: 0 auto 10px auto;
+			  display: block;
+			  text-align: center;
+			  font-size: 14px;
+			  /*color: white;*/
+			  transition-duration: 0.25s;
+			  font-weight: 300;
+	    	}
+
+	    	.login-button {
+				margin-top: 10px;
+				width: 320px;
+				height: 40px;
+			}
+
+	    	.img-company {
+	    		margin-left: 0px;
+	    	}
 		}
+    </style>
+
+    <style>
+
+    	/* Desktops and laptops ----------- */
+		@media only screen and (min-width : 1224px) {
+			.wrapper {
+			  background: rgba(76, 175, 80, .4);
+			  /*
+			  background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+			  background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+			  background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+			  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);*/
+			  padding-top: 60px;
+			  position: absolute;
+			  /*top: 50%;*/
+			  left: 34%;
+			  width: 30%;
+			  height: 10000px;
+			  overflow: hidden;
+			}
+
+			.login-button {
+				margin-top: 10px;
+				width: 300px;
+				height: 40px;
+			}
+
+			form input {
+			  appearance: none;
+			  outline: 0;
+			  border: 1px solid rgba(255, 255, 255, 1);
+			  background-color: rgba(255, 255, 255, 1);
+			  width: 290px;
+			  border-radius: 6px;
+			  padding: 10px 10px;
+			  margin: 0 auto 10px auto;
+			  display: block;
+			  text-align: center;
+			  font-size: 14px;
+			  /*color: white;*/
+			  transition-duration: 0.25s;
+			  font-weight: 300;
+			}
+		}
+
 		.wrapper.form-success .container h1 {
 		  transform: translateY(85px);
 		}
+
 		.container-cp {
 		  max-width: 600px;
 		  margin: 0 auto;
@@ -86,35 +186,23 @@
 		  transition-timing-function: ease-in-put;
 		  font-weight: 200;
 		}
+
 		form {
 		  padding: 20px 0;
 		  position: relative;
 		  z-index: 2;
 		}
-		form input {
-		  appearance: none;
-		  outline: 0;
-		  border: 1px solid rgba(255, 255, 255, 1);
-		  background-color: rgba(255, 255, 255, 1);
-		  width: 290px;
-		  border-radius: 6px;
-		  padding: 10px 10px;
-		  margin: 0 auto 10px auto;
-		  display: block;
-		  text-align: center;
-		  font-size: 14px;
-		  /*color: white;*/
-		  transition-duration: 0.25s;
-		  font-weight: 300;
-		}
+
 		form input:hover {
 		  background-color: rgba(255, 255, 255, 0.8);
 		}
+
 		form input:focus {
 		  background-color: white;
 		  width: 300px;
 		  color: black;
 		}
+
 		/*form button {
 		  appearance: none;
 		  outline: 0;
@@ -128,14 +216,12 @@
 		  font-size: 18px;
 		  transition-duration: 0.25s;
 		}
+
 		form button:hover {
 		  background-color: #f5f7f9;
 		}*/
-		.login-button {
-			margin-top: 10px;
-			width: 300px;
-			height: 40px;
-		}
+
+		
 
 		.bg-bubbles {
 		  position: absolute;
@@ -266,18 +352,20 @@
     </head>
 
 <body class="focused-form animated-content login-background">
-        
-        
+
+
 <div class="container" id="login-form">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="wrapper">
-					<div class="container-cp ">
+					<div class="container-cp">
 						<!-- <h1 style="color: white; font-weight: 200; font-family: 'Segoe UI',sans-serif;">Welcome</h1> -->
-						<img style="min-height: 100px; min-width: 100px; max-width: 240px; max-height: 100px;" src="<?php echo $company_info->logo_path; ?>">
+						
+						<img class="img-company" style="min-height: 100px; min-width: 100px; max-width: 240px; max-height: 100px; margin-bottom: 15px;" src="<?php echo (file_exists($company_info->logo_path) ? $company_info->logo_path : 'assets/img/jdev-logo.png'); ?>">
 							<form class="form">
 								<input name="user_name" type="text" placeholder="Username" data-parsley-minlength="20" placeholder="At least 6 characters" required>
 								<input name="user_pword" type="password" id="exampleInputPassword1" placeholder="Password">
+                
 								<button type="button" id="btn_login" class="btn login-button" style="background: #4caf50; color: white; border:2px solid #ffffff;"><span class=""></span>&nbsp;Login</button>
 							</form>
 					</div>
@@ -294,7 +382,7 @@
 		</div>
 
 </div>
-		
+
 <ul class="bg-bubbles">
 	<li></li>
 	<li></li>

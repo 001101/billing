@@ -33,6 +33,7 @@
             opacity: .8;
             cursor: pointer;
         }
+
         .image {
             display: block;
             width: 100%;
@@ -40,10 +41,12 @@
             border-radius: 50%;
             border: 1px solid #eaeaea;
         }
+
         .container-img:hover .overlay {
             opacity: .8;
             cursor: pointer;
         }*/
+
         .numeriCol {
             text-align: right;
         }
@@ -61,45 +64,47 @@
     <!-- Select2 -->
     <script src="assets/plugins/select2/select2.full.min.js"></script>
 
-
-
-
     <!-- touchspin -->
     <script type="text/javascript" src="assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
-
-
-
 
     <style>
         .toolbar{
             float: left;
         }
+
         td.details-control {
             background: url('assets/img/Folder_Closed.png') no-repeat center center;
             cursor: pointer;
         }
+
         tr.details td.details-control {
             background: url('assets/img/Folder_Opened.png') no-repeat center center;
         }
+
         .child_table{
             padding: 5px;
             border: 1px #ff0000 solid;
         }
+
         .glyphicon.spinning {
             animation: spin 1s infinite linear;
             -webkit-animation: spin2 1s infinite linear;
         }
+
         .select2-container{
             min-width: 100%;
         }
+
         @keyframes spin {
             from { transform: scale(1) rotate(0deg); }
             to { transform: scale(1) rotate(360deg); }
         }
+
         @-webkit-keyframes spin2 {
             from { -webkit-transform: rotate(0deg); }
             to { -webkit-transform: rotate(360deg); }
         }
+
         textarea {
             resize: none;
         }
@@ -173,12 +178,9 @@
                         <div data-widget-group="group1">
                             <div class="row">
                                 <div class="col-md-12">
-
                                     <div id="div_supplier_list">
                                         <div class="panel panel-default">
-
                                             <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Clients</b></div></a>
-
                                             <div class="panel-body table-responsive">
                                                 <table id="tbl_clients" class="custom-design table-striped" cellspacing="0" width="100%">
                                                     <thead class="">
@@ -326,7 +328,7 @@
                     "dom": '<"toolbar">frtip',
                     "bLengthChange":false,
                     "pageLength":15,
-                    "ajax" : "Clients/transaction/list",
+                    "ajax" : "Clients/transaction/list/"+<?php echo $this->session->user_id; ?>,
                     "columns": [
                         {
                             "targets": [0],
@@ -519,7 +521,7 @@
                 _selectedID=data.customer_id;
             });
             $('#btn_yes').click(function(){
-                removeSupplier().done(function(response){
+                removeCustomer().done(function(response){
                     showNotification(response);
                     dt.row(_selectRowObj).remove().draw();
                 });
@@ -669,7 +671,7 @@
                     "searchPlaceholder": "Search Services"
                 }
             });
-            
+
             tbl.on('click','a#link_status',function(e){
                 e.preventDefault();
 
@@ -818,7 +820,7 @@
         };
 
         $('#btn_choose').click(function(){
-            
+
         });
     });
 </script>
