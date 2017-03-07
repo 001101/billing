@@ -13,6 +13,13 @@ class Login extends CORE_Controller {
         $this->load->model('Payment_method_model');
         $this->load->model('Company_model');
         $this->load->model('Charges_model');
+        $this->load->model(
+            array(
+                'Customers_model',
+                'User_customers_model',
+                'Users_model'
+            )
+        );
     }
 
 
@@ -26,8 +33,34 @@ class Login extends CORE_Controller {
         $company=$this->Company_model->get_list();
         $data['company_info']=$company[0];
 
-        $this->load->view('login_view',$data);
+        //TEMPORARY WORKAROUND FOR LOGIN REDIRECTION TO DASHBOARD (if user session is ACTIVE)
+        if($this->session->userdata('logged_in') == 1) {
+            $dashboardData['_def_css_files']=$this->load->view('template/assets/css_files','',TRUE);
+            $dashboardData['_def_js_files']=$this->load->view('template/assets/js_files','',TRUE);
+            $dashboardData['_switcher_settings']=$this->load->view('template/elements/switcher','',TRUE);
+            $dashboardData['_side_bar_navigation']=$this->load->view('template/elements/side_bar_navigation','',TRUE);
+            $dashboardData['_top_navigation']=$this->load->view('template/elements/top_navigation','',TRUE);
 
+            $user_count=$this->Users_model->get_list(
+                'is_deleted=FALSE AND is_active=TRUE',
+                'COUNT(*) AS user_count'
+            );
+
+            $customer_count=$this->User_customers_model->get_list(
+                array('user_id'=>$this->session->user_id),
+                'COUNT(*) AS customer_count'
+            );
+
+            $dashboardData['users_count']=$user_count[0];
+
+            $dashboardData['customers_count']=$customer_count[0];
+
+            $this->load->view('dashboard_view',$dashboardData);
+
+        } else {
+            $this->load->view('login_view',$data); 
+        }
+        //END TEMPORARY WORKAROUND FOR LOGIN REDIRECTION TO DASHBOARD (if user session is ACTIVE)
     }
 
 
@@ -92,7 +125,8 @@ class Login extends CORE_Controller {
                                 'user_email'=>$result->row()->user_email,
                                 'user_photo'=>$result->row()->photo_path,
                                 'user_rights'=>$user_rights,
-                                'parent_rights'=>$parent_links
+                                'parent_rights'=>$parent_links,
+                                'logged_in'=>1
                             )
                         );
 
