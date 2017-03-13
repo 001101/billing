@@ -211,7 +211,7 @@ class Clients extends CORE_Controller {
                     )
                 );
 
-                $this->load->view('Template/client_expand_view',$data);
+                $this->load->view('template/client_expand_view',$data);
                 break;
 
             case 'services':
