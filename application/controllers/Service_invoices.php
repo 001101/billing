@@ -14,7 +14,8 @@
 				    'Customers_model',
                     'Charges_model',
                     'Contract_fee_template_model',
-                    'Beginning_balance_model'
+                    'Beginning_balance_model',
+                    'Company_model'
                 )
 			);
 		}
@@ -26,7 +27,7 @@
 	        $data['_switcher_settings']=$this->load->view('template/elements/switcher','',TRUE);
 	        $data['_side_bar_navigation']=$this->load->view('template/elements/side_bar_navigation','',TRUE);
 	        $data['_top_navigation']=$this->load->view('template/elements/top_navigation','',TRUE);
-	        $data['title']='Service Invoice';
+	        $data['title']='Billing Statement';
 
             $current_year=date("Y");
             $max_year=$current_year+1;
@@ -192,7 +193,47 @@
 
                     break;
 
+                case 'billing_statement':
+                    $m_billing=$this->Services_invoice_model;
+                    $m_billing_items=$this->Services_invoice_items_model;
+                    $m_company_info=$this->Company_model;
+                    $m_beginning=$this->Beginning_balance_model;
 
+                    $billing_id=$this->input->get('bid', TRUE);
+
+                    $company_info=$m_company_info->get_list();
+
+                    $data['company_info']=$company_info[0];
+                    $data['_def_css_files']=$this->load->view('template/assets/css_files','',TRUE);
+
+                    $data['beginning_balances']=$m_beginning->get_list(
+                        array('billing_id'=>$billing_id)
+                    );
+                    $data['current_charges']=$m_billing_items->get_list(
+                        array('billing_id'=>$billing_id),
+                        'billing_items.*,
+                        charges.*',
+                        array(
+                            array('charges','charges.charge_id=billing_items.charge_id','left')
+                        )
+                    );
+
+                    $billing_info=$m_billing->get_list(
+                        $billing_id,
+                        'billing_info.*,
+                        customers_info.*,
+                        contracts.*',
+                        array(
+                            array('customers_info','customers_info.customer_id=billing_info.customer_id','left'),
+                            array('contracts','contracts.contract_id=billing_info.contract_id','left')
+                        )
+                    );
+
+                    $data['billing_info']=$billing_info[0];
+
+                    $this->load->view('template/billing_statement_report',$data);
+
+                    break;
 
             }
 		}

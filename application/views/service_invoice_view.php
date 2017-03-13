@@ -806,6 +806,14 @@
                 }
             });
 
+            $('#tbl_billing tbody').on('click','#btn_print', function(){
+                _selectRowObj=$(this).closest('tr');
+                var data=dtBilling.row(_selectRowObj).data();
+                _selectedID=data.billing_id;
+
+                window.open('Service_invoices/transaction/billing_statement?bid='+_selectedID);
+            });
+
             $('#btn_finalize').click(function(){
 
                 var btn=$(this);
