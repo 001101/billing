@@ -180,7 +180,7 @@
                                 <div class="col-md-12">
                                     <div id="div_supplier_list">
                                         <div class="panel panel-default">
-                                            <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Clients</b></div></a>
+                                            <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Clients Management</b></div></a>
                                             <div class="panel-body table-responsive">
                                                 <table id="tbl_clients" class="custom-design table-striped" cellspacing="0" width="100%">
                                                     <thead class="">
