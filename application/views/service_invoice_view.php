@@ -414,7 +414,7 @@
                             <caption><b style="font-size: 12pt;font-weight: 500;">Beginning Balance :</b></caption>
                             <div style="border: 1px solid gray;padding: 2%;border-radius: 5px;">
 
-                                <div class="row" style="margin-bottom: 10px;">
+                                <!-- <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-lg-12">
                                         <b>Select Charges to add (Optional) :</b><br />
                                         <select id="cbo_previous_charges" class="form-control">
@@ -423,7 +423,7 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <table id="tbl_beginning_balances" class="custom-design table-striped">
 
@@ -705,14 +705,14 @@
                 allowClear: true
             });
 
-            _cboPreviousCharges=$('#cbo_previous_charges').select2({
-                placeholder: "Please select charge.",
-                allowClear: true
-            });
+            // _cboPreviousCharges=$('#cbo_previous_charges').select2({
+            //     placeholder: "Please select charge.",
+            //     allowClear: true
+            // });
 
 
             $('#cbo_current_charges').select2('val',null);
-            $('#cbo_previous_charges').select2('val',null);
+            // $('#cbo_previous_charges').select2('val',null);
 
             _monthID=<?php echo json_encode(date('m')); ?>;
             _year=<?php echo json_encode(date('Y')); ?>;
@@ -852,29 +852,29 @@
                 reComputeBillingSummary();
             });
 
-            _cboPreviousCharges.on('select2:select',function(e){
-                var i=$(this).select2('val');
-                var charges=$('#cbo_previous_charges').find('option[value="'+i+'"]');
+            // _cboPreviousCharges.on('select2:select',function(e){
+            //     var i=$(this).select2('val');
+            //     var charges=$('#cbo_previous_charges').find('option[value="'+i+'"]');
 
 
-                var charge_id=i;
-                var charge_name=charges.html();
-                var charge_description=charges.data('charge-description');
-                var charge_amount=charges.data('charge-amount');
+            //     var charge_id=i;
+            //     var charge_name=charges.html();
+            //     var charge_description=charges.data('charge-description');
+            //     var charge_amount=charges.data('charge-amount');
 
 
-                $('#tbl_beginning_balances tbody').append(newRowBeginningCharges(
-                    {
-                        "charge_id":charge_id,
-                        "charge_name":charge_name,
-                        "charge_description":charge_description,
-                        "charge_amount":charge_amount
-                    }
-                ));
+            //     $('#tbl_beginning_balances tbody').append(newRowBeginningCharges(
+            //         {
+            //             "charge_id":charge_id,
+            //             "charge_name":charge_name,
+            //             "charge_description":charge_description,
+            //             "charge_amount":charge_amount
+            //         }
+            //     ));
 
-                reInitializeNumeric();
-                $(this).select2('val',null);
-            });
+            //     reInitializeNumeric();
+            //     $(this).select2('val',null);
+            // });
 
 
             _cboCurrentCharges.on('select2:select',function(e){
