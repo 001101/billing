@@ -206,21 +206,22 @@
             </div>
 
 
-            <div id="modal_confirmation" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
-                <div class="modal-dialog modal-sm">
+            <div id="modal_update_status" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
+                <div class="modal-dialog modal-md">
                     <div class="modal-content"><!---content--->
                         <div class="modal-header">
                             <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
-                            <h4 class="modal-title"><span id="modal_mode"> </span>Confirm Deletion</h4>
+                            <h4 class="modal-title" style="color: white;"><span id="modal_mode"> </span></h4>
 
                         </div>
 
                         <div class="modal-body">
-                            <p id="modal-body-message">Are you sure ?</p>
+                            Narration (Optional) : <br />
+                            <textarea id="txt_narration" class="form-control"></textarea>
                         </div>
 
                         <div class="modal-footer">
-                            <button id="btn_yes" type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                            <button id="btn_mark_completed" type="button" class="btn btn-primary" data-dismiss="modal">Mark as Complted</button>
                             <button id="btn_close" type="button" class="btn btn-default" data-dismiss="modal">No</button>
                         </div>
                     </div><!---content---->
@@ -269,7 +270,10 @@
 
 <script>
     $(document).ready(function(){
-        var dt; var _txnMode; var _selectedID; var _selectRowObj; var _cboClasses; var _cboParentAccounts; var zNodes; var setting; var _cboTypes;
+        var dt; var _txnMode; var _selectedID; var _selectRowObj;
+        var _cboClasses; var _cboParentAccounts; var zNodes; var setting; var _cboTypes;
+        var _customerID; var _serviceID; var _monthID; var _year; var _selectedServiceDT;
+        var _selectedServiceDTRow;
 
 
         var reInitializeTreeView=function(){
@@ -277,9 +281,7 @@
         };
 
 
-
-        var initializeControls=function(){
-
+        function reloadCustomers(){
             dt= $('#tbl_customers').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
@@ -306,12 +308,22 @@
             });
 
             var createToolBarButton=function() {
-                var _btnNew='<button class="btn btn-primary"  id="btn_refresh" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Refresh" >'+
-                    '<i class="fa fa-refresh"></i> Reload </button>';
+                var _btnNew='<button class="btn btn-default"  id="btn_refresh" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Refresh" >'+
+                    '<i class="fa fa-refresh"></i> Refresh </button>';
 
 
                 $("div.toolbar").html(_btnNew);
             }();
+        };
+
+
+
+        var initializeControls=function(){
+
+            reloadCustomers();
+
+            _monthID=<?php echo json_encode(date('m')); ?>;
+            _year=<?php echo json_encode(date('Y')); ?>;
 
 
             //**************************************************************************************************************
@@ -340,10 +352,10 @@
             zNodes=[
 
                 <?php foreach($years as $year){ ?>
-                    {"id":"<?php echo $year; ?>","pId":"","name":"<?php echo $year; ?><?php echo ($year==date("Y")?"(Current Year)":""); ?>","title":"<?php echo $year; ?>","open":"<?php echo ($year==date("Y")?"true":false); ?>","icon":"assets\/plugins\/zTree\/img\/diy\/4.png"},
-                    <?php foreach($months as $month){ ?>
-                            {"id":"<?php echo $year; ?>-<?php echo $month; ?>","pId":"<?php echo $year; ?>","name":"<?php echo $month; ?>","title":"<?php echo $month; ?>","open":"<?php echo ($year==date("Y")?"true":false); ?>","icon":"assets\/plugins\/zTree\/img\/diy\/11.png"},
-                    <?php } ?>
+                {"id":"<?php echo $year; ?>","pId":"","name":"<?php echo $year; ?><?php echo ($year==date("Y")?"(Current Year)":""); ?>","title":"<?php echo $year; ?>","open":"<?php echo ($year==date("Y")?"true":false); ?>","icon":"assets\/plugins\/zTree\/img\/diy\/4.png"},
+                <?php foreach($months as $month){ ?>
+                {"id":"<?php echo $year; ?>-<?php echo $month; ?>","pId":"<?php echo $year; ?>","name":"<?php echo $month; ?>","title":"<?php echo $month; ?>","open":"<?php echo ($year==date("Y")?"true":false); ?>","icon":"assets\/plugins\/zTree\/img\/diy\/11.png"},
+                <?php } ?>
                 <?php } ?>
 
 
@@ -404,7 +416,45 @@
             $('.zTreeDemoBackground').on('click','ul.ztree li span',function(){
                 var sMonth=$(this).closest('li').text();
                 var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
+
+                //get month id and year
+                _monthID=$(this).closest('li').index()+1;
+                _year=sYear;
+
+                dt.destroy();
+                reloadCustomers();
+
                 $('#lbl_date').html(sMonth+" "+sYear);
+            });
+
+
+            $('#btn_mark_completed').click(function(){
+                var _data=[];
+
+                _data.push({name:"customer_id",value:_customerID});
+                _data.push({name:"service_id",value:_serviceID});
+                _data.push({name:"month_id",value:_monthID});
+                _data.push({name:"year_id",value:_year});
+                _data.push({name:"narration",value:$('#txt_narration').val()});
+
+                $.ajax({
+                    "dataType":"json",
+                    "type":"POST",
+                    "url":"Accomplishments/transaction/mark-completed",
+                    "data":_data
+                }).done(function(response){
+
+                    var details=response.row_updated[0];
+                    var dataservices=[
+                        details.service_name,
+                        details.narration,
+                        details.date_accomplished,
+                        '<a href="" id="link_accomplished" class="" data-customer-id="'+_customerID+'" data-service-id="'+_serviceID+'"><i class="fa fa-'+(details.status=="1"?"check":"times")+'-circle" style="color:'+(details.status=="1"?"green":"red")+';"></i></a>'
+                    ];
+
+                    _selectedServiceDT.row(_selectedServiceDTRow).data(dataservices).draw(false);
+
+                });
             });
 
 
@@ -443,9 +493,26 @@
                 "pageLength":8
             });
 
+
+
             tbl.on('click','a#link_accomplished',function(){
-                alert("dd");
+                _selectedServiceDTRow=$(this).closest('tr');
+                _selectedServiceDT=$(this).closest('table').DataTable();
+
+                var service=_selectedServiceDTRow.find('td').eq(0).text();
+
+                _customerID=$(this).data('customer-id');
+                _serviceID=$(this).data('service-id');
+
+
+
+
+                $('#modal_update_status').modal('show');
+                $('#modal_mode').html(service);
+
             });
+
+
         };
 
 

@@ -200,7 +200,7 @@
 
                                                                 <div class="tab-pane active" id="billing_statement" style="min-height: 250px;">
                                                                     <div style="border:1px solid gray;padding: 1%;">
-                                                                        <span style="font-size: 14pt;">Billing as of <b id="lbl_date">February 2017</b></span><hr />
+                                                                        <span style="font-size: 14pt;">Billing as of <b class="lbl_date">February 2017</b></span><hr />
 
                                                                         <table id="tbl_billing" class="custom-design table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
@@ -225,7 +225,7 @@
 
                                                                 <div class="tab-pane " id="customer_list" style="min-height: 250px;">
                                                                     <div style="border:1px solid gray;padding: 1%;">
-                                                                        <span style="font-size: 14pt;">Account / Contract Billing Status as of <b id="lbl_date">February 2017</b></span><span style="font-size: 9pt;"> (Please tick mark all accomplished services on <b>Completed Column</b>.)</span><hr />
+                                                                        <span style="font-size: 14pt;">Account / Contract Billing Status as of <b class="lbl_date">February 2017</b></span><hr />
 
                                                                         <table id="tbl_customers" class="custom-design table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
@@ -1010,7 +1010,7 @@
                 dt.destroy();
                 reloadContractBillingStatus();
 
-                $('#lbl_date').html(sMonth+" "+sYear);
+                $('.lbl_date').html(sMonth+" "+sYear);
             });
 
 

@@ -126,7 +126,7 @@
                     $billing_year=$this->input->get('year',TRUE);
 
 
-                    $response['data']=$this->get_response_rows('billing_info.is_deleted=0 AND billing_info.is_active=1');
+                    $response['data']=$this->get_response_rows('billing_info.is_deleted=0 AND billing_info.is_active=1 AND billing_info.month_id='.$billing_month.' AND billing_info.year_id='.$billing_year);
                     echo json_encode($response);
                     break;
                 case 'contract-billing-status-list':

@@ -10,19 +10,19 @@
 
                 <thead>
                 <tr>
-                    <th width="30%">Service</th>
-                    <th width="48%">Description</th>
-                    <th width="15%">Date Completed</th>
-                    <th width="7%" style="text-align: center;">Completed</th>
+                    <th width="25%">Service</th>
+                    <th width="40%">Narration</th>
+                    <th width="25%">Date Completed</th>
+                    <th width="10%" style="text-align: center;">Completed</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach($services as $service){ ?>
                     <tr>
                         <td><?php echo $service->service_name;  ?></td>
-                        <td><?php echo $service->service_description;  ?></td>
-                        <td><?php echo '';  ?></td>
-                        <td align="center"><a href="#" id="link_accomplished" data-customer-id="<?php echo $customer_id; ?>" data-service-id="<?php echo $service->service_id; ?>"><i class="fa fa-check-circle" style="color: green"></i></a> </td>
+                        <td><?php echo $service->narration;  ?></td>
+                        <td><?php echo $service->date_accomplished;;  ?></td>
+                        <td align="center"><a href="#" id="link_accomplished" data-customer-id="<?php echo $customer_id; ?>" data-service-id="<?php echo $service->service_id; ?>"><i class="fa fa-<?php echo ($service->status?'check':'times'); ?>-circle" style="color: <?php echo ($service->status?'green':'red'); ?>"></i></a> </td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -90,5 +90,5 @@
 
     <hr />
 
-    <button class="btn btn-primary" style="text-transform: none;"><i class="fa fa-plus-circle"></i> Post Accomplishments to Service Invoice</button>
+
 </div>
