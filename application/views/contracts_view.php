@@ -345,7 +345,7 @@
                                 var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"   data-toggle="tooltip" data-placement="top" title="Edit" style="margin-left:-5px;"><i class="fa fa-pencil"></i> </button>';
                                 var btn_trash='<button class="btn btn-danger btn-sm" name="remove_info"  data-toggle="tooltip" data-placement="top" title="Move to trash" style="margin-right:-5px;"><i class="fa fa-trash-o"></i> </button>';
 
-                                var btn_cancel='<button class="btn btn-default btn-sm" name="set_inactive"  data-toggle="tooltip" data-placement="top" title="Mare as Inactive/Active" style="margin-right:-5px;"><i class="fa fa-times"></i> </button>';
+                                var btn_cancel='<button class="btn btn-default btn-sm" name="set_inactive"  data-toggle="tooltip" data-placement="top" title="Mark as Inactive/Active" style="margin-right:-5px;"><i class="fa fa-times"></i> </button>';
 
 
                                 return '<center>'+btn_edit+'&nbsp;'+btn_trash+'&nbsp;&nbsp;'+btn_cancel+'</center>';
@@ -534,6 +534,8 @@
                         }
                     });
                 });
+
+                _cboClients.select2('val',data.customer_id);
             });
 
             $('#tbl_clients tbody').on('click','button[name="remove_info"]',function(){

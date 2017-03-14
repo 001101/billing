@@ -14,7 +14,8 @@ class Contracts extends CORE_Controller
             'Customers_services_model',
             'Customer_document_type_model',
             'Charges_model',
-            'Contract_fee_template_model'
+            'Contract_fee_template_model',
+            'User_customers_model'
         ));
 
     }
@@ -27,7 +28,14 @@ class Contracts extends CORE_Controller
         $data['_side_bar_navigation'] = $this->load->view('template/elements/side_bar_navigation', '', TRUE);
         $data['_top_navigation'] = $this->load->view('template/elements/top_navigation', '', TRUE);
         $data['title'] = 'Contract Management';
-        $data['customers']=$this->Customers_model->get_list('is_deleted=0');
+        $data['customers']=$this->User_customers_model->get_list(
+            array('user_id'=>$this->session->user_id),
+            'user_customers.*,
+            customers_info.*',
+            array(
+                array('customers_info','customers_info.customer_id=user_customers.customer_id','left')
+            )
+        );
 
         $this->load->view('contracts_view', $data);
     }
@@ -37,7 +45,9 @@ class Contracts extends CORE_Controller
         switch($txn){
             case 'list':
                 $m_contracts=$this->Contract_model;
-                $response['data']=$this->get_response('contracts.is_deleted=0');
+                $response['data']=$this->get_response(
+                    'contracts.is_deleted=0 AND contracts.is_active=TRUE AND uc.user_id='.$this->session->user_id
+                );
                 echo json_encode($response);
 
                 break;
@@ -405,13 +415,15 @@ class Contracts extends CORE_Controller
 
             array(
                 'contracts.*',
+                'uc.*',
                 'ci.company_name',
                 'ci.trade_name',
-                'ci.contact_no'
+                'ci.contact_no',
             ),
 
             array(
-                array('customers_info as ci','ci.customer_id=contracts.customer_id','left')
+                array('customers_info as ci','ci.customer_id=contracts.customer_id','left'),
+                array('user_customers AS uc','uc.customer_id=contracts.customer_id','left')
             )
 
         );

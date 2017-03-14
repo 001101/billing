@@ -105,6 +105,11 @@ class Clients extends CORE_Controller {
 
                 $customer_id=$m_customers->last_insert_id();//get last insert id
 
+                $m_user_customers=$this->User_customers_model;
+                $m_user_customers->user_id=$this->session->user_id;
+                $m_user_customers->customer_id=$customer_id;
+                $m_user_customers->save();
+
                 $m_customers->commit();
 
                 //$m_photos->customer_id=$customer_id;
