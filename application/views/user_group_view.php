@@ -277,13 +277,14 @@
 $(document).ready(function(){
     var dt; var _txnMode; var _selectedID; var _selectRowObj; var _cboUserGroup;
 
-
-
     var initializeControls=function(){
 
         dt=$('#tbl_user_group_list').DataTable({
             "dom": '<"toolbar">frtip',
             "bLengthChange":false,
+            "language": {
+                "searchPlaceholder":"Search User Group"
+            },
             "ajax" : "User_groups/transaction/list",
             "columns": [
                 {

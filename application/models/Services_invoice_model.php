@@ -42,27 +42,33 @@
             return $this->db->query($sql)->result();
         }
 
+        function create_billing_no() {
 
+
+            $sql="SELECT IFNULL(MAX(m.counter_id),0) as id
+            FROM
+            (SELECT CAST(REPLACE(billing_no,DATE_FORMAT(NOW(),'%Y-%m-'),'') AS UNSIGNED)as counter_id 
+            FROM billing_info 
+            WHERE billing_no LIKE CONCAT(DATE_FORMAT(NOW(),'%Y-%m-'),'%')) AS m";
+
+            $counter=$this->db->query($sql)->result();
+            $id= $counter[0] ->id;         
+
+            settype($id, "double");
+
+            return date('Y-m-').str_pad($id+1,4,0,STR_PAD_LEFT);
+        }
 
         function get_contract_billing_status($month_id,$year_id,$contract_id=null){
             $sql="SELECT c.*,IF(ISNULL(bi.customer_id),0,1)as bill_status
-
                     FROM
-
-                    (
-
-                    SELECT c.*,ci.company_name,ci.trade_name,ci.contact_no,ci.office_address FROM contracts as c
+                    (SELECT c.*,ci.company_name,ci.trade_name,ci.contact_no,ci.office_address FROM contracts as c
                     LEFT JOIN customers_info as ci ON ci.customer_id=c.customer_id
                     WHERE c.is_deleted=0 AND c.is_active=1
-                    ".($contract_id==null?"":" AND c.contract_id=$contract_id")."
-
-                    )as c
+                    ".($contract_id==null ? "" : " AND c.contract_id=$contract_id")." )as c
 
                     LEFT JOIN
-
-                    (
-
-                    SELECT bi.customer_id,bi.contract_id FROM billing_info as bi WHERE bi.is_deleted=0 AND bi.is_active=1
+                    (SELECT bi.customer_id,bi.contract_id FROM billing_info as bi WHERE bi.is_deleted=0 AND bi.is_active=1
                     AND bi.month_id=CAST($month_id as UNSIGNED) AND bi.year_id=CAST($year_id as UNSIGNED)
                     ".($contract_id==null?"":" AND bi.contract_id=$contract_id")."
 

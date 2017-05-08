@@ -12,7 +12,7 @@ class Login extends CORE_Controller {
         $this->load->model('User_group_right_model');
         $this->load->model('Payment_method_model');
         $this->load->model('Company_model');
-        $this->load->model('Charges_model');
+        $this->load->model('Charges_model');    
         $this->load->model(
             array(
                 'Customers_model',
@@ -33,7 +33,7 @@ class Login extends CORE_Controller {
         $company=$this->Company_model->get_list();
         $data['company_info']=$company[0];
 
-        //TEMPORARY WORKAROUND FOR LOGIN REDIRECTION TO DASHBOARD (if user session is ACTIVE)
+        //WORKAROUND FOR LOGIN REDIRECTION TO DASHBOARD (if user session is ACTIVE)
         if($this->session->userdata('logged_in') == 1) {
             $dashboardData['_def_css_files']=$this->load->view('template/assets/css_files','',TRUE);
             $dashboardData['_def_js_files']=$this->load->view('template/assets/js_files','',TRUE);
@@ -60,7 +60,7 @@ class Login extends CORE_Controller {
         } else {
             $this->load->view('login_view',$data); 
         }
-        //END TEMPORARY WORKAROUND FOR LOGIN REDIRECTION TO DASHBOARD (if user session is ACTIVE)
+        //END WORKAROUND FOR LOGIN REDIRECTION TO DASHBOARD (if user session is ACTIVE)
     }
 
 

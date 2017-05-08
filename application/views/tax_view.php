@@ -210,7 +210,7 @@
             <div id="modal_tax" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">
-                        <div class="modal-header modal-erp">
+                        <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
                             <h4 id="tax_title" class="modal-title" style="color: white;"></h4>
                         </div>
@@ -341,6 +341,9 @@
             dt=$('#tbl_tax').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder":"Search Tax"
+                },
                 "ajax" : "Tax/transaction/list",
                 "columns": [
                     {

@@ -150,7 +150,7 @@
                                                         <th>TIN #</th>
                                                         <th>Contact #</th>
                                                         <th>Status</th>
-                                                        <th><center>Action</center></th>
+                                                        <th width="6%"><center>Action</center></th>
                                                     </tr>
 
                                                     </thead>
@@ -262,7 +262,7 @@
                                 Contact Person : <br><input class="form-control" name="contact_person" />
                             </form>
                             <br>
-                            <strong style="color: red; float: right;"><i>Note: Fields with (*) are required.</i></strong><br>
+                            <strong style="color: #f44336; float: right;"><i>Note: Fields with (*) are required.</i></strong><br>
                         </div>
                         <div class="modal-footer">
                             <button id="btn_save_client" class="btn btn-primary">Save Changes</button>
@@ -319,6 +319,9 @@
                     "dom": '<"toolbar">frtip',
                     "bLengthChange":false,
                     "pageLength":15,
+                    "language": {
+                        "searchPlaceholder":"Search Contract"
+                    },
                     "ajax" : "Contracts/transaction/list",
                     "columns": [
                         {
@@ -335,7 +338,7 @@
                         { targets:[5],data: "contact_no" },
                         { targets:[6],data: "is_active",
                             render: function (data, type, full, meta){
-                                return (data==1?"<center><i class='fa fa-check-circle' style='color:green;'></i></center>":"<center><i class='fa fa-times-circle' style='color:red;'></i></center>");
+                                return (data==1?"<center><i class='fa fa-check-circle' style='color:#4caf50;'></i></center>":"<center><i class='fa fa-times-circle' style='color:#f44336;'></i></center>");
                             }
 
                         },
@@ -348,7 +351,19 @@
                                 var btn_cancel='<button class="btn btn-default btn-sm" name="set_inactive"  data-toggle="tooltip" data-placement="top" title="Mark as Inactive/Active" style="margin-right:-5px;"><i class="fa fa-times"></i> </button>';
 
 
-                                return '<center>'+btn_edit+'&nbsp;'+btn_trash+'&nbsp;&nbsp;'+btn_cancel+'</center>';
+                                return  '<table cellspacing="5">'+
+                                            '<tr>'+
+                                                '<td width="40%">'+
+                                                    btn_edit +
+                                                '</td>'+
+                                                '<td width="40%">'+
+                                                    btn_trash +
+                                                '</td>'+
+                                                '<td width="40%">'+
+                                                    btn_cancel + 
+                                                '</td>'+
+                                            '</tr>'+
+                                        '</table>';
                             }
                         }
                     ],
@@ -479,13 +494,13 @@
                             //document list
                             var details=response.doc_details[0];
 
-                            var stat=(details.doc_type_stat>0?"<i class='fa fa-check-circle' style='color: green;'></i>":"<i class='fa fa-times-circle' style='color: red;'></i>");
+                            var stat=(details.doc_type_stat>0?"<i class='fa fa-check-circle' style='color: #4caf50;'></i>":"<i class='fa fa-times-circle' style='color: #f44336;'></i>");
                             var document=[
                                 details.document_type,
                                 details.document_type_description,
                                 '<a href="#" id="link_doc_type_status" class="" data-contract-id="'+_contractID+'" data-document-type-id="'+_docTypeID+'">'+stat+'</a>',
                                 details.documents_count+" File(s)",
-                                '<a href="" id="link_upload" class="" data-contract-id="'+_contractID+'" data-document-type-id="'+_docTypeID+'"><i class="fa fa-upload" style="color:blue;"></i></a>'
+                                '<a href="" id="link_upload" class="" data-contract-id="'+_contractID+'" data-document-type-id="'+_docTypeID+'"><i class="fa fa-upload" style="color:#2196f3;"></i></a>'
                             ];
                             _selectedDocTBL.row(_docSelectedRowObj).data(document).draw(false);
 
@@ -497,7 +512,7 @@
                                 details.date_posted,
                                 details.user_name,
                                 '<center><a href="" id="link_delete" data-file-id="'+details.customer_file_id+'"><i class="fa fa-trash" style="color:black;"></i></a></center>',
-                                '<center><a href="" id="link_search" data-file-id="'+details.customer_file_id+'"><i class="fa fa-search" style="color:blue;"></i></a></center>'
+                                '<center><a href="https://docs.google.com/viewerng/viewer?url=<?php echo base_url(); ?>'+details.document_path+'" id="link_search" target="_blank" data-file-id="'+details.customer_file_id+'"><i class="fa fa-search" style="color:#2196f3;"></i></a></center>'
                             ];
 
                             _selectedFileTBL.row.add(document).draw(false);
@@ -613,9 +628,11 @@
                     }
                 });
             });
+
             $('#btn_cancel').click(function(){
                 showList(true);
             });
+            
             $('#btn_save').click(function(){
                 if(validateRequiredFields('#frm_contract')){
                     if(_txnMode=="new"){
@@ -777,7 +794,7 @@
 
                     var data=response.row_updated[0];
                     if(response.stat=="success"){
-                        var htmlStat=(data.stat=="1"?'<i class="fa fa-check-circle" style="color: green;"></i></center>':'<center><i class="fa fa-times-circle" style="color: red;"></i></center>');
+                        var htmlStat=(data.stat=="1"?'<i class="fa fa-check-circle" style="color: #4caf50;"></i></center>':'<center><i class="fa fa-times-circle" style="color: #f44336;"></i></center>');
 
                         var data_update=[
                             data.service_name,
@@ -825,13 +842,13 @@
 
 
                         var details=response.doc_details[0];
-                        var stat=(details.doc_type_stat>0?"<i class='fa fa-check-circle' style='color: green;'></i>":"<i class='fa fa-times-circle' style='color: red;'></i>");
+                        var stat=(details.doc_type_stat>0?"<i class='fa fa-check-circle' style='color: #4caf50;'></i>":"<i class='fa fa-times-circle' style='color: #f44336;'></i>");
                         var document=[
                             details.document_type,
                             details.document_type_description,
                             '<a href="#" id="link_doc_type_status" class="" data-contract-id="'+contract_id+'" data-document-type-id="'+doc_type_id+'">'+stat+'</a>',
                             details.documents_count+" File(s)",
-                            '<a href="" id="link_upload" class="" data-contract-id="'+contract_id+'" data-document-type-id="'+doc_type_id+'"><i class="fa fa-upload" style="color:blue;"></i></a>'
+                            '<a href="" id="link_upload" class="" data-contract-id="'+contract_id+'" data-document-type-id="'+doc_type_id+'"><i class="fa fa-upload" style="color:#2196f3;"></i></a>'
                         ];
                         _selectedDocTBL.row(row).data(document).draw(false);
                     }

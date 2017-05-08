@@ -140,7 +140,6 @@
 
             <div class="static-content"  >
                 <div class="page-content"><!-- #page-content -->
-
                     <ol class="breadcrumb" style="margin:0;">
                         <li><a href="dashboard">Dashboard</a></li>
                         <li><a href="Accomplishments">Process Accomplishments</a></li>
@@ -152,7 +151,7 @@
 
                                 <div class="col-md-12">
                                     <div id="div_chart_list">
-                                        <div class="panel panel-default" style="border-top: 3px solid #2196f3;">
+                                        <div class="panel panel-default">
 
                                             <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Accomplishments</b></div></a>
 
@@ -167,29 +166,26 @@
 
                                                 <div class="col-xs-12 col-lg-10">
                                                     <div class="panel-body table-responsive" style="padding-left: 1px!important;">
-                                                        <div style="border:1px solid gray;padding: 1%;">
-                                                            <span style="font-size: 14pt;">Accomplishments as of <b id="lbl_date">February 2017</b></span><span style="font-size: 9pt;"> (Please tick mark all accomplished services on <b>Completed Column</b>.)</span><hr />
+                                                        <div style="border:1px solid  #acb8b1;padding: 1%;">
+                                                            <span style="font-size: 14pt;">Accomplishments as of <b id="lbl_date"><?php echo date('F'); ?> 2017</b></span><span style="font-size: 9pt;"> (Please tick mark all accomplished services on <b>Completed Column</b>.)</span><hr />
 
                                                             <table id="tbl_customers" class="custom-design table-striped" cellspacing="0" width="100%">
-                                                                <thead class="">
+                                                                <thead>
                                                                 <tr>
-                                                                    <th>&nbsp;&nbsp;</th>
-                                                                    <th>Code</th>
-                                                                    <th>Company / Client</th>
-                                                                    <th>Trade Name</th>
-                                                                    <th>Office Address</th>
-                                                                    <th>Contact No</th>
-                                                                    <th>Contact Person</th>
+                                                                    <th width="1%">&nbsp;&nbsp;</th>
+                                                                    <th width="10%">Code</th>
+                                                                    <th width="20%">Company / Client</th>
+                                                                    <th width="15%">Trade Name</th>
+                                                                    <th width="20%">Office Address</th>
+                                                                    <th width="10%">Contact No</th>
+                                                                    <th width="15%">Contact Person</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
 
                                                                 </tbody>
                                                             </table>
-
-
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -221,7 +217,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button id="btn_mark_completed" type="button" class="btn btn-primary" data-dismiss="modal">Mark as Complted</button>
+                            <button id="btn_mark_completed" type="button" class="btn btn-primary" data-dismiss="modal">Mark as Completed</button>
                             <button id="btn_close" type="button" class="btn btn-default" data-dismiss="modal">No</button>
                         </div>
                     </div><!---content---->
@@ -282,13 +278,17 @@
 
 
         function reloadCustomers(){
-            dt= $('#tbl_customers').DataTable({
+            dt=$('#tbl_customers').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
                 "language": {
                     "searchPlaceholder": "Search Customer"
                 },
-                "ajax" : "Accomplishments/transaction/list",
+                "ajax" : {
+                    "url":"Accomplishments/transaction/list",
+                    "type":"GET",
+                    "bDestroy": true
+                },
                 "columns": [
                     {
                         "targets": [0],
@@ -411,20 +411,25 @@
                 }
             });
 
-
-
             $('.zTreeDemoBackground').on('click','ul.ztree li span',function(){
                 var sMonth=$(this).closest('li').text();
                 var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
+                var YearOnly=$(this).closest('.level0').attr('title');
 
                 //get month id and year
                 _monthID=$(this).closest('li').index()+1;
                 _year=sYear;
 
-                dt.destroy();
+                dt.clear().destroy();
                 reloadCustomers();
 
-                $('#lbl_date').html(sMonth+" "+sYear);
+                if ($(this).parent().hasClass('level0')) {
+                    $('#lbl_date').html(YearOnly);
+                } else {
+                    $('#lbl_date').html(sMonth+" "+sYear);
+                }
+
+                
             });
 
 

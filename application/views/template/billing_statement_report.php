@@ -105,8 +105,8 @@
 					<tr>
 						<td width="70%" style="border-right: 1px solid black; padding: 0 0 0 40px;"><?php echo $current_charge->description; ?></td>
 						<td width="30%" align="right" style=" padding-right: 10px;"><?php 
-							$sum_curr_charge += $current_charge->charge_amount;
-							echo number_format($current_charge->charge_amount,2); 
+							$sum_curr_charge += $current_charge->charge_line_total;
+							echo number_format($current_charge->charge_line_total,2); 
 						?></td>
 					</tr>
 					<?php } ?>

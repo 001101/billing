@@ -40,15 +40,13 @@
 	        $this->load->view('accomplishments_view',$data);
 		}
 
-
-
         function transaction($txn=null){
             switch($txn){
                 case 'list':
                     $m_customers=$this->Customers_model;
                     $response['data']=$m_customers->get_list('is_deleted=0');
-                    echo json_encode(
-                        $response
+                    echo (
+                        json_encode($response)
                     );
 
                     break;

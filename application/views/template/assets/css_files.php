@@ -31,9 +31,12 @@
     .form-control:focus,
     textarea.form-control:focus,
     select.form-control:focus {
-        -webkit-box-shadow: 0px 0px 16px -2px rgba(30,160,230,1)!important;
-        -moz-box-shadow: 0px 0px 16px -2px rgba(30,160,230,1)!important;
-        box-shadow: 0px 0px 16px -2px rgba(30,160,230,1)!important;
+        background: #fff490;
+        color: black;
+        border-color: #9e9e9e;
+        -webkit-box-shadow: 0px 0px 16px -2px #fff490!important;
+        -moz-box-shadow: 0px 0px 16px -2px #fff490!important;
+        box-shadow: 0px 0px 16px -2px #fff490!important;
     }
 
     .select2-container{
@@ -61,6 +64,13 @@
     }
 
     table.custom-design > thead > tr > th{
+        background: rgba(255,255,255,1)!important;
+        background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)!important;
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)))!important;
+        background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)!important;
+        background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)!important;
+        background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)!important;
+        background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)!important;
         border:1px solid #acb8b1;
         padding: 7px;
     }

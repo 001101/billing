@@ -502,6 +502,9 @@
             dt=$('#tbl_user_list').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder":"Search User"
+                },
                 "ajax" : "Users/transaction/list",
                 "columns": [
                     {

@@ -169,7 +169,7 @@
 
                                 <div class="col-md-12">
                                     <div id="div_chart_list">
-                                        <div class="panel panel-default" style="border-top: 3px solid #2196f3;">
+                                        <div class="panel panel-default">
 
                                             <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Billing Statements</b></div></a>
 
@@ -199,8 +199,8 @@
 
 
                                                                 <div class="tab-pane active" id="billing_statement" style="min-height: 250px;">
-                                                                    <div style="border:1px solid gray;padding: 1%;">
-                                                                        <span style="font-size: 14pt;">Billing as of <b class="lbl_date">February 2017</b></span><hr />
+                                                                    <div style="padding: 0.5%;">
+                                                                        <span style="font-size: 14pt;">Billing as of <b class="lbl_date"><?php echo date('F'); ?> 2017</b></span><hr />
 
                                                                         <table id="tbl_billing" class="custom-design table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
@@ -224,19 +224,19 @@
                                                                 </div>
 
                                                                 <div class="tab-pane " id="customer_list" style="min-height: 250px;">
-                                                                    <div style="border:1px solid gray;padding: 1%;">
-                                                                        <span style="font-size: 14pt;">Account / Contract Billing Status as of <b class="lbl_date">February 2017</b></span><hr />
+                                                                    <div style="padding: 1%;">
+                                                                        <span style="font-size: 14pt;">Account / Contract Billing Status as of <b class="lbl_date"><?php echo date('F'); ?> 2017</b></span><hr />
 
                                                                         <table id="tbl_customers" class="custom-design table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
                                                                             <tr>
-                                                                                <th>&nbsp;&nbsp;</th>
-                                                                                <th>Account #</th>
-                                                                                <th>Company / Client</th>
-                                                                                <th>Trade Name</th>
-                                                                                <th>Contact No</th>
-                                                                                <th style="text-align: center;">Status(Billing)</th>
-                                                                                <th>Process</th>
+                                                                                <th width="5%">&nbsp;&nbsp;</th>
+                                                                                <th width="15%">Account #</th>
+                                                                                <th width="30%">Company / Client</th>
+                                                                                <th width="20%">Trade Name</th>
+                                                                                <th width="10%">Contact No</th>
+                                                                                <th width="5%" style="text-align: center;">Status(Billing)</th>
+                                                                                <th width="5%">Process</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -608,7 +608,7 @@
                     {
                         targets:[6],
                         render: function(data, type, full, meta){
-                            var _btnNew='<center><button class="btn btn-default"  id="btn_print" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Print" >'+
+                            var _btnNew='<center><button class="btn btn-success"  id="btn_print" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Print" >'+
                                 '<i class="fa fa-print"></i> Print </button></center>';
 
                             return _btnNew;
@@ -969,9 +969,6 @@
 
                     }
                 }).done(function(response){
-
-
-
                     $('#div_billing_no_loader').hide();
                     $('#div_billing_no').show();
 
@@ -1005,20 +1002,30 @@
             $('.zTreeDemoBackground').on('click','ul.ztree li span',function(){
                 var sMonth=$(this).closest('li').text();
                 var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
+                var YearOnly=$(this).closest('.level0').attr('title');
 
                 //get month id and year
                 _monthID=$(this).closest('li').index()+1;
                 _year=sYear;
+
+                if ($(this).parent().hasClass('level0')) {
+                    _year = YearOnly;
+                    $('.lbl_date').html(YearOnly);
+                } else {
+                    $('.lbl_date').html(sMonth+" "+sYear);
+                }
 
                 //realod billing list
                 dtBilling.destroy();
                 reloadBilling();
 
                 //realod contract list
-                dt.destroy();
+                dt.clear().destroy();
                 reloadContractBillingStatus();
 
-                $('.lbl_date').html(sMonth+" "+sYear);
+               
+
+                // $('.lbl_date').html(sMonth+" "+sYear);
             });
 
 

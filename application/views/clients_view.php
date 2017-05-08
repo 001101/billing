@@ -328,6 +328,9 @@
                     "dom": '<"toolbar">frtip',
                     "bLengthChange":false,
                     "pageLength":15,
+                    "language": {
+                        "searchPlaceholder":"Search Client"
+                    },
                     "ajax" : "Clients/transaction/list/"+<?php echo $this->session->user_id; ?>,
                     "columns": [
                         {

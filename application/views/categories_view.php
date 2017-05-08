@@ -233,6 +233,9 @@
             dt=$('#tbl_categories').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder":"Search Category"
+                },
                 "ajax" : "Categories/transaction/list",
                 "columns": [
 
