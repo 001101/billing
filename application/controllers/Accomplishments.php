@@ -53,9 +53,11 @@
                 case 'expand-view':
                     $m_customers=$this->Customers_model;
                     $customer_id=$this->input->get('id');
+                    $month=$this->input->get('month');
+                    $year=$this->input->get('year');
 
-                    $data['customer_id']=$this->input->get('id');
-                    $data['services']=$this->Accomplishment_model->get_services_accomplishment($customer_id);
+                    $data['customer_id']=$customer_id;
+                    $data['services']=$this->Accomplishment_model->get_services_accomplishment($customer_id,null,$month,$year);
                     $data['customer_info']=$m_customers->get_list($customer_id);
 
 

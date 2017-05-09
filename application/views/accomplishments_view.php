@@ -396,7 +396,7 @@
                     $.ajax({
                         "dataType":"html",
                         "type":"POST",
-                        "url":"Accomplishments/transaction/expand-view?id="+ d.customer_id,
+                        "url":"Accomplishments/transaction/expand-view?id="+ d.customer_id +"&month="+_monthID+"&year="+_year,
                         "beforeSend" : function(){
                             row.child( '<center><br /><img src="assets/img/loader/ajax-loader-lg.gif" /><br /><br /></center>' ).show();
                         }
@@ -420,18 +420,23 @@
                 _monthID=$(this).closest('li').index()+1;
                 _year=sYear;
 
+
                 dt.clear().destroy();
                 reloadCustomers();
 
                 if ($(this).parent().hasClass('level0')) {
+                    _monthID = 1;
+                    _year = YearOnly;
                     $('#lbl_date').html(YearOnly);
-                } else {
+                } else
                     $('#lbl_date').html(sMonth+" "+sYear);
-                }
 
-                
             });
 
+            $('.zTreeDemoBackground').on('click','.ztree li span.button', function(){
+                _monthID = 1;
+                _year = $('.ztree li span').closest('ul').closest('li').find('a').attr('title');
+            });
 
             $('#btn_mark_completed').click(function(){
                 var _data=[];
