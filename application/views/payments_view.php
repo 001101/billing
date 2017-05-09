@@ -344,6 +344,9 @@
             dt=$('#tbl_payments').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder":"Search Payment"
+                },
                 "ajax" : "Payments/transactions/list",
                 "columns": [
 

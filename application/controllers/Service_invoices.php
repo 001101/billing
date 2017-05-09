@@ -48,14 +48,14 @@
 		function transaction($txn=null) 
 		{
 			switch($txn) {
+
                 case 'finalize':
                     $m_billing=$this->Services_invoice_model;
                     $m_billing_items=$this->Services_invoice_items_model;
                     $m_beginning=$this->Beginning_balance_model;
 
-
                     $m_billing->begin();
-                    $m_billing->set('billing_no','create_billing_no()');
+                    $m_billing->billing_no=$m_billing->create_billing_no();
                     $m_billing->contract_id=$this->input->post('contract_id',TRUE);
                     $m_billing->date_billed=date('Y-m-d',strtotime($this->input->post('date_billed',TRUE)));
                     $m_billing->customer_id=$this->input->post('customer_id',TRUE);
@@ -85,7 +85,7 @@
                         $m_billing_items->billing_id=$billing_id;
                         $m_billing_items->charge_id=$current_charge_id[$i];
                         $m_billing_items->description=$current_charge_description[$i];
-                        $m_billing_items->charge_line_total=$this->get_numeric_value($current_charge_amount);
+                        $m_billing_items->charge_line_total=$this->get_numeric_value($current_charge_amount[$i]);
                         $m_billing_items->save();
                     }
 
@@ -185,7 +185,7 @@
 
 
                     $response['stat']="success";
-                    $response['billing_no']=$m_billing->get_billing_no();
+                    $response['billing_no']=$m_billing->create_billing_no();
                     $response['current_charges']=$this->load->view('template/current_charges_table_body',$data,TRUE);
                     $response['beginning_balances']=$this->load->view('template/beginning_balance_table_body',$data,TRUE);
 
@@ -209,6 +209,7 @@
                     $data['beginning_balances']=$m_beginning->get_list(
                         array('billing_id'=>$billing_id)
                     );
+
                     $data['current_charges']=$m_billing_items->get_list(
                         array('billing_id'=>$billing_id),
                         'billing_items.*,

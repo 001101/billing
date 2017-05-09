@@ -249,6 +249,9 @@
             dt=$('#tbl_charges').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder":"Search Charge"
+                },
                 "ajax" : "Charges/transaction/list",
                 "columns": [
                     { targets:[0],data: "charge_name" },

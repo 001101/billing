@@ -234,6 +234,9 @@
             dt=$('#tbl_documents').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder":"Search Document Type"
+                },
                 "ajax" : "Documents/transaction/list",
                 "columns": [
 

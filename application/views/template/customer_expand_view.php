@@ -94,9 +94,9 @@
                                 <tr>
                                     <td><?php echo $document->document_type; ?></td>
                                     <td><?php echo $document->document_type_description; ?></td>
-                                    <td align="center"><a href="#" id="link_doc_type_status" class="" data-contract-id="<?php echo $contract_id; ?>" data-document-type-id="<?php echo $document->document_type_id; ?>"><i class="fa fa-<?php echo ($document->doc_type_stat>0?"check":"times"); ?>-circle" style="color: <?php echo ($document->doc_type_stat>0?"green":"red"); ?>;"></i></a></td>
+                                    <td align="center"><a href="#" id="link_doc_type_status" class="" data-contract-id="<?php echo $contract_id; ?>" data-document-type-id="<?php echo $document->document_type_id; ?>"><i class="fa fa-<?php echo ($document->doc_type_stat>0?"check":"times"); ?>-circle" style="color: <?php echo ($document->doc_type_stat>0?"#4caf50":"#f44336"); ?>; font-size: 12px;"></i></a></td>
                                     <td align="right"><?php echo number_format($document->documents_count,0); ?> File(s)</i></td>
-                                    <td align="center" width="5%"><a href="" id="link_upload" class="" data-contract-id="<?php echo $contract_id; ?>" data-document-type-id="<?php echo $document->document_type_id; ?>"><i class="fa fa-upload" style="color:blue;"></i></a></td>
+                                    <td align="center" width="5%"><a href="" id="link_upload" class="" data-contract-id="<?php echo $contract_id; ?>" data-document-type-id="<?php echo $document->document_type_id; ?>"><i class="fa fa-upload" style="color:#2196f3;"></i></a></td>
 
                                 </tr>
                             <?php } ?>
@@ -153,7 +153,7 @@
                                     <td><?php echo $customer_file->date_posted; ?></td>
                                     <td><?php echo $customer_file->user_name; ?></td>
                                     <td align="center"><a href="" id="link_delete" data-file-id="<?php echo $customer_file->customer_file_id; ?>"><i class="fa fa-trash" style="color:black;"></i></a></td>
-                                    <td align="center"><a href="" id="link_search" data-file-id="<?php echo $customer_file->customer_file_id; ?>"><i class="fa fa-search" style="color:blue;"></i></a></td>
+                                    <td align="center"><a href="https://docs.google.com/viewerng/viewer?url=<?php echo base_url($customer_file->document_path); ?>" target="_blank" id="link_search" data-file-id="<?php echo $customer_file->customer_file_id; ?>"><i class="fa fa-search" style="color:blue;"></i></a></td>
 
                                 </tr>
                             <?php } ?>

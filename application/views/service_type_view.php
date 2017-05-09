@@ -327,10 +327,10 @@
             dt=$('#tbl_services').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
-                "ajax" : "service_types/transaction/list",
-                "language" : {
-                    "search": "Filter records:"
+                "language": {
+                    "searchPlaceholder":"Search Service Type"
                 },
+                "ajax" : "service_types/transaction/list",
                 "columns": [
                     { targets:[0],data: "service_code" },
                     { targets:[1],data: "service_name" },

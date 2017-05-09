@@ -65,67 +65,84 @@
     <style>
 
     body {
+        font-family: 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif!important;
         overflow-x: hidden;
     }
 
-    html {
-        zoom: 85%;
+    .group-box {
+        padding: 20px;
+        background: white;
+        border: 1px solid #d1d1d1;
     }
 
-        .modal-dialog {
-          width: 95%;
-         /* height: 95%;*/
-          margin: 0;
-          padding-top: 20px;
-          padding-left: 100px;
-        }
+    div.dataTables_filter input {
+        border: 1px solid #c8c8c8;
+        background: transparent!important;
+        border-radius: 0;
+    }
 
-        @media only screen and (max-width: 600px) {
-          .modal-dialog {
-            padding: 5px;
-          }
-        }
+    table, th, td  {
+        border: 1px solid #c8c8c8!important;
+    }
 
-        .modal-content {
-          height: auto;
-          min-height: 100%;
-          border-radius: 0;
-        }
+    .transparent-bg {
+        box-shadow: none;
+        background: rgba(0, 0, 0, .2)!important;
+    }
+
+    .modal-dialog {
+      width: 95%;
+      margin: 0;
+      padding-top: 20px;
+      padding-left: 100px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .modal-dialog {
+        padding: 5px;
+      }
+    }
+
+    .modal-content {
+      height: auto;
+      min-height: 100%;
+      border-radius: 0;
+    }
 
     .tab-container {
         margin-bottom: 0;
     }
 
-        .tile {
-            width: 100%;
-            background: #ffffff;
-            border: 1px solid #d1d1d1;
-            /*border-top: 3px solid #2196f3;*/
-            -webkit-box-shadow: -1px 1px 5px -1px rgba(143,143,143,1);
-            -moz-box-shadow: -1px 1px 5px -1px rgba(143,143,143,1);
-            box-shadow: -1px 1px 5px -1px rgba(143,143,143,1);
-        }
+    .tile {
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid #d1d1d1;
+        /*border-top: 3px solid #03a9f4;*/
+        -webkit-box-shadow: -1px 1px 5px -1px rgba(143,143,143,1);
+        -moz-box-shadow: -1px 1px 5px -1px rgba(143,143,143,1);
+        box-shadow: -1px 1px 5px -1px rgba(143,143,143,1);
+    }
 
-            .tile:hover {
-                background: #2196f3;
-                /*border-top: 3px solid transparent;*/
-                color: white;
-                transition: .80s;
-                transform: rotateX(360deg);
-            }
+    .tile:hover {
+        background: #03a9f4;
+        /*border-top: 3px solid transparent;*/
+        color: white;
+        transition: .80s;
+        transform: rotateX(360deg);
+    }
 
-            .tile:hover .tile-text {
-                color: white;
-            }
+    .tile:hover .tile-text {
+        color: white;
+    }
 
-        .tile-text {
-            color: #2196f3;
-            font-weight: 600;
-        }
+    .tile-text {
+        color: #03a9f4;
+        font-weight: 600;
+    }
 
-        .tile-icon {
-            font-size: 90px;
-        }
+    .tile-icon {
+        font-size: 90px;
+    }
 
     .toolbar{
         float: left;
@@ -166,7 +183,7 @@
     }
 
     .btn-white {
-        background: white none repeat scroll 0 0;
+        background: white none repeat scroll 0 0;   
         border: 1px solid #e7eaec;
         color: inherit;
         text-transform: none;
@@ -214,26 +231,58 @@
 
         ?>
             <div class="static-content-wrapper">
-                <div class="static-content"  >
-                    <div class="page-content"><!-- #page-content -->
+                <div class="static-content" >
+                    <div class="page-content"  style="padding: 0 20px 0 20px;"><!-- #page-content -->
                         <div class="row" style="margin-bottom: 0;">
                             <div class="container-fluid">
                                 <div style="padding: 0 15px 0 15px;">
-                                    <h1><span class="fa fa-dashboard"></span>&nbsp;Dashboard</h1>
+                                    <h1 style="font-weight: 350; font-size: 60px;">Overview</h1>
+                                    <div style="margin-bottom: 5px;">
+                                        <div class="container-fluid">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <h3 style="font-weight: 200;">Hi <strong><?php echo $this->session->user_fullname; ?></strong>, here's a rundown of your business performance and how your payments are doing individually.</h3> 
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3">
+                                                <button id="btn_generate" class="btn btn-primary btn-block" style="font-size: 20px; font-weight: 200; border-radius: 10px; margin-top: 5px;">Generate Billing Report</button>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3">
+                                                <select id="cbo_month" class="form-control" style="font-size: 20px; font-weight: 200; height: 40px; background: transparent; margin-top: 5px;">
+                                                    <option>January</option>
+                                                    <option>February</option>
+                                                    <option>March</option>
+                                                    <option>April</option>
+                                                    <option>May</option>
+                                                    <option>June</option>
+                                                    <option>July</option>
+                                                    <option>August</option>
+                                                    <option>September</option>
+                                                    <option>October</option>
+                                                    <option>November</option>
+                                                    <option>December</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <div class="container-fluid">
+                                            <div class="col-xs-12 col-sm-3">
+                                                <span style="font-size: 800%; font-weight: 200;">0%</span><br>
+                                                <h3 style="font-weight: 100;">Collection for this month</h3>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-9">
+                                                <canvas id="lineChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-xs-12 col-md-3">
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-bg-blue">
-                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-user"></i></h1>
+                                               <h1 class="text-right" style="color: white; font-size: 40px;"><i class="ti ti-user"></i></h1>
                                                <hr>
                                                 <div class="row">
                                                     <div class="container-fluid">
-                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
-                                                            <br>
-                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
-                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
-                                                        </div>
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo ($this->session->user_group_id == 1 ? (string)$users_count->user_count : (string)$customers_count->customer_count) ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo ($this->session->user_group_id == 1 ? (string)$users_count->user_count : (string)$customers_count->customer_count) ?></h1>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -244,17 +293,12 @@
                                     <div class="col-xs-12 col-md-3">
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-bg-red">
-                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-settings"></i></h1>
+                                               <h1 class="text-right" style="color: white; font-size: 40px;"><i class="ti ti-settings"></i></h1>
                                                <hr>
                                                 <div class="row">
                                                     <div class="container-fluid">
-                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
-                                                            <br>
-                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
-                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
-                                                        </div>
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -265,17 +309,12 @@
                                     <div class="col-xs-12 col-md-3">
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-bg-green">
-                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-stats-up"></i></h1>
+                                               <h1 class="text-right" style="color: white; font-size: 40px;"><i class="ti ti-stats-up"></i></h1>
                                                <hr>
                                                 <div class="row">
                                                     <div class="container-fluid">
-                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
-                                                            <br>
-                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
-                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
-                                                        </div>
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -286,17 +325,12 @@
                                     <div class="col-xs-12 col-md-3">
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-bg-light-blue">
-                                               <h1 class="text-right" style="color: white; font-size: 50px;"><i class="ti ti-money"></i></h1>
+                                               <h1 class="text-right" style="color: white; font-size: 40px;"><i class="ti ti-money"></i></h1>
                                                <hr>
                                                 <div class="row">
                                                     <div class="container-fluid">
-                                                        <div class="col-md-2" style="color: white; padding-left: 0;">
-                                                            <br>
-                                                            <span style="font-size: 20px; margin-top: 20px;"><?php echo "-50%"; ?></span>
-                                                            <span class="ti ti-angle-up" style="font-size: 20px; font-weight: 400;"></span>
-                                                        </div>
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 70px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -310,34 +344,25 @@
                             <div class="row">
                                 <div class="container-fluid">
                                     <div style="padding: 0 15px 0 5px;">
-                                        <div class="col-xs-12 col-sm-4" style="padding: 7px;">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" style="border-radius: 0;">
-                                                    <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-users"></i>&nbsp;Clients</span>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <canvas id="DoughnutChart" height="150px"></canvas>
-                                                </div>
+                                        <div class="col-xs-12 col-sm-8" style="padding: 7px;">
+                                            <div class="container-fluid group-box">
+                                                <h4 style="position: absolute; font-weight: 700; margin-top: 5px;">CLIENTS STATUS</h4>
+                                                <table id="tbl_clients" class="table" style="min-height: 395px; max-height: 395px;">
+                                                    <thead>
+                                                        <th>Client name</th>
+                                                        <th>Address</th>
+                                                        <th>Contact Person</th>
+                                                        <th>Contact #</th>
+                                                        <th>Status</th>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-4" style="padding: 7px;">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" style="border-radius: 0;">
-                                                    <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-cog"></i>&nbsp;Payments</span>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <canvas id="lineChart" height="150px"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-4" style="padding: 7px;">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" style="border-radius: 0;">
-                                                    <span style="color: white; font-weight: 200; font-size: 16px;"><i class="fa fa-file-text-o"></i>&nbsp;Summary</span>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <canvas id="barChart" height="150px"></canvas>
-                                                </div>
+                                            <div class="container-fluid group-box">
+                                                <h4 style="position: absolute; font-weight: 700; margin-top: 5px;">BILLING PERFORMANCE</h4><br><br>
+                                                <canvas id="barChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -368,109 +393,47 @@
 <!-- CHART -->
 <script src="assets/plugins/chartJs/Chart.min.js"></script>
 
-<script>
-       var ctx = document.getElementById("DoughnutChart");
+<script type="text/javascript" src="assets/plugins/datatables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
 
-        var data = {
-            labels: [
-                "Paid",
-                "Unpaid",
-                "Processing"
-            ],
-            datasets: [
-                {
-                    data: [70, 10, 20],
-                    backgroundColor: [
-                        "#36A2EB",
-                        "#FF6384",
-                        "#ff9800"
-                    ],
-                    hoverBackgroundColor: [
-                        "#36A2EB",
-                        "#FF4394",
-                        "#ff9800"
-                    ]
-                }]
-        };
-
-        var options = {
-            cutoutPercentage:50,
-            legend: {
-                position: 'bottom'
-            },
-            animation: {
-                animateScale:true
-            }
-        };
-
-        var myDoughnutChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: data,
-            options: options
-        });
-</script>
-<script>
-    var ctx2 = document.getElementById("lineChart");
-
-    var dataLine = {
-        labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
-        datasets: [
-            {
-                label: "Collection",
-                fill: false,
-                lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 10,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: [65, 59, 80, 81, 56, 55, 40,50,60,10,20,21],
-                spanGaps: false,
-            }
-        ]
-    };
-
-    var myLineChart = new Chart(ctx2, {
-        type: 'line',
-        data: dataLine
-    });
-</script>
 <script>
     var ctx3 = document.getElementById('barChart');
-
+    ctx3.height = 300;
     var dataBar = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         datasets: [
             {
                 label: "Summary",
                 backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd',
+                    '#60ccfd'
                 ],
-                // borderColor: [
-                //     'rgba(255,99,132,1)',
-                //     'rgba(54, 162, 235, 1)',
-                //     'rgba(255, 206, 86, 1)',
-                //     'rgba(75, 192, 192, 1)',
-                //     'rgba(153, 102, 255, 1)',
-                //     'rgba(255, 159, 64, 1)'
-                // ],
-                borderWidth: 1,
-                data: [65, 59, 80, 81, 56, 55, 40],
+                borderColor: [
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4',
+                    '#03a9f4'
+                ],
+                borderWidth: 3,
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             }
         ]
     };
@@ -488,6 +451,64 @@
             }
         }
     });
+</script>
+
+<script>
+    var ctx2 = document.getElementById("lineChart");
+    ctx2.height = 60;
+    var dataLine = {
+        labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
+        datasets: [
+            {
+                label: "Collection",
+                fill: true,
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 10,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                spanGaps: false,
+            }
+        ]
+    };
+
+    var myLineChart = new Chart(ctx2, {
+        type: 'line',
+        data: dataLine
+    });
+</script>
+
+
+<script>
+    (function(){
+        var dt;
+
+        dt=$('#tbl_clients').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bLengthChange":false,
+            "language": {
+                "searchPlaceholder": "Search Client"
+            }
+        });
+
+        var bindEventHandlers=function(){
+            $('#btn_generate').click(function(){
+                alert('FEATURE UNDER CONSTRUCTION!');
+            });
+        }();
+    })();
 </script>
 
 <!-- DATATABLE -->
