@@ -104,7 +104,7 @@ $(function() {
 
 
 			//TODO: Check in Fixed Sidebar Mode
-
+			var defaultNavColor = localStorage.setItem('navbar-color','navbar-green');
 			var navColor = localStorage.getItem('navbar-color');
 			if (navColor) {
 				$('#topnav').removeClass(headerColors).addClass(navColor);
@@ -123,7 +123,10 @@ $(function() {
                     $('#tbl_entries > thead > tr > th').css('color','white');
                     $('div.panel-heading b').css('color','white');
                 }
-
+			} else if (navColor == null) {
+				$('#topnav').removeClass(headerColors).addClass(defaultNavColor);
+                $('div.panel-heading').css('background-color',$('#topnav').css('background-color'));
+                $('div.modal-header').css('background-color',$('#topnav').css('background-color'));
 			}
 
 			var sideColor = localStorage.getItem('sidebar-color');
@@ -133,6 +136,9 @@ $(function() {
 
                 $('div.panel').css('border-color',$('#topnav').css('background-color'));
 
+			} else if (sideColor == null) {
+				$('.static-sidebar-wrapper, .fixed-sidebar-wrapper').removeClass(sidebarColors).addClass('sidebar-green');
+				$('#wrapper>nav.navbar').removeClass(sidebarColors).addClass('navbar-green');
 			}
 
 		});
