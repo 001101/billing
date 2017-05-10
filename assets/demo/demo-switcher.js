@@ -104,7 +104,6 @@ $(function() {
 
 
 			//TODO: Check in Fixed Sidebar Mode
-			var defaultNavColor = localStorage.setItem('navbar-color','navbar-green');
 			var navColor = localStorage.getItem('navbar-color');
 			if (navColor) {
 				$('#topnav').removeClass(headerColors).addClass(navColor);
@@ -124,7 +123,7 @@ $(function() {
                     $('div.panel-heading b').css('color','white');
                 }
 			} else if (navColor == null) {
-				$('#topnav').removeClass(headerColors).addClass(defaultNavColor);
+				$('#topnav').removeClass(headerColors).addClass('navbar-green');
                 $('div.panel-heading').css('background-color',$('#topnav').css('background-color'));
                 $('div.modal-header').css('background-color',$('#topnav').css('background-color'));
 			}
