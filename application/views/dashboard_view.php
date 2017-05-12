@@ -40,24 +40,25 @@
         }
 
         .panel-bg-green {
-            background: -moz-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* ff3.6+ */
-            background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #429745), color-stop(34%, #4caf50), color-stop(78%, #6ec071), color-stop(100%, #6ec071)); /* safari4+,chrome */
-            background: -webkit-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* safari5.1+,chrome10+ */
-            background: -o-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* opera 11.10+ */
-            background: -ms-linear-gradient(206deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* ie10+ */
-            background: linear-gradient(244deg, #6ec071 0%, #6ec071 22%, #4caf50 66%, #429745 100%); /* w3c */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#429745', endColorstr='#6ec071',GradientType=1 ); /* ie6-9 */
+           background: rgba(119,41,158,1);
+background: -moz-linear-gradient(left, rgba(119,41,158,1) 0%, rgba(136,40,184,1) 55%, rgba(173,30,245,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(119,41,158,1)), color-stop(55%, rgba(136,40,184,1)), color-stop(100%, rgba(173,30,245,1)));
+background: -webkit-linear-gradient(left, rgba(119,41,158,1) 0%, rgba(136,40,184,1) 55%, rgba(173,30,245,1) 100%);
+background: -o-linear-gradient(left, rgba(119,41,158,1) 0%, rgba(136,40,184,1) 55%, rgba(173,30,245,1) 100%);
+background: -ms-linear-gradient(left, rgba(119,41,158,1) 0%, rgba(136,40,184,1) 55%, rgba(173,30,245,1) 100%);
+background: linear-gradient(to right, rgba(119,41,158,1) 0%, rgba(136,40,184,1) 55%, rgba(173,30,245,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#77299e', endColorstr='#ad1ef5', GradientType=1 );
         }
 
         .panel-bg-light-blue {
-            background: rgba(0,188,212,1);
-            background: -moz-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
-            background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(0,188,212,1)), color-stop(47%, rgba(101,189,214,1)), color-stop(100%, rgba(147,206,222,1)));
-            background: -webkit-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
-            background: -o-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
-            background: -ms-linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
-            background: linear-gradient(45deg, rgba(0,188,212,1) 0%, rgba(101,189,214,1) 47%, rgba(147,206,222,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00bcd4', endColorstr='#93cede', GradientType=1 );
+            background: rgba(255,146,10,1);
+background: -moz-linear-gradient(left, rgba(255,146,10,1) 0%, rgba(255,175,75,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,146,10,1)), color-stop(100%, rgba(255,175,75,1)));
+background: -webkit-linear-gradient(left, rgba(255,146,10,1) 0%, rgba(255,175,75,1) 100%);
+background: -o-linear-gradient(left, rgba(255,146,10,1) 0%, rgba(255,175,75,1) 100%);
+background: -ms-linear-gradient(left, rgba(255,146,10,1) 0%, rgba(255,175,75,1) 100%);
+background: linear-gradient(to right, rgba(255,146,10,1) 0%, rgba(255,175,75,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', endColorstr='#ffaf4b', GradientType=1 );
         }
     </style>
 
@@ -67,6 +68,19 @@
     body {
         font-family: 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif!important;
         overflow-x: hidden;
+    }
+
+    .progress {height: 20px; border-radius: 10px; background: #c8c8c8;}
+
+    .progress-bar { 
+        background: #4caf50;
+    }
+
+    .group-box-header {
+        background: #4caf50; 
+        padding: 2px 15px 2px 15px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
 
     .group-box {
@@ -81,8 +95,25 @@
         border-radius: 0;
     }
 
-    table, th, td  {
+    th {
+        background: #c1e4c2!important;
         border: 1px solid #c8c8c8!important;
+        border-bottom: 3px solid #a9daab!important;
+    }
+
+    
+    tr:nth-child(even) {
+        background: #f3f3f3!important;
+    }
+
+    table {
+        border: 1px solid #e1e1e1!important;
+    }
+
+    table, td  {
+        /*border: 1px solid #e1e1e1!important;*/
+        border: none;
+        vertical-align: middle!important;
     }
 
     .transparent-bg {
@@ -240,25 +271,28 @@
                                     <div style="margin-bottom: 5px;">
                                         <div class="container-fluid">
                                             <div class="col-xs-12 col-sm-6">
-                                                <h3 style="font-weight: 200;">Hi <strong><?php echo $this->session->user_fullname; ?></strong>, here's a rundown of your business performance and how your payments are doing individually.</h3> 
-                                            </div>
+                                                <h3 style="font-weight: 200;">Hi <strong><?php echo $this->session->user_fullname; ?></strong>,
+                                                <?php echo
+                                                    ($this->session->user_group_id == 1 ? 'heres a rundown of your business performance and how your collections are doing individually.' : 'heres a rundown of your performance and how your collections are doing individually.')
+                                                ?></h3> 
+                                            </div>  
                                             <div class="col-xs-12 col-sm-3">
                                                 <button id="btn_generate" class="btn btn-primary btn-block" style="font-size: 20px; font-weight: 200; border-radius: 10px; margin-top: 5px;">Generate Billing Report</button>
                                             </div>
                                             <div class="col-xs-12 col-sm-3">
                                                 <select id="cbo_month" class="form-control" style="font-size: 20px; font-weight: 200; height: 40px; background: transparent; margin-top: 5px;">
-                                                    <option>January</option>
-                                                    <option>February</option>
-                                                    <option>March</option>
-                                                    <option>April</option>
-                                                    <option>May</option>
-                                                    <option>June</option>
-                                                    <option>July</option>
-                                                    <option>August</option>
-                                                    <option>September</option>
-                                                    <option>October</option>
-                                                    <option>November</option>
-                                                    <option>December</option>
+                                                    <option value="01">January</option>
+                                                    <option value="02">February</option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July</option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -266,7 +300,7 @@
                                     <div style="margin-bottom: 15px;">
                                         <div class="container-fluid">
                                             <div class="col-xs-12 col-sm-3">
-                                                <span style="font-size: 800%; font-weight: 200;">0%</span><br>
+                                                <span style="font-size: 800%; font-weight: 200;"><?php echo number_format($collection_percentage->pc,0); ?>%</span><br>
                                                 <h3 style="font-weight: 100;">Collection for this month</h3>
                                             </div>
                                             <div class="col-xs-12 col-sm-9">
@@ -298,34 +332,35 @@
                                                 <div class="row">
                                                     <div class="container-fluid">
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo $service_count->total_service_count; ?></h1>
                                                         </div>
                                                     </div>
                                                 </div>
-                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Services</h4>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Total Services</h4>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-md-3">
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-bg-green">
-                                               <h1 class="text-right" style="color: white; font-size: 40px;"><i class="ti ti-stats-up"></i></h1>
+                                               <h1 class="pull-left" style="color: white; font-size: 25px;"></h1>
+                                               <h1 class="text-right" style="color: white; font-size: 40px;">&#8369;</h1>
                                                <hr>
                                                 <div class="row">
                                                     <div class="container-fluid">
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo $unpaid_billing->unpaid_count; ?></h1>
                                                         </div>
                                                     </div>
                                                 </div>
-                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Performance</h4>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Total Unpaid billing this month</h4>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-md-3">
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-bg-light-blue">
-                                               <h1 class="text-right" style="color: white; font-size: 40px;"><i class="ti ti-money"></i></h1>
+                                               <h1 class="text-right" style="color: white; font-size: 40px;">&#8369;</h1>
                                                <hr>
                                                 <div class="row">
                                                     <div class="container-fluid">
@@ -334,7 +369,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Payments</h4>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Collection this month</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -345,23 +380,27 @@
                                 <div class="container-fluid">
                                     <div style="padding: 0 15px 0 5px;">
                                         <div class="col-xs-12 col-sm-8" style="padding: 7px;">
+                                            <div class="group-box-header">
+                                                <h4 style="color: white;"><i class="fa fa-user"></i> CLIENTS ACCOMPLISHMENTS STATUS</h4>
+                                            </div>
                                             <div class="container-fluid group-box">
-                                                <h4 style="position: absolute; font-weight: 700; margin-top: 5px;">CLIENTS STATUS</h4>
-                                                <table id="tbl_clients" class="table" style="min-height: 395px; max-height: 395px;">
+                                                <h4 style="position: absolute; font-weight: 700; margin-top: 5px;">CLIENTS LIST</h4>
+                                                <table id="tbl_clients" class="table" width="100%" style="min-height: 360px; max-height: 395px;">
                                                     <thead>
-                                                        <th>Client name</th>
-                                                        <th>Address</th>
-                                                        <th>Contact Person</th>
-                                                        <th>Contact #</th>
-                                                        <th>Status</th>
+                                                        <th width="25%">CLIENT NAME</th>
+                                                        <th width="20%">CONTACT PERSON</th>
+                                                        <th width="10%">CONTACT #</th>
+                                                        <th width="30%">PROGRESS</th>
                                                     </thead>
                                                     <tbody></tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-4" style="padding: 7px;">
+                                            <div class="group-box-header">
+                                                <h4 style="color: white;"><i class="fa fa-info-circle"></i> BILLING INFORMATION</h4>
+                                            </div>
                                             <div class="container-fluid group-box">
-                                                <h4 style="position: absolute; font-weight: 700; margin-top: 5px;">BILLING PERFORMANCE</h4><br><br>
                                                 <canvas id="barChart"></canvas>
                                             </div>
                                         </div>
@@ -395,6 +434,10 @@
 
 <script type="text/javascript" src="assets/plugins/datatables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
+
+<!-- numeric formatter -->
+<script src="assets/plugins/formatter/autoNumeric.js" type="text/javascript"></script>
+<script src="assets/plugins/formatter/accounting.js" type="text/javascript"></script>
 
 <script>
     var ctx3 = document.getElementById('barChart');
@@ -478,7 +521,7 @@
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                data: <?php echo json_encode($collections); ?>,
                 spanGaps: false,
             }
         ]
@@ -500,7 +543,23 @@
             "bLengthChange":false,
             "language": {
                 "searchPlaceholder": "Search Client"
-            }
+            },
+            "ajax":"Accomplishments/transaction/accomplishment-percentage/",
+            "columns":[
+                { targets:[0],data: "company_name" },
+                { targets:[1],data: "contact_person" },
+                { targets:[2],data: "contact_no" },
+                { 
+                    targets:[3],
+                    render: function (data, type, full, meta){
+                        return  '<div class="progress" style="margin-top:12px;">'+
+                                    '<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: '+ accounting.formatNumber(full.percentage,2) +'%;">'+
+                                         accounting.formatNumber(full.percentage,0) +'% Complete'
+                                  '</div>'+
+                                '</div>'
+                    }
+                }
+            ]
         });
 
         var bindEventHandlers=function(){

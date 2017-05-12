@@ -205,7 +205,7 @@ class Clients extends CORE_Controller {
                         'is_deleted=FALSE AND is_active=TRUE',
                         'contracts.customer_id'=>$customer_id
                     ),
-                    'contracts.contract_no,
+                    'DISTINCT(contracts.contract_no) AS contract_no,
                     contracts.date_started,
                     IFNULL(charges.charge_amount,0) as charge_amount,
                     contracts.is_active',

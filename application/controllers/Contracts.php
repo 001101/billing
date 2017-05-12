@@ -91,9 +91,6 @@ class Contracts extends CORE_Controller
                 $m_contracts=$this->Contract_model;
                 $contract_id=$this->input->post('contract_id');
 
-
-
-
                 $m_contracts->begin();
 
                 $m_contracts->contract_no=$this->input->post('contract_no',TRUE);
@@ -171,7 +168,7 @@ class Contracts extends CORE_Controller
 
                 );
 
-                $this->load->view('Template/customer_expand_view',$data);
+                $this->load->view('template/customer_expand_view',$data);
                 break;
 
 
