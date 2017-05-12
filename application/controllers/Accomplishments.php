@@ -42,6 +42,11 @@
 
         function transaction($txn=null){
             switch($txn){
+                case 'accomplishment-percentage':
+                    $response['data']=$this->Accomplishment_model->get_accomplishment_percentage();    
+                    echo json_encode($response);
+                break;
+                
                 case 'list':
                     $m_customers=$this->Customers_model;
                     $response['data']=$m_customers->get_list('is_deleted=0');

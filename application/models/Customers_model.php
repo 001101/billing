@@ -18,7 +18,7 @@ class Customers_model extends CORE_Model {
             ((IFNULL(unpaid.total_billing_current_amount, 0) - IFNULL(unpaid.advance_payment, 0)) - IFNULL(paid.payment_amount,0)) AS amount_due
         FROM
             (SELECT 
-                billing_info.billing_id,
+                DISTINCT(billing_info.billing_id) AS billing_id,
                 billing_info.billing_no,
                 billing_info.contract_id,
                 contracts.contract_no,

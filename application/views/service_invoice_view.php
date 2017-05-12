@@ -1022,14 +1022,8 @@
                 //realod contract list
                 dt.clear().destroy();
                 reloadContractBillingStatus();
-
-               
-
                 // $('.lbl_date').html(sMonth+" "+sYear);
             });
-
-
-
 
         })();
 

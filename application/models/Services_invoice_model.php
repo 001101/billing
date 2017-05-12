@@ -42,6 +42,40 @@
             return $this->db->query($sql)->result();
         }
 
+        function get_collection_percentage() {
+            $sql = "SELECT
+            IFNULL((no_fully_paid / no_billing) * 100, 0) AS pc
+            FROM
+            (SELECT
+            billing_id,
+            posted_by,
+            COUNT(billing_id) AS no_fully_paid
+            FROM `billing_info`
+            WHERE 
+            is_active=TRUE 
+            AND is_deleted=FALSE
+            AND payment_status = 2
+            AND date_billed 
+            LIKE CONCAT('%',YEAR(CURDATE()),'-',LPAD(MONTH(CURDATE()), 2, '0'),'%')
+            ".($this->session->user_group_id == 1 ? '' : ' AND posted_by='.$this->session->user_group_id).") AS t1
+            LEFT JOIN 
+            (SELECT
+            billing_id,
+            posted_by,
+            COUNT(billing_id) AS no_billing
+            FROM
+            billing_info
+            WHERE
+            is_active=TRUE
+            AND is_deleted=FALSE
+            AND date_billed 
+            LIKE CONCAT('%',YEAR(CURDATE()),'-',LPAD(MONTH(CURDATE()), 2, '0'),'%')
+            ".($this->session->user_group_id == 1 ? '' : ' AND posted_by='.$this->session->user_group_id).") AS t2
+            ON t2.billing_id=t1.billing_id";
+
+            return $this->db->query($sql)->result();
+        }
+
         function create_billing_no() {
 
 

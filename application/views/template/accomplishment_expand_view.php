@@ -17,7 +17,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($services as $service){ ?>
+                <?php foreach($services as $service){  ?>
+
                     <tr>
                         <td><?php echo $service->service_name;  ?></td>
                         <td><?php echo $service->narration;  ?></td>
