@@ -49,7 +49,7 @@
 
 					$response['data']=$m_payment_info->get_list(
 						'payment_info.is_deleted=FALSE',
-						'payment_info.*, customers_info.*, user_accounts.*, payment_methods.*',
+						'payment_info.is_active AS active_status,payment_info.*, customers_info.*, user_accounts.*, payment_methods.*',
 						array(
 							array('customers_info','customers_info.customer_id=payment_info.customer_id','left'),
 							array('payment_methods','payment_methods.payment_method_id=payment_info.payment_method_id','left'),
@@ -59,6 +59,20 @@
 
 					echo json_encode($response);
 					break;
+
+				case 'cancel':
+					$m_payment_info=$this->Payments_info_model;
+
+					$payment_id=$this->input->post('payment_id',TRUE);
+					$m_payment_info->is_active=FALSE;
+					$m_payment_info->modify($payment_id);
+
+					$response['title'] = 'Success!';
+                    $response['stat'] = 'success';
+                    $response['msg'] = 'Collection Entry successfully cancelled.';
+
+                    echo json_encode($response);
+				break;
 
 				case 'create':
 					$m_payment_info=$this->Payments_info_model;
@@ -73,6 +87,8 @@
 					$m_payment_info->remarks=$this->input->post('remarks',TRUE);
 					$m_payment_info->posted_by=$this->session->user_id;
 					$m_payment_info->set('date_posted','NOW()');
+					$m_payment_info->check_date=date('Y-m-d',strtotime($this->input->post('check_date',TRUE)));
+					$m_payment_info->check_no=$this->input->post('check_no',TRUE);
 					$m_payment_info->save();
 
 					$payment_id=$m_payment_info->last_insert_id();
@@ -102,7 +118,7 @@
                     $response['msg'] = 'Collection Entry successfully posted.';
                     $response['row_added']=$m_payment_info->get_list(
 						array('payment_info.is_deleted=FALSE','payment_info.payment_id'=>$payment_id),
-						'payment_info.*, customers_info.*, user_accounts.*, payment_methods.*',
+						'payment_info.is_active as active_status, payment_info.*, customers_info.*, user_accounts.*, payment_methods.*',
 						array(
 							array('customers_info','customers_info.customer_id=payment_info.customer_id','left'),
 							array('payment_methods','payment_methods.payment_method_id=payment_info.payment_method_id','left'),

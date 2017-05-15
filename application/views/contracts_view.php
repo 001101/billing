@@ -340,7 +340,6 @@
                             render: function (data, type, full, meta){
                                 return (data==1?"<center><i class='fa fa-check-circle' style='color:#4caf50;'></i></center>":"<center><i class='fa fa-times-circle' style='color:#f44336;'></i></center>");
                             }
-
                         },
                         {
                             targets:[7],

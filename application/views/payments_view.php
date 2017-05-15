@@ -127,6 +127,7 @@
                                                 <th width="20%">Remarks</th>
                                                 <th width="15%">Posted by</th>
                                                 <th width="10%">Date Paid</th>
+                                                <th width="5%">Status</th>
                                                 <th width="10%" style="text-align: right;">Amount</th>
                                                 <th>
                                                     <center>Action</center>
@@ -174,19 +175,34 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="container-fluid">
-                                                                <div class="col-xs-12 col-sm-5">
-                                                                    <strong>Payment Method:</strong><br>
-                                                                        <select id="cbo_payment_method" name="payment_method_id" class="form-control" style="width: 100%;" data-error-msg="Payment method is required!" required>
-                                                                            <?php foreach($methods as $method) { ?>
-                                                                                <option value="<?php echo $method->payment_method_id; ?>">
-                                                                                    <?php echo $method->payment_method; ?>
-                                                                                </option>
-                                                                            <?php } ?>
-                                                                        </select>
+                                                            <div class="col-xs-12 col-sm-5">
+                                                                <strong>Payment Method:</strong><br>
+                                                                <select id="cbo_payment_method" name="payment_method_id" class="form-control" style="width: 100%;" data-error-msg="Payment method is required!" required>
+                                                                    <?php foreach($methods as $method) { ?>
+                                                                        <option value="<?php echo $method->payment_method_id; ?>">
+                                                                            <?php echo $method->payment_method; ?>
+                                                                        </option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-3 check-prop hidden">
+                                                                <strong>Check Date :</strong><br>
+                                                                <div class="input-group">
+                                                                     <span class="input-group-addon">
+                                                                         <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                    <input type="text" name="check_date" class="date-picker form-control" value="<?php echo date("m/d/Y"); ?>" placeholder="Check Date">
                                                                 </div>
-                                                                <div class="col-xs-12 col-sm-offset-7">
-                                                                    
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-4 check-prop hidden">
+                                                                <strong>Check # :</strong>
+                                                                <div class="input-group">
+                                                                     <span class="input-group-addon">
+                                                                         <i class="fa fa-code"></i>
+                                                                    </span>
+                                                                    <input type="text" name="check_no" class="form-control" placeholder="Check #">
                                                                 </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -225,16 +241,12 @@
 
                                                                     </tbody>
                                                                     <tfoot>
-                                                                    <!-- <tr>
-                                                                        <td colspan="6" style="height: 50px;">&nbsp;</td>
-                                                                    </tr> -->
-                                                                    <tr>
-                                                                        <td colspan="5" align="right"><b>Total : </b></td>
-                                                                        <td id="td_total_amount_due" align="right"><b>0.00</b></td>
-                                                                        <td colspan="1" id="td_total_payment_amount" align="right"><b>0.00</b></td>
-                                                                        <td></td>
-                                                                    </tr>
-
+                                                                        <tr>
+                                                                            <td colspan="5" align="right"><b>Total : </b></td>
+                                                                            <td id="td_total_amount_due" align="right"><b>0.00</b></td>
+                                                                            <td colspan="1" id="td_total_payment_amount" align="right"><b>0.00</b></td>
+                                                                            <td></td>
+                                                                        </tr>
                                                                     </tfoot>
                                                                 </table>
                                                         </div>
@@ -264,12 +276,12 @@
             <div class="modal-content"><!---content--->
                 <div class="modal-header ">
                     <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
-                    <h4 class="modal-title" style="color: white;"><span id="modal_mode"> </span>Confirm Deletion</h4>
+                    <h4 class="modal-title" style="color: white;"><span id="modal_mode"> </span>Confirm Cancellation</h4>
 
                 </div>
 
                 <div class="modal-body">
-                    <p id="modal-body-message">Are you sure you want to delete?</p>
+                    <p id="modal-body-message">Are you sure you want to cancel this payment?</p>
                 </div>
 
                 <div class="modal-footer">
@@ -341,40 +353,7 @@
     $(document).ready(function(){
         var _cboCustomers, _cboPayments, _txnMode;
         var initializeControls=function(){
-            dt=$('#tbl_payments').DataTable({
-                "dom": '<"toolbar">frtip',
-                "bLengthChange":false,
-                "language": {
-                    "searchPlaceholder":"Search Payment"
-                },
-                "ajax" : "Payments/transactions/list",
-                "columns": [
-
-                    { targets:[0],data: "receipt_no" },
-                    { targets:[1],data: "company_name" },
-                    { targets:[2],data: "payment_method" },
-                    { targets:[3],data: "remarks" },
-                    { targets:[4],data: "user_name" },
-                    { targets:[5],data: "date_paid" },
-                    { 
-                        class: "numeriCol",
-                        targets:[6],data: "total_amount_paid",
-                        render: function (data, type, full) {
-                             return accounting.formatNumber(data, 2, ",");
-                        }
-                    },
-                    {
-                        targets:[7],
-                        render: function (data, type, full, meta){
-                            var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
-                            var btn_trash='<button class="btn btn-danger btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
-
-                            return '<center>'+btn_trash+'</center>';
-                        }
-                    }
-                ]
-            });
-
+            InitializeDatatable();
             _cboCustomers=$("#cbo_customers").select2({
                 placeholder: "Please select Client.",
                 allowClear: true
@@ -405,6 +384,50 @@
             $('#payment_trans').hide();
         }();
 
+        function InitializeDatatable() {
+            dt=$('#tbl_payments').DataTable({
+                "dom": '<"toolbar">frtip',
+                "bLengthChange":false,
+                "language": {
+                    "searchPlaceholder":"Search Payment"
+                },
+                "ajax" :{ 
+                    "url":"Payments/transactions/list",
+                    "bDestroy":true
+                },
+                "columns": [
+
+                    { targets:[0],data: "receipt_no" },
+                    { targets:[1],data: "company_name" },
+                    { targets:[2],data: "payment_method" },
+                    { targets:[3],data: "remarks" },
+                    { targets:[4],data: "user_name" },
+                    { targets:[5],data: "date_paid" },
+                    { targets:[6],data: "active_status",
+                        render: function (data, type, full, meta){
+                            return (data==1?"<center><i class='fa fa-check-circle' style='color:#4caf50;'></i></center>":"<center><i class='fa fa-times-circle' style='color:#f44336;'></i></center>");
+                        }
+                    },
+                    { 
+                        class: "numeriCol",
+                        targets:[7],data: "total_amount_paid",
+                        render: function (data, type, full) {
+                             return accounting.formatNumber(data, 2, ",");
+                        }
+                    },
+                    {
+                        targets:[8],
+                        render: function (data, type, full, meta){
+                            var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
+                            var btn_trash='<button class="btn btn-danger btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Cancel"><i class="fa fa-times"></i> </button>';
+
+                            return '<center>'+btn_trash+'</center>';
+                        }
+                    }
+                ]
+            });
+        }
+
         var bindEventHandlers=function(){
             $('#btn_new').on('click',function(){
                 //showList(false);
@@ -416,6 +439,11 @@
             $('#btn_cancel').on('click',function(){
                 //showList(true);
                 $('#modal_payment').modal('hide');
+            });
+
+            _cboPayments.on('change', function() {
+                if (_cboPayments.val() == 2)
+                    $('.check-prop').toggleClass('hidden');
             });
 
             _cboCustomers.on('change', function() {
@@ -494,6 +522,30 @@
                 row.find('input[name="payment_amount[]"]').val(accounting.formatNumber(payableAmount,2));
                 reComputeDetails();
             });
+
+            $('#tbl_payments > tbody').on('click','button[name="remove_info"]',function(e){
+                _selectRowObj=$(this).closest('tr');
+                var data=dt.row(_selectRowObj).data();
+                _selectedID = data.payment_id;
+
+                if (data.active_status == 0) {
+                    showNotification({
+                        "title":"Error!",
+                        "stat":"error",
+                        "msg":"You cannot cancel this payment, it's already cancelled."
+                    });
+                } else {
+                    $('#modal_confirmation').modal('show');
+                }
+            });
+
+            $('#btn_yes').click(function(){
+                cancelPayment().done(function(response){
+                    showNotification(response);
+                    dt.destroy();
+                    InitializeDatatable();
+                });
+            });
         }();
 
         var clearFields=function(f){
@@ -551,6 +603,15 @@
                 "data":_data,
                 "beforeSend": showSpinningProgress($('#btn_save'))
             });
+        };
+
+        var cancelPayment=function(){
+            return $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":"Payments/transactions/cancel",
+                "data":{payment_id : _selectedID}
+            })
         };
 
         var showNotification=function(obj){

@@ -70,6 +70,31 @@
             zoom: 85%;
         }
 
+        table, td  {
+        /*border: 1px solid #e1e1e1!important;*/
+        border: none;
+        vertical-align: middle!important;
+        }
+
+        th {
+            background: #c1e4c2!important;
+            border: 1px solid #c8c8c8!important;
+            border-bottom: 3px solid #a9daab!important;
+        }
+
+        
+        tr:nth-child(even) {
+            background: #f3f3f3;
+        }
+
+        tr:hover {
+            background: #d9eed9;
+        }
+
+        table {
+            border: 1px solid #e1e1e1!important;
+        }
+
         .toolbar{
             float: left;
         }
@@ -169,9 +194,8 @@
                                                         <div style="border:1px solid  #acb8b1;padding: 1%;">
                                                             <span style="font-size: 14pt;">Accomplishments as of <b id="lbl_date"><?php echo date('F'); ?> 2017</b></span><span style="font-size: 9pt;"> (Please tick mark all accomplished services on <b>Completed Column</b>.)</span><hr />
 
-                                                            <table id="tbl_customers" class="custom-design table-striped" cellspacing="0" width="100%">
+                                                            <table id="tbl_customers" class="table" cellspacing="0" width="100%">
                                                                 <thead>
-                                                                <tr>
                                                                     <th width="1%">&nbsp;&nbsp;</th>
                                                                     <th width="10%">Code</th>
                                                                     <th width="20%">Company / Client</th>
@@ -179,7 +203,6 @@
                                                                     <th width="20%">Office Address</th>
                                                                     <th width="10%">Contact No</th>
                                                                     <th width="15%">Contact Person</th>
-                                                                </tr>
                                                                 </thead>
                                                                 <tbody>
 

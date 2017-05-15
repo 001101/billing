@@ -54,16 +54,50 @@
         zoom: 80%!important;
     }
 
-    table.custom-design{
+    /*table.custom-design{
         width: 100%;
     }
 
     table.custom-design > tbody > tr > td{
         border:1px solid #acb8b1;
         padding: 7px;
+    }*/
+
+    table, td  {
+        /*border: 1px solid #e1e1e1!important;*/
+        border: none;
+        vertical-align: middle!important;
+        padding: 10px;
     }
 
-    table.custom-design > thead > tr > th{
+    th {
+        background: #c1e4c2!important;
+        border: 1px solid #c8c8c8!important;
+        border-bottom: 3px solid #a9daab!important;
+        padding: 10px;
+    }
+
+    tr:hover {
+        background: #d9eed9!important;
+    }
+
+    tr:nth-child(even) {
+        background: #f3f3f3;
+    }
+
+    tfoot > tr {
+        border-top: 1px solid #e1e1e1;
+    }
+
+    tfoot > tr:hover {
+        background: transparent!important;
+    }
+
+    table {
+        border: 1px solid #e1e1e1!important;
+    }
+
+    /*table.custom-design > thead > tr > th{
         background: rgba(255,255,255,1)!important;
         background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)!important;
         background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)))!important;
@@ -73,12 +107,12 @@
         background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)!important;
         border:1px solid #acb8b1;
         padding: 7px;
-    }
+    }*/
 
-    table.custom-design > tfoot > tr > td{
+    /*table.custom-design > tfoot > tr > td{
         border:1px solid #acb8b1;
         padding: 7px;
-    }
+    }*/
 
     .custom-design-header{
         background-color: #4f9f63;

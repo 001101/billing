@@ -94,6 +94,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
         background: transparent!important;
         border-radius: 0;
     }
+    
+    table, td  {
+        /*border: 1px solid #e1e1e1!important;*/
+        border: none;
+        vertical-align: middle!important;
+    }
 
     th {
         background: #c1e4c2!important;
@@ -103,17 +109,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
 
     
     tr:nth-child(even) {
-        background: #f3f3f3!important;
+        background: #f3f3f3;
+    }
+
+    tr:hover {
+        background: #d9eed9;
     }
 
     table {
         border: 1px solid #e1e1e1!important;
-    }
-
-    table, td  {
-        /*border: 1px solid #e1e1e1!important;*/
-        border: none;
-        vertical-align: middle!important;
     }
 
     .transparent-bg {
@@ -273,7 +277,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
                                             <div class="col-xs-12 col-sm-6">
                                                 <h3 style="font-weight: 200;">Hi <strong><?php echo $this->session->user_fullname; ?></strong>,
                                                 <?php echo
-                                                    ($this->session->user_group_id == 1 ? 'heres a rundown of your business performance and how your collections are doing individually.' : 'heres a rundown of your performance and how your collections are doing individually.')
+                                                    ($this->session->user_group_id == 1 ? 'here&#39;s a rundown of your business performance and how your collections are doing individually.' : 'here&#39;s a rundown of your performance and how your collections are doing individually.')
                                                 ?></h3> 
                                             </div>  
                                             <div class="col-xs-12 col-sm-3">
@@ -344,7 +348,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
                                         <div class="panel panel-default">
                                             <div class="panel-body panel-bg-green">
                                                <h1 class="pull-left" style="color: white; font-size: 25px;"></h1>
-                                               <h1 class="text-right" style="color: white; font-size: 40px;">&#8369;</h1>
+                                               <h1 class="text-right" style="color: white; font-size: 40px;">#</h1>
                                                <hr>
                                                 <div class="row">
                                                     <div class="container-fluid">
@@ -365,7 +369,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
                                                 <div class="row">
                                                     <div class="container-fluid">
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo "0"; ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo number_format($collection_amount->total_billing_amount,2); ?></h1>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -398,10 +402,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
                                         </div>
                                         <div class="col-xs-12 col-sm-4" style="padding: 7px;">
                                             <div class="group-box-header">
-                                                <h4 style="color: white;"><i class="fa fa-info-circle"></i> BILLING INFORMATION</h4>
+                                                <h4 style="color: white;"><i class="fa fa-info-circle"></i> NEWS FEED</h4>
                                             </div>
-                                            <div class="container-fluid group-box">
-                                                <canvas id="barChart"></canvas>
+                                            <div class="container-fluid group-box" style="min-height: 357px;max-height: 357px;">
+                                                <div class="container-fluid">
+                                                    No new events.
+                                                </div>
+                                                <!-- <canvas id="barChart"></canvas> -->
                                             </div>
                                         </div>
                                     </div>
@@ -439,7 +446,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
 <script src="assets/plugins/formatter/autoNumeric.js" type="text/javascript"></script>
 <script src="assets/plugins/formatter/accounting.js" type="text/javascript"></script>
 
-<script>
+<!-- <script>
     var ctx3 = document.getElementById('barChart');
     ctx3.height = 300;
     var dataBar = {
@@ -494,7 +501,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', end
             }
         }
     });
-</script>
+</script> -->
 
 <script>
     var ctx2 = document.getElementById("lineChart");

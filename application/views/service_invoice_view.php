@@ -202,7 +202,7 @@
                                                                     <div style="padding: 0.5%;">
                                                                         <span style="font-size: 14pt;">Billing as of <b class="lbl_date"><?php echo date('F'); ?> 2017</b></span><hr />
 
-                                                                        <table id="tbl_billing" class="custom-design table-striped" cellspacing="0" width="100%">
+                                                                        <table id="tbl_billing" class=" table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
                                                                             <tr>
                                                                                 <th width="5%">&nbsp;&nbsp;</th>
@@ -227,7 +227,7 @@
                                                                     <div style="padding: 1%;">
                                                                         <span style="font-size: 14pt;">Account / Contract Billing Status as of <b class="lbl_date"><?php echo date('F'); ?> 2017</b></span><hr />
 
-                                                                        <table id="tbl_customers" class="custom-design table-striped" cellspacing="0" width="100%">
+                                                                        <table id="tbl_customers" class="table-striped" cellspacing="0" width="100%">
                                                                             <thead class="">
                                                                             <tr>
                                                                                 <th width="5%">&nbsp;&nbsp;</th>
@@ -915,13 +915,12 @@
             });
 
             $('#tbl_current_charges tbody').on( 'click', 'button[name="remove_charge"]', function () {
-                    var row=$(this).closest('tr');
-                    row.fadeOut(500, function() {
-                        row.remove();
-                        reComputeTotalCurrentCharges();
-                        reComputeBillingSummary();
-                    });
-
+                var row=$(this).closest('tr');
+                row.fadeOut(500, function() {
+                    row.remove();
+                    reComputeTotalCurrentCharges();
+                    reComputeBillingSummary();
+                });
             });
 
             $('#tbl_beginning_balances tbody').on( 'click', 'button[name="remove_charge"]', function () {
@@ -931,7 +930,6 @@
                     reComputeTotalBeginningCharges();
                     reComputeBillingSummary();
                 });
-
             });
 
 
