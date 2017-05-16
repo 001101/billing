@@ -916,20 +916,20 @@
 
             $('#tbl_current_charges tbody').on( 'click', 'button[name="remove_charge"]', function () {
                 var row=$(this).closest('tr');
-                row.fadeOut(500, function() {
+                // row.fadeOut(500, function() {
                     row.remove();
                     reComputeTotalCurrentCharges();
                     reComputeBillingSummary();
-                });
+                // });
             });
 
             $('#tbl_beginning_balances tbody').on( 'click', 'button[name="remove_charge"]', function () {
                 var row=$(this).closest('tr');
-                row.fadeOut(500, function() {
+                // row.fadeOut(500, function() {
                     row.remove();
                     reComputeTotalBeginningCharges();
                     reComputeBillingSummary();
-                });
+                // });
             });
 
 
