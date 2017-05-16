@@ -19,6 +19,7 @@ class Service_types extends CORE_Controller
         $data['_switcher_settings'] = $this->load->view('template/elements/switcher', '', TRUE);
         $data['_side_bar_navigation'] = $this->load->view('template/elements/side_bar_navigation', '', TRUE);
         $data['_top_navigation'] = $this->load->view('template/elements/top_navigation', '', TRUE);
+        $data['_chat_template']=$this->load->view('template/elements/chat_view','',TRUE);
         $data['title'] = 'Service Type Management';
 
         $data['categories']=$this->Categories_model->get_list('is_deleted=FALSE');

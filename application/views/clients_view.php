@@ -66,7 +66,6 @@
 
     <!-- touchspin -->
     <script type="text/javascript" src="assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
-
     <style>
         .toolbar{
             float: left;
@@ -168,7 +167,7 @@
         <div class="static-content-wrapper white-bg">
             <div class="static-content"  >
                 <div class="page-content"><!-- #page-content -->
-
+                    <?php echo $_chat_template; ?>
                     <ol class="breadcrumb" style="margin:0%;">
                         <li><a href="dashboard">Dashboard</a></li>
                         <li><a href="Clients">Customers</a></li>
@@ -313,7 +312,7 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="assets/js/chat.js"></script>
 <script>
     $(document).ready(function(){
         var dt; var _txnMode; var _selectedID; var _selectRowObj; var _cboItemTypes;

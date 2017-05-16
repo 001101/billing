@@ -13,7 +13,6 @@
     <meta name="description" content="Avenxo Admin Theme">
     <meta name="author" content="">
 
-
     <link type="text/css" href="assets/css/bootstrap.css" rel="stylesheet">
     <link type="text/css" href="assets/css/animate.css" rel="stylesheet">
     <link type="text/css" href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -148,6 +147,8 @@
 
 
     </style>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/chat_style.css">
 </head>
 
 <body class="animated-content">
@@ -165,6 +166,7 @@
 
             <div class="static-content"  >
                 <div class="page-content"><!-- #page-content -->
+                <?php echo $_chat_template; ?>
                     <ol class="breadcrumb" style="margin:0;">
                         <li><a href="dashboard">Dashboard</a></li>
                         <li><a href="Accomplishments">Process Accomplishments</a></li>

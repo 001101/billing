@@ -27,6 +27,7 @@ class Contracts extends CORE_Controller
         $data['_switcher_settings'] = $this->load->view('template/elements/switcher', '', TRUE);
         $data['_side_bar_navigation'] = $this->load->view('template/elements/side_bar_navigation', '', TRUE);
         $data['_top_navigation'] = $this->load->view('template/elements/top_navigation', '', TRUE);
+        $data['_chat_template']=$this->load->view('template/elements/chat_view','',TRUE);
         $data['title'] = 'Contract Management';
         $data['customers']=$this->User_customers_model->get_list(
             array('user_id'=>$this->session->user_id),

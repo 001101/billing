@@ -72,7 +72,7 @@
         <div class="static-content-wrapper white-bg">
             <div class="static-content"  >
                 <div class="page-content"><!-- #page-content -->
-
+                    <?php echo $_chat_template; ?>
                     <ol class="breadcrumb">
                         <li><a href="dashboard">Dashboard</a></li>
                         <li><a href="units">Units</a></li>

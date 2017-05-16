@@ -106,7 +106,7 @@
 
 <div class="static-content"  >
 <div class="page-content"><!-- #page-content -->
-
+<?php echo $_chat_template; ?>
 <ol class="breadcrumb" style="margin-bottom: 0px;">
     <li><a href="dashboard">Dashboard</a></li>
     <li><a href="Account_integration">Account Integration  <?php //print_r($user_groups); ?></a></li>

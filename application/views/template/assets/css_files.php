@@ -9,6 +9,7 @@
 <link type="text/css" href="assets/plugins/codeprettifier/prettify.css" rel="stylesheet">                <!-- Code Prettifier -->
 <link type="text/css" href="assets/plugins/iCheck/skins/minimal/blue.css" rel="stylesheet">              <!-- iCheck -->
 
+<link rel="stylesheet" type="text/css" href="assets/css/chat_style.css">
 
 <link href="assets/plugins/notify/pnotify.core.css" rel="stylesheet"> <!-- notification -->
 

@@ -268,6 +268,7 @@
             <div class="static-content-wrapper">
                 <div class="static-content" >
                     <div class="page-content"  style="padding: 0 20px 0 20px;"><!-- #page-content -->
+                        <?php echo $_chat_template; ?>
                         <div class="row" style="margin-bottom: 0;">
                             <div class="container-fluid">
                                 <div style="padding: 0 15px 0 15px;">

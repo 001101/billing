@@ -27,6 +27,7 @@ class Dashboard extends CORE_Controller {
         $data['_switcher_settings']=$this->load->view('template/elements/switcher','',TRUE);
         $data['_side_bar_navigation']=$this->load->view('template/elements/side_bar_navigation','',TRUE);
         $data['_top_navigation']=$this->load->view('template/elements/top_navigation','',TRUE);
+        $data['_chat_template']=$this->load->view('template/elements/chat_view','',TRUE);
 
         $user_count=$this->Users_model->get_list(
             'is_deleted=FALSE AND is_active=TRUE',

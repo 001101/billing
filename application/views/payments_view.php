@@ -106,7 +106,7 @@
         <div class="static-content-wrapper white-bg">
             <div class="static-content">
                 <div class="page-content"><!-- #page-content -->
-
+                    <?php echo $_chat_template; ?>
                     <ol class="breadcrumb"  style="margin-bottom: 0;">
                         <li><a href="Dashboard">Dashboard</a></li>
                         <li><a href="Payments">Collection Entry</a></li>
@@ -351,7 +351,7 @@
 
 <script>
     $(document).ready(function(){
-        var _cboCustomers, _cboPayments, _txnMode;
+        var _cboCustomers, _cboPayments, _txnMode, _cell;
         var initializeControls=function(){
             InitializeDatatable();
             _cboCustomers=$("#cbo_customers").select2({
@@ -527,6 +527,7 @@
                 _selectRowObj=$(this).closest('tr');
                 var data=dt.row(_selectRowObj).data();
                 _selectedID = data.payment_id;
+                _cell=dt.cell(this);
 
                 if (data.active_status == 0) {
                     showNotification({
