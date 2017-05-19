@@ -24,7 +24,7 @@
                     <ul class="acc-menu">
                         <li class="nav-separator"><span>Explore</span></li>
 
-                        <li><a href="Dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span><span class="badge badge-teal">2</span></a></li>
+                        <li><a href="Dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
 
                         <li class="<?php echo (in_array('1',$this->session->parent_rights)?'':'hidden'); ?>"><a href="#"><i class="ti ti-view-list-alt"></i><span>References</span></a>
                             <ul class="acc-menu">
@@ -59,10 +59,15 @@
                                 <li class="<?php echo (in_array('3-4',$this->session->user_rights)?'':'hidden'); ?>"><a href="company">Company Info Setup</a></li>
                             </ul>
                         </li>
+
+                        <li class="<?php echo (in_array('5',$this->session->parent_rights)?'':'hidden'); ?>"><a href="#"><i class="ti ti-clipboard"></i><span>Reports</span></a>
+                            <ul class="acc-menu">
+                                <li class="<?php echo (in_array('5-1',$this->session->user_rights)?'':'hidden'); ?>"><a href="Customer_ledger">Clients Ledger</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
-
             <!--<div class="widget" id="widget-progress">
                 <div class="widget-heading">
                     Progress

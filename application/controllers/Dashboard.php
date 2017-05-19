@@ -140,22 +140,20 @@ class Dashboard extends CORE_Controller {
 
         $collection_percentage = $this->Services_invoice_model->get_collection_percentage();
 
-        $data['collection_percentage']=$collection_percentage[0];
-
-        $data['collection_amount']=$this->Payments_info_model->get_list(
+        $collection_amount=$this->Payments_info_model->get_list(
             'is_deleted=FALSE AND is_active=TRUE AND date_paid LIKE CONCAT("%",YEAR(NOW()),"-",DATE_FORMAT(NOW(),"%m"),"%")'.($this->session->user_group_id == 1 ? '' : ' AND posted_by='.$this->session->user_id),
             'SUM(total_amount_paid) AS total_billing_amount'
-        )[0];
+        );
 
-        $data['service_count']=$this->Services_model->get_list(
+        $service_count=$this->Services_model->get_list(
             'is_active=TRUE AND is_deleted=FALSE',
             'COUNT(*) AS total_service_count'
-        )[0];
+        );
 
-        $data['unpaid_billing']=$this->Services_invoice_model->get_list(
+        $unpaid_billing=$this->Services_invoice_model->get_list(
             'is_deleted=FALSE AND is_active=TRUE AND month_id=MONTH(NOW()) AND year_id=YEAR(NOW()) AND payment_status!=2'.($this->session->user_group_id == 1 ? '' : ' AND posted_by='.$this->session->user_id),
             'COUNT(billing_id) AS unpaid_count'
-        )[0];
+        );
 
         $data['collections']=array(
             (count($january) == 0 ? 0 : $january[0]->total_amount),
@@ -173,6 +171,14 @@ class Dashboard extends CORE_Controller {
         );
 
         $data['users_count']=$user_count[0];
+
+        $data['service_count']=$service_count[0];
+
+        $data['collection_amount']=$collection_amount[0];
+
+        $data['unpaid_billing']=$unpaid_billing[0];
+
+        $data['collection_percentage']=$collection_percentage[0];
 
         $data['customers_count']=$customer_count[0];
 

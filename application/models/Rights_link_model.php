@@ -27,7 +27,8 @@ class Rights_link_model extends CORE_Model{
                                           (10,'4','4-3','Payments'),
                                           (11,'3','3-5','Charges'),
                                           (12,'1','1-3','Category Management'),
-                                          (13,'2','2-2','Contract Management')
+                                          (13,'2','2-2','Contract Management'),
+                                          (14,'5','5-1','Clients Ledger')
             ";
 
 

@@ -12,9 +12,9 @@
 			$sql="SELECT 
 			* 
 			FROM
-			(SELECT * FROM chat WHERE chat_code='$chat_code' OR chat_code='$rev_chat_code' ORDER BY chat_id DESC LIMIT 30) AS chat
+			(SELECT * FROM chat WHERE chat_code='$chat_code' OR chat_code='$rev_chat_code' ORDER BY chat_id DESC LIMIT 100) AS chat
 			LEFT JOIN user_accounts ON user_accounts.user_id=chat.from_user_id
-			WHERE chat.chat_code='$chat_code' OR chat_code='$rev_chat_code'
+			-- WHERE chat.chat_code='$chat_code' OR chat_code='$rev_chat_code'
 			ORDER BY chat_id ASC";
 
 			return $this->db->query($sql)->result();

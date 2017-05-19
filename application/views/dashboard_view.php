@@ -64,6 +64,9 @@
 
 
     <style>
+    html {
+        zoom: 85%;
+    }
 
     body {
         font-family: 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif!important;
@@ -389,7 +392,7 @@
                                                 <h4 style="color: white;"><i class="fa fa-user"></i> CLIENTS ACCOMPLISHMENTS STATUS</h4>
                                             </div>
                                             <div class="container-fluid group-box">
-                                                <h4 style="position: absolute; font-weight: 700; margin-top: 5px;">CLIENTS LIST</h4>
+                                                <h4 style="position: absolute; margin-top: 5px; margin-left: 70%;">SEARCH :</h4>
                                                 <table id="tbl_clients" class="table" width="100%" style="min-height: 360px; max-height: 395px;">
                                                     <thead>
                                                         <th width="25%">CLIENT NAME</th>

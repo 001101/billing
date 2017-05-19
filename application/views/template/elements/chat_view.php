@@ -1,15 +1,17 @@
-<span id="chat_advisor">
+<div id="chat_advisor">
     <strong>JCORE Chat Beta</strong><span id="close_advisor" class="pull-right">&times;</span>
     <br>Needs to chat somebody? Just click me!
-</span>
+</div>
 
 <div class="chat-box-button-wrapper">
     <button id="btn_open_chat" class="btn btn-warning chat-box-button">
         <span class="fa fa-comments"></span>
     </button>
 </div>
+
 <form id="session_id" action="" data-sessionid="<?php echo $this->session->user_id; ?>">
 </form>
+
 <div id="chat_user_box" class="panel chat-users rounded-right hidden">
     <div class="panel-heading chat-heading">
         <span class="chat-title">
