@@ -64,6 +64,7 @@
                         <li class="<?php echo (in_array('5',$this->session->parent_rights)?'':'hidden'); ?>"><a href="#"><i class="ti ti-clipboard"></i><span>Reports</span></a>
                             <ul class="acc-menu">
                                 <li class="<?php echo (in_array('5-1',$this->session->user_rights)?'':'hidden'); ?>"><a href="Customer_ledger">Clients Ledger</a></li>
+                                <li class="<?php echo (in_array('5-2',$this->session->user_rights)?'':'hidden'); ?>"><a href="Collection_report">Collection Report</a></li>
                             </ul>
                         </li>
                     </ul>
