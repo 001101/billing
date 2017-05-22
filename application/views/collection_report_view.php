@@ -101,7 +101,7 @@
                             <?php echo $_chat_template; ?>
                             <ol class="breadcrumb">
                                 <li><a href="dashboard">Dashboard</a></li>
-                                <li><a href="Customer_ledger">Customer Ledger Report</a></li>
+                                <li><a href="Collection_report">Collection Report</a></li>
                             </ol>
 
                             <div class="container-fluid">
@@ -111,7 +111,7 @@
                                             <div id="div_documents_list">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
-                                                        <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Customer Ledger Report</b>
+                                                        <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Collection Report</b>
                                                     </div>
                                                     <div class="panel-body table-responsive">
                                                         <div class="col-xs-12 col-sm-4" style="margin-bottom: 10px;">

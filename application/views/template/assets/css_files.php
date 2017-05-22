@@ -1,3 +1,4 @@
+<link rel="shortcut icon" href="assets/abc_logo.ico" />
 <link type="text/css" href="assets/css/bootstrap.css" rel="stylesheet">
 <link type="text/css" href="assets/css/animate.css" rel="stylesheet">
 <link type="text/css" href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
