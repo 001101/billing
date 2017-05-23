@@ -15,7 +15,9 @@ class Contracts extends CORE_Controller
             'Customer_document_type_model',
             'Charges_model',
             'Contract_fee_template_model',
-            'User_customers_model'
+            'User_customers_model',
+            'Services_invoice_model',
+            'Payments_item_model'
         ));
 
     }
@@ -334,31 +336,72 @@ class Contracts extends CORE_Controller
                 break;
             case 'delete':
                 $m_contracts=$this->Contract_model;
+                $m_billing=$this->Services_invoice_model;
                 $contract_id=$this->input->post('contract_id',TRUE);
 
-                $m_contracts->is_deleted=1;
-                if($m_contracts->modify($contract_id)){
-                    $response['title']='Success!';
-                    $response['stat']='success';
-                    $response['msg']='Contract successfully deleted.';
-                    $response['row_updated']=$this->get_response($contract_id);
-                    echo json_encode($response);
+                $is_exists=$m_billing->get_list(
+                    'billing_info.is_active=TRUE AND billing_info.is_deleted=FALSE AND billing_info.contract_id='.$contract_id,
+                    'COUNT(*) AS count,
+                    c.contract_no',
+                    array(
+                        array('contracts as c','c.contract_id=billing_info.contract_id','left')
+                    )
+                );
+
+                $contract_count=$is_exists[0]->count;
+
+                if ( $contract_count > 0 ) {
+                    $response['title']='Error';
+                    $response['stat']='error';
+                    $response['msg']='Cannot delete contract no. '.$is_exists[0]->contract_no.' contract has an active transaction';
+                } else {
+                    $m_contracts->is_deleted=1;
+                    if($m_contracts->modify($contract_id)){
+                        $response['title']='Success!';
+                        $response['stat']='success';
+                        $response['msg']='Contract successfully deleted.';
+                        $response['row_updated']=$this->get_response($contract_id);
+                        echo json_encode($response);
+                    }
                 }
+
+                echo json_encode($response);
 
                 break;
 
             case 'update-contract-status':
                 $m_contracts=$this->Contract_model;
+                $m_payment_items=$this->Payments_item_model;
                 $contract_id=$this->input->post('contract_id',TRUE);
 
-                $m_contracts->set('is_active','NOT is_active');
-                if($m_contracts->modify($contract_id)){
-                    $response['title']='Success!';
-                    $response['stat']='success';
-                    $response['msg']='Contract successfully updated.';
-                    $response['row_updated']=$this->get_response($contract_id);
-                    echo json_encode($response);
+                $payment_items=$m_payment_items->get_list(
+                    'pi.is_active=TRUE AND pi.is_deleted=FALSE AND payment_items.contract_id='.$contract_id,
+                    'COUNT(*) as count, c.contract_no',
+                    array(
+                        array('payment_info pi','pi.payment_id=payment_items.payment_id','inner'),
+                        array('contracts c','c.contract_id=payment_items.contract_id','inner')
+                    )
+                );
+
+                $contract_count=$payment_items[0]->count;
+                $contract_no=$payment_items[0]->contract_no;
+
+                if ($contract_count > 0) {
+                    $response['title']='Error!';
+                    $response['stat']='error';
+                    $response['msg']='Cannot cancel contract no. '.$contract_no.' active payment found.';
+                } else {
+                    $m_contracts->set('is_active','NOT is_active');
+                    if($m_contracts->modify($contract_id)){
+                        $response['title']='Success!';
+                        $response['stat']='success';
+                        $response['msg']='Contract no. '.$contract_no.' successfully cancelled.';
+                        $response['row_updated']=$this->get_response($contract_id);
+                        echo json_encode($response);
+                    }
                 }
+
+                echo json_encode($response);
 
                 break;
 

@@ -80,6 +80,7 @@
     }
 
     tr:hover {
+        transition: .3s;
         background: #d9eed9!important;
     }
 

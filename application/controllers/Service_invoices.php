@@ -237,6 +237,59 @@
 
                     break;
 
+                case 'print-all':
+                    $m_billing=$this->Services_invoice_model;
+                    $m_billing_items=$this->Services_invoice_items_model;
+                    $m_company_info=$this->Company_model;
+                    $m_beginning=$this->Beginning_balance_model;
+
+                    $month_id=$this->input->get('m',TRUE);
+                    $year_id=$this->input->get('y',TRUE);
+
+                    $results=$m_billing->get_list(
+                        'payment_status != 2 AND month_id='.$month_id.' AND year_id='.$year_id,
+                        'billing_id'
+                    );
+
+                    foreach($results as $result) 
+                    {
+                        $billing_id=$result->billing_id;
+
+                        $company_info=$m_company_info->get_list();
+
+                        $data['company_info']=$company_info[0];
+                        $data['_def_css_files']=$this->load->view('template/assets/css_files','',TRUE);
+
+                        $data['beginning_balances']=$m_beginning->get_list(
+                            array('billing_id'=>$billing_id)
+                        );
+
+                        $data['current_charges']=$m_billing_items->get_list(
+                            array('billing_id'=>$billing_id),
+                            'billing_items.*,
+                            charges.*',
+                            array(
+                                array('charges','charges.charge_id=billing_items.charge_id','left')
+                            )
+                        );
+
+                        $billing_info=$m_billing->get_list(
+                            $billing_id,
+                            'billing_info.*,
+                            customers_info.*,
+                            contracts.*',
+                            array(
+                                array('customers_info','customers_info.customer_id=billing_info.customer_id','left'),
+                                array('contracts','contracts.contract_id=billing_info.contract_id','left')
+                            )
+                        );
+
+                        $data['billing_info']=$billing_info[0];
+
+                        $this->load->view('template/billing_statement_all_report',$data);
+                    }
+                break;
+
             }
 		}
 

@@ -66,11 +66,21 @@
 
 					$payment_id=$this->input->post('payment_id',TRUE);
 					$m_payment_info->is_active=FALSE;
+					$m_payment_info->set('date_cancelled','NOW()');
 					$m_payment_info->modify($payment_id);
 
 					$response['title'] = 'Success!';
                     $response['stat'] = 'success';
                     $response['msg'] = 'Collection Entry successfully cancelled.';
+                    $response['row_updated']=$m_payment_info->get_list(
+						array('payment_info.is_deleted=FALSE','payment_info.payment_id'=>$payment_id),
+						'payment_info.is_active as active_status, payment_info.*, customers_info.*, user_accounts.*, payment_methods.*',
+						array(
+							array('customers_info','customers_info.customer_id=payment_info.customer_id','left'),
+							array('payment_methods','payment_methods.payment_method_id=payment_info.payment_method_id','left'),
+							array('user_accounts','user_accounts.user_id=payment_info.posted_by','left')
+						)
+					);
 
                     echo json_encode($response);
 				break;

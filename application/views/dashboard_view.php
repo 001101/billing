@@ -392,7 +392,7 @@
                                                 <h4 style="color: white;"><i class="fa fa-user"></i> CLIENTS ACCOMPLISHMENTS STATUS</h4>
                                             </div>
                                             <div class="container-fluid group-box">
-                                                <h4 style="position: absolute; margin-top: 5px; margin-left: 70%;">SEARCH :</h4>
+                                                <h4 style="position: absolute; top: 75px; right:230px;">SEARCH :</h4>
                                                 <table id="tbl_clients" class="table" width="100%" style="min-height: 360px; max-height: 395px;">
                                                     <thead>
                                                         <th width="25%">CLIENT NAME</th>
@@ -548,6 +548,8 @@
 <script>
     (function(){
         var dt;
+        var currentTime = new Date();
+        var year = currentTime.getFullYear();
 
         dt=$('#tbl_clients').DataTable({
             "dom": '<"toolbar">frtip',
@@ -575,8 +577,9 @@
 
         var bindEventHandlers=function(){
             $('#btn_generate').click(function(){
-                alert('FEATURE UNDER CONSTRUCTION!');
+                window.open('Service_invoices/transaction/print-all?m='+$('#cbo_month').val()+'&y='+year);
             });
+
         }();
     })();
 </script>

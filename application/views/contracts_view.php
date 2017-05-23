@@ -173,7 +173,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
-                            <h4 class="modal-title"><span id="modal_mode"> </span>Confirm Deletion</h4>
+                            <h4 class="modal-title" style="color: white;"><span id="modal_mode"> </span>Confirm Deletion</h4>
                         </div>
                         <div class="modal-body">
                             <p id="modal-body-message">Are you sure ?</p>
@@ -181,6 +181,24 @@
                         <div class="modal-footer">
                             <button id="btn_yes" type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
                             <button id="btn_close" type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!---modal-->
+
+            <div id="modal_confirm_cancel" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
+                            <h4 class="modal-title" style="color: white"><span id="modal_mode"> </span>Confirm Cancellation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modal-body-message">Are you sure ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn_yes_contract" type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                            <button id="btn_close_contract" type="button" class="btn btn-default" data-dismiss="modal">No</button>
                         </div>
                     </div>
                 </div>
@@ -349,8 +367,7 @@
 
                                 var btn_cancel='<button class="btn btn-default btn-sm" name="set_inactive"  data-toggle="tooltip" data-placement="top" title="Mark as Inactive/Active" style="margin-right:-5px;"><i class="fa fa-times"></i> </button>';
 
-
-                                return  '<table cellspacing="5">'+
+                                return  '<table style="border:none!important;" cellspacing="5">'+
                                             '<tr>'+
                                                 '<td width="40%">'+
                                                     btn_edit +
@@ -535,11 +552,11 @@
 
             $('#tbl_clients tbody').on('click','button[name="edit_info"]',function(){
                 _txnMode="edit";
+
                 $('#modal_contract_entry').modal('show');
-                _selectRowObj=$(this).closest('tr');
+                _selectRowObj=$(this).closest('table').closest('tr');
                 var data=dt.row(_selectRowObj).data();
                 _selectedID=data.contract_id;
-
                 $('input,textarea,select').each(function(){
                     var _elem=$(this);
                     $.each(data,function(name,value){
@@ -550,20 +567,24 @@
                 });
 
                 _cboClients.select2('val',data.customer_id);
+
             });
 
             $('#tbl_clients tbody').on('click','button[name="remove_info"]',function(){
                 $('#modal_confirmation').modal('show');
-                _selectRowObj=$(this).closest('tr');
+                _selectRowObj=$(this).closest('table').closest('tr');
                 var data=dt.row(_selectRowObj).data();
                 _selectedID=data.contract_id;
             });
 
             $('#tbl_clients tbody').on('click','button[name="set_inactive"]',function(){
-                _selectRowObj=$(this).closest('tr');
+                _selectRowObj=$(this).closest('table').closest('tr');
                 var data=dt.row(_selectRowObj).data();
                 _selectedID=data.contract_id;
+                $('#modal_confirm_cancel').modal('show');
+            });
 
+            $('#btn_yes_contract').click(function() {
                 updateContractStatus().done(function(response){
                     showNotification(response);
                     if(response.stat=="success"){
@@ -603,6 +624,7 @@
 
             $('#btn_yes').click(function(){
                 removeContract().done(function(response){
+                    console.log(response)
                     showNotification(response);
                     dt.row(_selectRowObj).remove().draw();
                 });
@@ -629,7 +651,7 @@
             });
 
             $('#btn_cancel').click(function(){
-                showList(true);
+                $('#modal_confirmation').modal('hide');
             });
             
             $('#btn_save').click(function(){

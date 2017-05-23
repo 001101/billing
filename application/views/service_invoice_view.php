@@ -614,13 +614,10 @@
                             return _btnNew;
                         }
                     }
-                ]
-
-                ,
+                ],
                 "rowCallBack": function(a,b,c){
                     console.log(b);
                 }
-
             });
 
             var createToolBarButton=function() {
@@ -628,10 +625,6 @@
                     '<i class="fa fa-print"></i> Print all </button>';
                 $("div.toolbar").html(_btnNew);
             }();
-
-
-
-
         };
 
 
@@ -743,9 +736,7 @@
 
             };
 
-
             zNodes=[
-
                 <?php foreach($years as $year){ ?>
                 {"id":"<?php echo $year; ?>","pId":"","name":"<?php echo $year; ?><?php echo ($year==date("Y")?"(Current Year)":""); ?>","title":"<?php echo $year; ?>","open":"<?php echo ($year==date("Y")?"true":false); ?>","icon":"assets\/plugins\/zTree\/img\/diy\/4.png"},
                 <?php foreach($months as $month){ ?>
@@ -753,24 +744,9 @@
                 <?php } ?>
                 <?php } ?>
 
-
-
-
             ];
-
             reInitializeTreeView();
-
-
-
-
-
-
         }();
-
-
-
-
-
 
         var bindEventHandlers=(function(){
             var detailRows = [];
@@ -916,20 +892,16 @@
 
             $('#tbl_current_charges tbody').on( 'click', 'button[name="remove_charge"]', function () {
                 var row=$(this).closest('tr');
-                // row.fadeOut(500, function() {
                     row.remove();
                     reComputeTotalCurrentCharges();
                     reComputeBillingSummary();
-                // });
             });
 
             $('#tbl_beginning_balances tbody').on( 'click', 'button[name="remove_charge"]', function () {
                 var row=$(this).closest('tr');
-                // row.fadeOut(500, function() {
                     row.remove();
                     reComputeTotalBeginningCharges();
                     reComputeBillingSummary();
-                // });
             });
 
 
@@ -989,13 +961,33 @@
 
                 });
 
-
-
-
                 $('#modal_process_billing').modal('show');
             });
 
+            $('.zTreeDemoBackground').on('click','.ztree li span.button',function(){
+                var sMonth=$(this).closest('li').text();
+                var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
+                var YearOnly=$(this).closest('.level0').attr('title');
 
+                //get month id and year
+                _monthID=$(this).closest('li').index()+1;
+                _year=sYear;
+
+                if ($(this).parent().hasClass('level0')) {
+                    _year = YearOnly;
+                    $('.lbl_date').html(YearOnly);
+                } else {
+                    $('.lbl_date').html(sMonth+" "+sYear);
+                }
+
+                //realod billing list
+                dtBilling.destroy();
+                reloadBilling();
+
+                //realod contract list
+                dt.clear().destroy();
+                reloadContractBillingStatus();
+            });
 
             $('.zTreeDemoBackground').on('click','ul.ztree li span',function(){
                 var sMonth=$(this).closest('li').text();
@@ -1020,11 +1012,13 @@
                 //realod contract list
                 dt.clear().destroy();
                 reloadContractBillingStatus();
-                // $('.lbl_date').html(sMonth+" "+sYear);
+            });
+
+            $(document).on('click','#btn_print_all',function(){
+                window.open('Service_invoices/transaction/print-all?m='+_monthID+'&y='+_year);
             });
 
         })();
-
 
         var showNotification=function(obj){
             PNotify.removeAll(); //remove all notifications

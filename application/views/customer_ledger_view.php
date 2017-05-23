@@ -142,9 +142,9 @@
                                                                     <th>Billing #</th>
                                                                     <th>Receipt #</th>
                                                                     <th>Remarks</th>
-                                                                    <th>Debit</th>
-                                                                    <th>Credit</th>
-                                                                    <th>Balance</th>
+                                                                    <th style="text-align: left;">Debit</th>
+                                                                    <th style="text-align: left;">Credit</th>
+                                                                    <th style="text-align: left;">Balance</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody></tbody>

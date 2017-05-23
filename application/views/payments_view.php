@@ -396,7 +396,6 @@
                     "bDestroy":true
                 },
                 "columns": [
-
                     { targets:[0],data: "receipt_no" },
                     { targets:[1],data: "company_name" },
                     { targets:[2],data: "payment_method" },
@@ -443,7 +442,9 @@
 
             _cboPayments.on('change', function() {
                 if (_cboPayments.val() == 2)
-                    $('.check-prop').toggleClass('hidden');
+                    $('.check-prop').removeClass('hidden');
+                else 
+                    $('.check-prop').addClass('hidden');
             });
 
             _cboCustomers.on('change', function() {
@@ -478,20 +479,25 @@
             });
 
             $('#btn_save').on('click', function(){
+                var rowCount = $('#tbl_receivables tr').length - 2;
                 if(validateRequiredFields($('#frm_payment_info'))){
-                    if(_txnMode=="new"){
-                        postPayment().done(function(response){
-                            showNotification(response);
-                            if(response.stat=="success"){
-                                dt.row.add(response.row_added[0]).draw();
-                                clearFields($('#frm_payment_info'));
-                                _cboPayments.select2('val',null);
-                                $('textarea[name="remarks"]').val('');
-                                $('#modal_payment').modal('hide');
-                            }
-                        }).always(function(){
-                            showSpinningProgress($('#btn_save'));
-                        });
+                    if (rowCount > 0) {
+                        if(_txnMode=="new"){
+                            postPayment().done(function(response){
+                                showNotification(response);
+                                if(response.stat=="success"){
+                                    dt.row.add(response.row_added[0]).draw();
+                                    clearFields($('#frm_payment_info'));
+                                    _cboPayments.select2('val',null);
+                                    $('textarea[name="remarks"]').val('');
+                                    $('#modal_payment').modal('hide');
+                                }
+                            }).always(function(){
+                                showSpinningProgress($('#btn_save'));
+                            });
+                        }
+                    } else {
+                        showNotification({title: 'Error!', msg: 'No Billing Transaction found.', stat: 'error' });
                     }
                 }
             });
@@ -533,7 +539,7 @@
                     showNotification({
                         "title":"Error!",
                         "stat":"error",
-                        "msg":"You cannot cancel this payment, it's already cancelled."
+                        "msg":"Cannot cancel payment. Payment already cancelled."
                     });
                 } else {
                     $('#modal_confirmation').modal('show');
@@ -543,8 +549,7 @@
             $('#btn_yes').click(function(){
                 cancelPayment().done(function(response){
                     showNotification(response);
-                    dt.destroy();
-                    InitializeDatatable();
+                    dt.row(_selectRowObj).data(response.row_updated[0]).draw();
                 });
             });
         }();
