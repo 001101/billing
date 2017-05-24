@@ -42,6 +42,139 @@
             return $this->db->query($sql)->result();
         }
 
+        function get_news_feed() {
+            $sql = "SELECT
+                    t.*
+                    FROM
+                    (SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Created billing no. ',bi.`billing_no`,' for ', ci.`company_name`) as description,
+                    bi.date_posted as `date`
+                    FROM billing_info bi
+                    INNER JOIN user_accounts ua on ua.user_id=bi.`posted_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=bi.`customer_id`
+                    WHERE bi.`is_active`=TRUE AND bi.`is_deleted`=FALSE
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Updated billing no. ',bi.`billing_no`,' for ', ci.`company_name`) as description,
+                    bi.date_modifed as `date`
+                    FROM billing_info bi
+                    INNER JOIN user_accounts ua on ua.user_id=bi.`modified_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=bi.`customer_id`
+                    WHERE bi.`is_active`=TRUE AND bi.`is_deleted`=FALSE
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Deleted billing no. ',bi.`billing_no`,' for ', ci.`company_name`) as description,
+                    bi.date_deleted as `date`
+                    FROM billing_info bi
+                    INNER JOIN user_accounts ua on ua.user_id=bi.`deleted_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=bi.`customer_id`
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Created contract no. ',c.`contract_no`,' for ', ci.`company_name`) as description,
+                    c.date_posted as `date`
+                    FROM contracts c
+                    INNER JOIN user_accounts ua on ua.user_id=c.`posted_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=c.`customer_id`
+                    WHERE c.`is_active`=TRUE AND c.`is_deleted`=FALSE
+
+                    UNION 
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Updated contract no. ',c.`contract_no`,' for ', ci.`company_name`) as description,
+                    c.`date_modified` as `date`
+                    FROM contracts c
+                    INNER JOIN user_accounts ua on ua.user_id=c.`modified_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=c.`customer_id`
+                    WHERE c.`is_active`=TRUE AND c.`is_deleted`=FALSE
+
+                    UNION 
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Cancelled contract no. ',c.`contract_no`,' for ', ci.`company_name`) as description,
+                    c.`date_cancelled` as `date`
+                    FROM contracts c
+                    INNER JOIN user_accounts ua on ua.user_id=c.`cancelled_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=c.`customer_id`
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Deleted contract no. ',c.`contract_no`,' for ', ci.`company_name`) as description,
+                    c.`date_deleted` as `date`
+                    FROM contracts c
+                    INNER JOIN user_accounts ua on ua.user_id=c.`deleted_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=c.`customer_id`
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Posted Payment on receipt no. ',pifo.`receipt_no`,' for ', ci.`company_name`) as description,
+                    pifo.`date_posted` as `date`
+                    FROM payment_info pifo
+                    INNER JOIN user_accounts ua on ua.user_id=pifo.`posted_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=pifo.`customer_id`
+                    WHERE pifo.`is_active`=TRUE AND pifo.`is_deleted`=FALSE
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Updated Payment on receipt no. ',pifo.`receipt_no`,' for ', ci.`company_name`) as description,
+                    pifo.`date_modified` as `date`
+                    FROM payment_info pifo
+                    INNER JOIN user_accounts ua on ua.user_id=pifo.`modified_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=pifo.`customer_id`
+                    WHERE pifo.`is_active`=TRUE AND pifo.`is_deleted`=FALSE
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Cancelled Payment on receipt no. ',pifo.`receipt_no`,' for ', ci.`company_name`) as description,
+                    pifo.`date_cancelled` as `date`
+                    FROM payment_info pifo
+                    INNER JOIN user_accounts ua on ua.user_id=pifo.`cancelled_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=pifo.`customer_id`
+
+                    UNION
+
+                    SELECT
+                    ua.`photo_path`,
+                    CONCAT(ua.user_fname,' ',ua.user_lname) as user,
+                    CONCAT('Deleted Payment on receipt no. ',pifo.`receipt_no`,' for ', ci.`company_name`) as description,
+                    pifo.`date_deleted` as `date`
+                    FROM payment_info pifo
+                    INNER JOIN user_accounts ua on ua.user_id=pifo.`deleted_by`
+                    INNER JOIN customers_info ci on ci.`customer_id`=pifo.`customer_id`) AS t
+                    ORDER BY t.`date` DESC LIMIT 10";
+
+                return $this->db->query($sql)->result();
+        }
+
         function get_customer_ledger($customer_id,$asOfDate) {
             $variable="SET @vRunBalance:=0.00;";
             $this->db->query($variable);

@@ -356,12 +356,12 @@ class Contracts extends CORE_Controller
                     $response['msg']='Cannot delete contract no. '.$is_exists[0]->contract_no.' contract has an active transaction';
                 } else {
                     $m_contracts->is_deleted=1;
+                    $m_contracts->set('date_deleted','NOW()');
                     if($m_contracts->modify($contract_id)){
                         $response['title']='Success!';
                         $response['stat']='success';
                         $response['msg']='Contract successfully deleted.';
                         $response['row_updated']=$this->get_response($contract_id);
-                        echo json_encode($response);
                     }
                 }
 
@@ -392,12 +392,12 @@ class Contracts extends CORE_Controller
                     $response['msg']='Cannot cancel contract no. '.$contract_no.' active payment found.';
                 } else {
                     $m_contracts->set('is_active','NOT is_active');
+                    $m_contracts->set('date_cancelled','NOW()');
                     if($m_contracts->modify($contract_id)){
                         $response['title']='Success!';
                         $response['stat']='success';
                         $response['msg']='Contract no. '.$contract_no.' successfully cancelled.';
                         $response['row_updated']=$this->get_response($contract_id);
-                        echo json_encode($response);
                     }
                 }
 

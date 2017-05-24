@@ -170,6 +170,8 @@ class Dashboard extends CORE_Controller {
             (count($december) == 0 ? 0 : $december[0]->total_amount)
         );
 
+        $data['newsfeeds']=$this->Services_invoice_model->get_news_feed();
+
         $data['users_count']=$user_count[0];
 
         $data['service_count']=$service_count[0];

@@ -412,14 +412,24 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-4" style="padding: 7px;">
-                                            <div class="group-box-header">
-                                                <h4 style="color: white;"><i class="fa fa-info-circle"></i> NEWS FEED</h4>
-                                            </div>
-                                            <div class="container-fluid group-box" style="min-height: 357px;max-height: 357px;">
-                                                <div class="container-fluid">
-                                                    No new events.
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                     <h4 style="color: white;"><i class="fa fa-newspaper-o"></i> NEWS FEED</h4>
                                                 </div>
-                                                <!-- <canvas id="barChart"></canvas> -->
+                                                <div class="panel-body" style="padding: 0 0 5px 0!important; max-height: 935px; overflow-y: scroll;">
+                                                    <?php foreach($newsfeeds as $newsfeed) { ?>
+                                                        <div class="container-fluid" style="border: 1px dashed #e2e2e2;padding: 10px;">
+                                                            <div class="col-xs-12 col-sm-2">
+                                                                <img src="<?php echo ($newsfeed->photo_path == null ? 'assets/img/default-user-image.png' : '$newsfeed->photo_path') ?>" width="55" height="50" style="border-radius: 50%;">
+                                                            </div>
+                                                            <div class="col-xs-12 col-sm-10">
+                                                                <strong><span style="text-transform: uppercase;"><?php echo $newsfeed->user; ?></span></strong><br>
+                                                                <span><?php echo $newsfeed->description; ?></span><br>
+                                                                <i><?php echo $newsfeed->date; ?></i>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
