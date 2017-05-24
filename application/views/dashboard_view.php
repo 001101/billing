@@ -265,11 +265,9 @@
 
 <div id="wrapper">
         <div id="layout-static">
-        <?php echo $_side_bar_navigation;
-
-        ?>
+        <?php echo $_side_bar_navigation;?>
             <div class="static-content-wrapper">
-                <div class="static-content" >
+                <div class="static-content">
                     <div class="page-content"  style="padding: 0 20px 0 20px;"><!-- #page-content -->
                         <?php echo $_chat_template; ?>
                         <div class="row" style="margin-bottom: 0;">
@@ -285,7 +283,9 @@
                                                 ?></h3> 
                                             </div>  
                                             <div class="col-xs-12 col-sm-3">
-                                                <button id="btn_generate" class="btn btn-primary btn-block" style="font-size: 20px; font-weight: 200; border-radius: 10px; margin-top: 5px;">Generate Billing Report</button>
+                                                <button id="btn_generate" class="btn btn-primary btn-block" style="font-size: 20px; font-weight: 200; border-radius: 10px; margin-top: 5px;">
+                                                    Generate Billing Report
+                                                </button>
                                             </div>
                                             <div class="col-xs-12 col-sm-3">
                                                 <select id="cbo_month" class="form-control" style="font-size: 20px; font-weight: 200; height: 40px; background: transparent; margin-top: 5px;">
@@ -324,11 +324,14 @@
                                                 <div class="row">
                                                     <div class="container-fluid">
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo ($this->session->user_group_id == 1 ? (string)$users_count->user_count : (string)$customers_count->customer_count) ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo ($this->session->user_group_id == 1 ? (string)$users_count->user_count : (string)$customers_count->customer_count) ?>
+                                                            </h1>
                                                         </div>
                                                     </div>
                                                 </div>
-                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;"><?php echo ($this->session->user_group_id == 1 ? 'Users' : 'Clients') ?></h4>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">
+                                                    <?php echo ($this->session->user_group_id == 1 ? 'Users' : 'Clients') ?>
+                                               </h4>
                                             </div>
                                         </div>
                                     </div>
@@ -340,11 +343,15 @@
                                                 <div class="row">
                                                     <div class="container-fluid">
                                                         <div class="col-md-10">
-                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;"><?php echo $service_count->total_service_count; ?></h1>
+                                                            <h1 style="color: white; font-size: 50px; margin-bottom: 0; margin-top: 0;">
+                                                                <?php echo $service_count->total_service_count; ?>
+                                                            </h1>
                                                         </div>
                                                     </div>
                                                 </div>
-                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">Total Services</h4>
+                                               <h4 style="color: white; font-weight: 200; margin-top: 0; margin-bottom: 0;">
+                                                    Total Services
+                                               </h4>
                                             </div>
                                         </div>
                                     </div>

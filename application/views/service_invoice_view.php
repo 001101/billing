@@ -964,31 +964,6 @@
                 $('#modal_process_billing').modal('show');
             });
 
-            $('.zTreeDemoBackground').on('click','.ztree li span.button',function(){
-                var sMonth=$(this).closest('li').text();
-                var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
-                var YearOnly=$(this).closest('.level0').attr('title');
-
-                //get month id and year
-                _monthID=$(this).closest('li').index()+1;
-                _year=sYear;
-
-                if ($(this).parent().hasClass('level0')) {
-                    _year = YearOnly;
-                    $('.lbl_date').html(YearOnly);
-                } else {
-                    $('.lbl_date').html(sMonth+" "+sYear);
-                }
-
-                //realod billing list
-                dtBilling.destroy();
-                reloadBilling();
-
-                //realod contract list
-                dt.clear().destroy();
-                reloadContractBillingStatus();
-            });
-
             $('.zTreeDemoBackground').on('click','ul.ztree li span',function(){
                 var sMonth=$(this).closest('li').text();
                 var sYear=$(this).closest('ul').closest('li').find('a').attr('title');
@@ -1005,11 +980,11 @@
                     $('.lbl_date').html(sMonth+" "+sYear);
                 }
 
-                //realod billing list
+                //reload billing list
                 dtBilling.destroy();
                 reloadBilling();
 
-                //realod contract list
+                //reload contract list
                 dt.clear().destroy();
                 reloadContractBillingStatus();
             });
