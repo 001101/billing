@@ -15,7 +15,7 @@ class Customers_model extends CORE_Model {
         $sql="SELECT 
             unpaid.*,
             IFNULL(paid.payment_amount, 0) AS payment_amount,
-            ((IFNULL(unpaid.total_billing_current_amount, 0) - IFNULL(unpaid.advance_payment, 0)) - IFNULL(paid.payment_amount,0)) AS amount_due
+            ((IFNULL(unpaid.total_billing_current_amount, 0) - IFNULL(unpaid.advance_payment, 0)) - IFNULL(paid.payment_amount,0) - IFNULL(paid.discount,0)) AS amount_due
         FROM
             (SELECT 
                 DISTINCT(billing_info.billing_id) AS billing_id,
@@ -46,6 +46,7 @@ class Customers_model extends CORE_Model {
             (SELECT 
                 payment_items.payment_id,
                 payment_items.billing_id,
+                payment_items.discount,
                 SUM(payment_items.payment_amount) AS payment_amount
             FROM
             (payment_items

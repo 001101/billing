@@ -17,7 +17,10 @@ class Login extends CORE_Controller {
             array(
                 'Customers_model',
                 'User_customers_model',
-                'Users_model'
+                'Users_model',
+                'Account_title_model',
+                'Account_type_model',
+                'Account_class_model'
             )
         );
     }
@@ -82,7 +85,15 @@ class Login extends CORE_Controller {
 
         $m_charges=$this->Charges_model;
         $m_charges->create_default_charges();
+
+        $m_account_titles=$this->Account_title_model;
+        $m_account_titles->create_default_account_title();
         
+        $m_account_types=$this->Account_type_model;
+        $m_account_types->create_default_account_types();
+
+        $m_account_class=$this->Account_class_model;
+        $m_account_class->create_default_account_classes();
     }
 
 

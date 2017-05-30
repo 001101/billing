@@ -120,8 +120,6 @@
                         echo json_encode($response);
                     }
 
-
-
                     break;
                 case 'invoice-list':
                     $billing_month=$this->input->get('month_id',TRUE);
@@ -131,6 +129,23 @@
                     $response['data']=$this->get_response_rows('billing_info.is_deleted=0 AND billing_info.is_active=1 AND billing_info.month_id='.$billing_month.' AND billing_info.year_id='.$billing_year);
                     echo json_encode($response);
                     break;
+
+                case 'cancel-billing':
+                    $m_service_info=$this->Services_invoice_model;
+
+                    $billing_id=$this->input->post('billing_id',TRUE);
+
+                    $m_service_info->is_active=0;
+                    $m_service_info->modify($billing_id);
+
+                    $response['title']="Success!";
+                    $response['stat']="success";
+                    $response['msg']="Billing successfully cancelled";
+                    $response['row_updated']=$this->get_response_rows('billing_info.billing_id='.$billing_id);
+
+                    echo json_encode($response);
+                    break;
+
                 case 'contract-billing-status-list':
                     $month_id=$this->input->get('month_id',TRUE);
                     $year_id=$this->input->get('year_id',TRUE);

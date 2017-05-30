@@ -29,6 +29,13 @@
         border-radius: 5px;
     }
 
+    .btn:hover {
+        transition: .3s;
+        -webkit-box-shadow: 0px 0px 12px -1px rgba(156,151,156,1);
+        -moz-box-shadow: 0px 0px 12px -1px rgba(156,151,156,1);
+        box-shadow: 0px 0px 12px -1px rgba(156,151,156,1);
+    }
+
     input.typeahead:focus,
     .form-control:focus,
     textarea.form-control:focus,

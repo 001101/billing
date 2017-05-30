@@ -414,7 +414,7 @@
                                         <div class="col-xs-12 col-sm-4" style="padding: 7px;">
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
-                                                     <h4 style="color: white;"><i class="fa fa-newspaper-o"></i> NEWS FEED</h4>
+                                                     <h4 style="color: white;"><i class="fa fa-newspaper-o"></i> ACTIVITIES FEED</h4>
                                                 </div>
                                                 <div class="panel-body" style="padding: 0 0 5px 0!important; max-height: 935px; overflow-y: scroll;">
                                                     <?php foreach($newsfeeds as $newsfeed) { ?>

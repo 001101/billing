@@ -110,6 +110,7 @@
 					$contract_id=$this->input->post('contract_id',TRUE);
 					$item_remarks=$this->input->post('item_remarks',TRUE);
 					$amount_due=$this->input->post('amount_due',TRUE);
+					$discount=$this->input->post('discount',TRUE);
 					$payment_amount=$this->input->post('payment_amount',TRUE);
 
 					for($i=0;$i<count($billing_id);$i++) {
@@ -118,6 +119,7 @@
 						$m_payment_items->contract_id=$contract_id[$i];
 						$m_payment_items->item_remarks=$item_remarks[$i];
 						$m_payment_items->amount_due=$this->get_numeric_value($amount_due[$i]);
+						$m_payment_items->discount=$this->get_numeric_value($discount[$i]);
 						$m_payment_items->payment_amount=$this->get_numeric_value($payment_amount[$i]);
 						$m_payment_items->save();
 					}

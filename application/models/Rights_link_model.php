@@ -30,7 +30,12 @@ class Rights_link_model extends CORE_Model{
                                           (13,'2','2-2','Contract Management'),
                                           (14,'5','5-1','Clients Ledger'),
                                           (15,'3','3-6','Database Backup'),
-                                          (16,'5','5-2','Collection Report')
+                                          (16,'5','5-2','Collection Report'),
+                                          (17,'3','3-7','Chart of Accounts'),
+                                          (18,'1','1-4','Account classes Management'),
+                                          (19,'6','6-1','General Journal'),
+                                          (20,'6','6-2','Cash Disbursement'),
+                                          (21,'2','2-3','Suppliers Management')
             ";
 
 

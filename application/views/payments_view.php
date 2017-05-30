@@ -227,12 +227,13 @@
                                                                     <tr>
                                                                         <th class="hidden">Billing ID</th>
                                                                         <th class="hidden">Contract ID</th>
-                                                                        <th width="10%">Contract/Account #</th>
-                                                                        <th width="10%">Billing #</th>
+                                                                        <th width="7%">Contract/Account #</th>
+                                                                        <th width="7%">Billing #</th>
                                                                         <th width="5%">Billing Date</th>
                                                                         <th width="5%">Due Date</th>
                                                                         <th width="15%">Remarks</th>
                                                                         <th width="10%" style="text-align: right;">Amount Due</th>
+                                                                        <th width="10%" style="text-align: right;">Discount</th>
                                                                         <th width="10%" style="text-align: right;">Payment</th>
                                                                         <th width="5%"><center>Action</center></th>
                                                                     </tr>
@@ -244,6 +245,7 @@
                                                                         <tr>
                                                                             <td colspan="5" align="right"><b>Total : </b></td>
                                                                             <td id="td_total_amount_due" align="right"><b>0.00</b></td>
+                                                                            <td id="td_total_discount" align="right"><b>0.00</b></td>
                                                                             <td colspan="1" id="td_total_payment_amount" align="right"><b>0.00</b></td>
                                                                             <td></td>
                                                                         </tr>
@@ -352,6 +354,9 @@
 <script>
     $(document).ready(function(){
         var _cboCustomers, _cboPayments, _txnMode, _cell;
+        var total_after_discount=0;
+        var rows;
+
         var initializeControls=function(){
             InitializeDatatable();
             _cboCustomers=$("#cbo_customers").select2({
@@ -429,15 +434,14 @@
 
         var bindEventHandlers=function(){
             $('#btn_new').on('click',function(){
-                //showList(false);
                 _txnMode="new";
                 $('#modal_payment').modal('show');
                 $('#btn_save').removeAttr('disabled','disabled');
             });
 
             $('#btn_cancel').on('click',function(){
-                //showList(true);
                 $('#modal_payment').modal('hide');
+                clearFields();
             });
 
             _cboPayments.on('change', function() {
@@ -469,6 +473,7 @@
                                 date_due : value.date_due,
                                 notes : value.notes,
                                 amount_due : value.amount_due,
+                                discount : value.discount,
                                 payment_amount : value.payment_amount
                             }));
                         });
@@ -505,14 +510,37 @@
             $('#tbl_receivables > tbody').on('keyup','input.numeric',function(e){
                 var row=$(this).closest('tr');
 
-                var payment=getFloat($(this).val());
+                var payment=getFloat(row.find('input[name="payment_amount[]"]').val());
+                var discount=getFloat(row.find('input[name="discount[]"]').val());
                 var payable=getFloat(row.find('input[name="amount_due[]"]').val());
+
+                var total_after_discount = payment + discount;
+
+                if (total_after_discount > payable) {
+                    showNotification({
+                        "title": "Invalid!",
+                        "stat" : "error",
+                        "msg" : "Sorry, the total of discount and payment must not be greater than payable amount."
+                    });
+
+                    $(this).val('');
+                }
 
                 if(payment>payable){
                     showNotification({
                         "title": "Invalid!",
                         "stat" : "error",
                         "msg" : "Sorry, payment amount is greater than payable amount."
+                    });
+
+                    $(this).val('');
+                }
+
+                if(discount>payable){
+                    showNotification({
+                        "title": "Invalid!",
+                        "stat" : "error",
+                        "msg" : "Sorry, your discount is greater than payable amount."
                     });
 
                     $(this).val('');
@@ -525,7 +553,21 @@
             $('#tbl_receivables > tbody').on('click','button#btn_pay_all',function(e){
                 var row=$(this).closest('tr');
                 var payableAmount=getFloat(row.find('input[name="amount_due[]"]').val());
-                row.find('input[name="payment_amount[]"]').val(accounting.formatNumber(payableAmount,2));
+                var discountAmount=getFloat(row.find('input[name="discount[]"]').val());
+                var TotalAfterDiscount = discountAmount + payableAmount;
+
+                if (TotalAfterDiscount > payableAmount) {
+                    showNotification({
+                        "title": "Invalid!",
+                        "stat" : "error",
+                        "msg" : "Sorry, the total of discount and payment must not be greater than payable amount."
+                    });
+
+                    $('input[name="payment_amount[]"]').val('0.00');
+                } else {
+                    row.find('input[name="payment_amount[]"]').val(accounting.formatNumber(payableAmount,2));
+                }
+
                 reComputeDetails();
             });
 
@@ -558,6 +600,7 @@
             $('input:not(.date-picker),textarea',f).val('');
 
             $(f).find('input:first').focus();
+
             $('#tbl_receivables > tbody').html('');
 
             _cboCustomers.select2('val',null);
@@ -649,27 +692,31 @@
             '<td><input name="date_due[]" type="hidden" value="'+ d.date_due+'">'+ d.date_due +'</td>'+
             '<td><input name="item_remarks[]" type="text" class="form-control" value="'+(d.notes == null ? '' : d.notes)+'"></td>'+
             '<td><input name="amount_due[]" class="numeric form-control" style="text-align: right;" value="'+accounting.formatNumber(d.amount_due,2)+'" disabled></td>'+
+            '<td><input name="discount[]" class="numeric form-control" style="text-align: right;" value="'+accounting.formatNumber(d.discount,2)+'"></td>'+
             '<td><input name="payment_amount[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(0,2)+'" style="text-align:right;"></td>'+
             '<td align="center"><button type="button" id="btn_pay_all" class="btn btn-success"><i class="fa fa-check"></i></button></td>'+
             '</tr>';
         };
 
         var reComputeDetails=function(){
-            var rows=$('#tbl_receivables > tbody > tr');
-            var total_amount_due=0; var total_payment=0;
+            rows=$('#tbl_receivables > tbody > tr');
+            var total_amount_due=0; var total_payment=0; var total_discount=0; var total_before_discount=0;
 
             $.each(rows,function(i,value){
                 var row=$(this);
                 total_amount_due+=getFloat(row.find('input[name="amount_due[]"]').val());
+                total_discount+=getFloat(row.find('input[name="discount[]"]').val());
                 total_payment+=getFloat(row.find('input[name="payment_amount[]"]').val());
             });
 
             $('#td_total_amount_due').html('<b>'+accounting.formatNumber(total_amount_due,2)+'</b>');
+            $('#td_total_discount').html('<b>'+accounting.formatNumber(total_discount,2)+'</b>');
             $('#td_total_payment_amount').html('<b>'+accounting.formatNumber(total_payment,2)+'</b>');
         };
 
         var resetSummaryDetails=function(){
             $('#td_total_amount_due').html('<b>0.00</b>');
+            $('#td_total_discount').html('<b>0.00</b>');
             $('#td_total_payment_amount').html('<b>0.00</b>');
         };
 

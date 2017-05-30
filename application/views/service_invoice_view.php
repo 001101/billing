@@ -210,8 +210,9 @@
                                                                                 <th width="35%">Company / Client</th>
                                                                                 <th width="10%">Billing Date</th>
                                                                                 <th width="10%">Due Date</th>
+                                                                                <th width="5%">Status</th>
                                                                                 <th width="10%">Total Due</th>
-                                                                                <th width="10%">Action</th>
+                                                                                <th class="text-center" width="20%">Action</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -504,13 +505,28 @@
                 </div>
             </div><!---modal-->
 
-
-
+            <div id="modal_confirmation_cancel" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" style="color: white;"><span id="modal_mode"> </span>Message</h4>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to cancel?
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn_yes_cancel" class="btn btn-danger">Yes</button>
+                            <button id="btn_no" class="btn btn-default">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <footer role="contentinfo">
                 <div class="clearfix">
                     <ul class="list-unstyled list-inline pull-left">
-                        <li><h6 style="margin: 0;">&copy; 2016 - Paul Christian Rueda</h6></li>
+                        <li><h6 style="margin: 0;">&copy; 2017 - JDEV IT BUSINESS SOLUTION</h6></li>
                     </ul>
                     <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="ti ti-arrow-up"></i></button>
                 </div>
@@ -598,7 +614,13 @@
                     { targets:[2],data: "company_name" },
                     { targets:[3],data: "date_billed" },
                     { targets:[4],data: "date_due" },
-                    { targets:[5],
+                    {
+                        targets:[5],data: "is_active",
+                        render: function(data,type,full,meta){
+                            return "<center><i class='fa fa-"+(data=="1"?"check":"times")+"-circle' style='color:"+(data=="1"?"green":"red")+";'></i></center>";
+                        }
+                    },
+                    { targets:[6],
                         data: "total_amount_due",
                         render: function(data, type, full, meta){
                             return accounting.formatNumber(data,2);
@@ -606,12 +628,24 @@
                     },
 
                     {
-                        targets:[6],
+                        targets:[7],
                         render: function(data, type, full, meta){
-                            var _btnNew='<center><button class="btn btn-success"  id="btn_print" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Print" >'+
-                                '<i class="fa fa-print"></i> Print </button></center>';
+                            var _btnNew='<button class="btn btn-success"  id="btn_print" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Print" >'+
+                                '<i class="fa fa-print"></i></button>';
 
-                            return _btnNew;
+                            var _btnCancel='<button class="btn btn-danger"  id="btn_cancel" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;" data-toggle="modal" data-target="" data-placement="left" title="Print" >'+
+                                '<i class="fa fa-times"></i></button>';
+
+                            return '<table style="border:none!important;">'+
+                                        '<tr>'+
+                                            '<td>'+
+                                                _btnNew +
+                                            '</td>'+ 
+                                            '<td>'+
+                                                _btnCancel+
+                                            '</td>'+
+                                        '</tr>'
+                                    '</table>';
                         }
                     }
                 ],
@@ -783,11 +817,36 @@
             });
 
             $('#tbl_billing tbody').on('click','#btn_print', function(){
-                _selectRowObj=$(this).closest('tr');
+                _selectRowObj=$(this).closest('table').closest('tr');
                 var data=dtBilling.row(_selectRowObj).data();
                 _selectedID=data.billing_id;
 
                 window.open('Service_invoices/transaction/billing_statement?bid='+_selectedID);
+            });
+
+            $('#tbl_billing tbody').on('click','#btn_cancel', function(){
+                _selectRowObj=$(this).closest('table').closest('tr');
+                var data=dtBilling.row(_selectRowObj).data();
+                _selectedID=data.billing_id;
+
+                $('#modal_confirmation_cancel').modal('show');
+            });
+
+            $('#btn_no').click(function(){
+                $('#modal_confirmation_cancel').modal('hide');
+            });
+
+            $('#btn_yes_cancel').click(function(){
+                return $.ajax({
+                    "dataType":"json",
+                    "type":"POST",
+                    "url":"Service_invoices/transaction/cancel-billing",
+                    "data":{billing_id : _selectedID}
+                }).done(function(response){
+                    $('#modal_confirmation_cancel').modal('hide');
+                    showNotification(response);
+                    dtBilling.row(_selectRowObj).remove().draw();
+                });
             });
 
             $('#btn_finalize').click(function(){
