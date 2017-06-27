@@ -68,7 +68,7 @@
     			<tr>
     				<td><?php echo $collection->date_paid; ?></td>
     				<td><?php echo $collection->receipt_no; ?></td>
-                    <td><?php echo $collection->trade_name; ?></td>
+                    <td><?php echo $collection->company_name; ?></td>
     				<td><?php echo $collection->remarks; ?></td>
     				<td align="right"><?php echo number_format($collection->total_amount_paid,2); ?></td>    	
                 </tr>

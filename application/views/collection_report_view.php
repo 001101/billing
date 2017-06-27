@@ -253,7 +253,7 @@
                     "columns":[
                         { targets:[0],data: "date_paid" },
                         { targets:[1],data: "receipt_no" },
-                        { targets:[2],data: "trade_name" },
+                        { targets:[2],data: "company_name" },
                         { targets:[3],data: "remarks" },
                         {
                             targets:[4],data: "total_amount_paid",
