@@ -128,7 +128,7 @@
             overflow: auto;
         }
 
-        div.zTreeDemoBackground {width:100%;height:500px;text-align:left;margin: 2%;overflow: hidden;border: 0px solid white;}
+        div.zTreeDemoBackground {width:100%;height:500px;text-align:left;margin: 2%;overflow: auto;border: 0px solid white;}
 
         ul.ztree {margin-top: 10px;background: white;width:100%;height:100%;}
         ul.ztree li span{font-size: 11pt;}
@@ -136,8 +136,6 @@
         ul.log.small {height:45px;}
         ul.log li {color: #666666;list-style: none;padding-left: 10px;}
         ul.log li.dark {background-color: #E3E3E3;}
-
-
 
     </style>
 </head>
@@ -1033,8 +1031,12 @@
                 _year=sYear;
 
                 if ($(this).parent().hasClass('level0')) {
-                    _year = YearOnly;
-                    $('.lbl_date').html(YearOnly);
+                    if ($(this).parent().hasClass('curSelectedNode'))
+                        _year = YearOnly;
+                    else
+                        _year = $(this).closest('li').find('a').attr('title');
+
+                    $('.lbl_date').html(_year);
                 } else {
                     $('.lbl_date').html(sMonth+" "+sYear);
                 }

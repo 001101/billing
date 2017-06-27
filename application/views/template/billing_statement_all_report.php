@@ -9,6 +9,10 @@
 		}
 
 		@media print {
+			body {-webkit-print-color-adjust: exact;}
+		}
+
+		@media print {
 		    footer {page-break-after: always;}
 		}
 	</style>

@@ -8,7 +8,8 @@
 			parent::__construct('');
 			$this->validate_session();
 			$this->load->model(
-				array('Users_model',
+				array(
+				'Users_model',
 				'Chat_model')
 			);
 		}

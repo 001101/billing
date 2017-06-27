@@ -7,6 +7,10 @@
 		.text-center {
 			text-align: center;
 		}
+
+		@media print {
+			body {-webkit-print-color-adjust: exact;}
+		}
 	</style>
 
 	<script>

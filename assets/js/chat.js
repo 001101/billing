@@ -11,6 +11,7 @@ var timeout;
 var bindEventHandlers=(function(){  
 
 	$('#btn_open_chat').on('click',function() {
+
         $('#chat_user_box').toggleClass('hidden');
         $('#chat_box').addClass('hidden');
         $('#chat_advisor').remove();
@@ -25,6 +26,7 @@ var bindEventHandlers=(function(){
             _isOpen=0;
             stopInterval();
         }
+
     });
 
     $('#close_advisor').click(function(){
@@ -41,6 +43,7 @@ var bindEventHandlers=(function(){
         } else {
             _isScrolled=0;
         }
+        
         position = scroll;
     });
 
@@ -144,7 +147,7 @@ function startInterval() {
 	                });
 	            });
 
-	            $('img').on ( 'error', function(){
+	            $('img').on( 'error', function(){
 	                $(this).attr('src', 'assets/img/anonymous-icon.png');
 	            });
 	            
