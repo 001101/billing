@@ -197,6 +197,7 @@
                         0 as credit_amount 
                     FROM billing_info as bi
                     WHERE bi.customer_id=$customer_id AND bi.date_billed <= '$asOfDate'
+                    AND is_deleted=FALSE AND is_active=TRUE
 
                     UNION ALL
 
@@ -209,7 +210,9 @@
                         0 as debit_amount,
                         pi.total_amount_paid as credit_amount
                     FROM payment_info as pi
-                    WHERE pi.customer_id=$customer_id AND pi.date_paid <= '$asOfDate') as trans
+                    WHERE 
+                    pi.customer_id=$customer_id AND pi.date_paid <= '$asOfDate'
+                    AND is_deleted=FALSE AND is_active=TRUE) as trans
                     ORDER BY trans.txn_date) AS trans2";
 
             return $this->db->query($sql)->result();

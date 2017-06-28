@@ -134,7 +134,7 @@
                                 <div class="col-md-12">
 
                                     <div id="div_supplier_list">
-                                        <div class="panel panel-default"  style="border-top: 3px solid #2196f3;">
+                                        <div class="panel panel-default">
 
                                             <a data-toggle="collapse" data-parent="#accordionA" href="#collapseTwo"><div class="panel-heading" style="background: #2ecc71;border-bottom: 1px solid lightgrey;"><b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i> Contract Management</b></div></a>
 
@@ -223,7 +223,7 @@
                 </div>
             </div>
 
-            <div id="modal_contract_entry" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
+            <div id="modal_contract_entry" class="modal fade" role="dialog"><!--modal-->
                 <div class="modal-dialog" style="width: 30%;">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#2ecc71;">

@@ -118,7 +118,7 @@
                                                             <strong>Client : </strong><br>
                                                             <select id="cbo_client" class="form-control">
                                                                 <?php foreach($clients as $client) { ?>
-                                                                    <option value="<?php echo $client->customer_id; ?>"><?php echo $client->trade_name ?></option>
+                                                                    <option value="<?php echo $client->customer_id; ?>"><?php echo $client->company_name; ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>

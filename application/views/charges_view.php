@@ -358,7 +358,7 @@
             var stat=true;
 
             $('div.form-group').removeClass('has-error');
-            $('input[required],textarea','#frm_charges').each(function(){
+            $('input[required],textarea[required]','#frm_charges').each(function(){
                 if($(this).val()==""){
                     showNotification({title:"Error!",stat:"error",msg:$(this).data('error-msg')});
                     $(this).closest('div.form-group').addClass('has-error');
